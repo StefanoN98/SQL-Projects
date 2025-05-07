@@ -27,7 +27,7 @@
 | **Naming Format**         | Use `snake_case`, all lowercase, with underscores `_` separating words      |
 | **Language**              | Use **English** for all names                                               |
 | **Reserved Words**        | Avoid SQL Server reserved words for object names (e.g., `user`, `order`)    |
-| **Consistency**           | Always name entities consistently across layers (e.g., `customer_id`)       |
+| **Consistency**           | Always name entities consistently across layers                             |
 
 ---
 
@@ -53,8 +53,9 @@
 ---
 
 ## Table Naming Convention
+For **bronze** and **silver** layer will be kept the original name of the tables.
 
-All tables follow the pattern:
+While all the tables in the **gold** layer follow the pattern:
 
 ```
 <schema>.<prefix>_<entity_name>
@@ -64,8 +65,6 @@ All tables follow the pattern:
 |------------|------------------|------------------------|
 | `dim_`     | Dimension table   | `gold.dim_product`     |
 | `fact_`    | Fact table        | `gold.fact_sales`      |
-| `raw_`     | Raw ingestion     | `bronze.raw_orders`    |
-| `stg_`     | Staging table     | `silver.stg_orders`    |
 | `report_`  | Report table      | `gold.report_sales`    |
 
 ---
@@ -155,8 +154,6 @@ vw_<entity or business_purpose>
 
 | Object           | Prefix/Format                  | Example                          |
 |------------------|--------------------------------|----------------------------------|
-| Raw Table        | `raw_`                         | `bronze.raw_orders`              |
-| Staging Table    | `stg_`                         | `silver.stg_orders`              |
 | Dimension Table  | `dim_`                         | `gold.dim_product`               |
 | Fact Table       | `fact_`                        | `gold.fact_sales`                |
 | View             | `vw_`                          | `vw_fact_sales_summary`          |
