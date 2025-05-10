@@ -27,8 +27,7 @@ CREATE TABLE bronze.crm_order_items (
     seller_id NVARCHAR(50),
     shipping_limit_date DATETIME,
     price FLOAT,
-    freight_value FLOAT,
-	ingested_at DATETIME DEFAULT GETDATE()
+    freight_value FLOAT
     );
 GO
 ---------------------------------------------------------------------------
@@ -44,8 +43,7 @@ CREATE TABLE bronze.crm_order_payments (
     payment_sequential INT,
     payment_type NVARCHAR(50),
     payment_installments INT,
-    payment_value FLOAT,
-	ingested_at DATETIME DEFAULT GETDATE()
+    payment_value FLOAT
     );
 GO
 ---------------------------------------------------------------------------
@@ -56,15 +54,15 @@ IF OBJECT_ID('bronze.crm_order_reviews', 'U') IS NOT NULL
 	DROP TABLE bronze.crm_order_reviews;
 GO
 
+-- In this case there are a lot of issues in the origin regarding datatype (mixed types) & lenght
 CREATE TABLE bronze.crm_order_reviews (
-    review_id NVARCHAR(50),
-    order_id NVARCHAR(50),
-    review_score INT,
-    review_comment_title NVARCHAR(255),
+    review_id NVARCHAR(MAX),
+    order_id NVARCHAR(MAX),
+    review_score NVARCHAR(MAX),
+    review_comment_title NVARCHAR(MAX),
     review_comment_message NVARCHAR(MAX),
-    review_creation_date DATETIME,
-    review_answer_timestamp DATETIME,
-	ingested_at DATETIME DEFAULT GETDATE()
+    review_creation_date NVARCHAR(MAX),
+    review_answer_timestamp NVARCHAR(MAX)
     );
 GO
 ---------------------------------------------------------------------------
@@ -83,8 +81,7 @@ CREATE TABLE bronze.crm_orders (
 	order_approved_at DATETIME,
 	order_delivered_carrier_date DATETIME,
 	order_delivered_customer_date DATETIME,
-	order_estimated_delivery_date DATETIME,
-	ingested_at DATETIME DEFAULT GETDATE()
+	order_estimated_delivery_date DATETIME
     );
 GO
 
@@ -103,8 +100,7 @@ CREATE TABLE bronze.erp_customers (
 	customer_unique_id NVARCHAR(50),
 	customer_zip_code_prefix NVARCHAR(10),
 	customer_city NVARCHAR(50),
-	customer_state NVARCHAR(10),
-	ingested_at DATETIME DEFAULT GETDATE()
+	customer_state NVARCHAR(10)
 	);
 GO
 ---------------------------------------------------------------------------
@@ -120,8 +116,7 @@ CREATE TABLE bronze.erp_geolocation (
 	geolocation_lat DECIMAL(18,15),
 	geolocation_lng DECIMAL(18,15),
 	geolocation_city NVARCHAR(50),
-	geolocation_state NVARCHAR(10),
-	ingested_at DATETIME DEFAULT GETDATE()
+	geolocation_state NVARCHAR(10)
 	);
 GO
 ---------------------------------------------------------------------------
@@ -134,8 +129,7 @@ GO
 
 CREATE TABLE bronze.erp_product_category_translation (
 	product_category_name NVARCHAR(100),
-	product_category_name_english NVARCHAR(100),
-	ingested_at DATETIME DEFAULT GETDATE()
+	product_category_name_english NVARCHAR(100)
 	);
 GO
 ---------------------------------------------------------------------------
@@ -155,8 +149,7 @@ CREATE TABLE bronze.erp_products (
 	product_weight_g INT,
 	product_length_cm INT,
 	product_height_cm INT,
-	product_width_cm INT,
-	ingested_at DATETIME DEFAULT GETDATE()
+	product_width_cm INT
 );
 GO
 ---------------------------------------------------------------------------
@@ -171,7 +164,6 @@ CREATE TABLE bronze.erp_sellers(
 	seller_id NVARCHAR(50),
 	seller_zip_code_prefix NVARCHAR(10),
 	seller_city NVARCHAR(50),
-	seller_state NVARCHAR(10),
-	ingested_at DATETIME DEFAULT GETDATE()
+	seller_state NVARCHAR(10)
 );
 GO
