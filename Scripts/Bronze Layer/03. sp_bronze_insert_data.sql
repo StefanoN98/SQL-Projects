@@ -201,3 +201,5 @@ BEGIN
 	END CATCH
 
 END
+
+EXEC dbo.sp_bronze_insert_data
