@@ -182,13 +182,12 @@ CREATE TABLE silver.crm_order_items (
     shipping_limit_date DATETIME,
     price FLOAT,
     freight_value FLOAT,
-    shipping_type NVARCHAR(50),
-    ingested_at DATETIME DEFAULT GETDATE()
+    shipping_type NVARCHAR(50)
 );
 
 INSERT INTO silver.crm_order_items (
     order_id, order_item_id, product_id, seller_id,
-    shipping_limit_date, price, freight_value, shipping_type, ingested_at
+    shipping_limit_date, price, freight_value, shipping_type
 )
 SELECT 
     order_id,
@@ -201,8 +200,7 @@ SELECT
     CASE 
         WHEN freight_value > 0 THEN 'Standard Shipping'
         ELSE 'Free Shipping'
-    END AS shipping_type,
-    GETDATE()
+    END AS shipping_type
 FROM bronze.crm_order_items;
 ```
 
