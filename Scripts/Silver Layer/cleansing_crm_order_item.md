@@ -177,6 +177,9 @@ FROM bronze.crm_order_items;
 # DLL Script to load `crm_order_items` in Silver Layer
 
 ```sql
+IF OBJECT_ID('silver.crm_order_items', 'U') IS NOT NULL
+	DROP TABLE silver.crm_order_items;
+  
 CREATE TABLE silver.crm_order_items (
     order_id NVARCHAR(50),
     order_item_id INT,
