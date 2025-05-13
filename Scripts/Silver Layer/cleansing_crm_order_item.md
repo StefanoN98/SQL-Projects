@@ -9,15 +9,15 @@
 
 | Type               | Category                | Check Description                                            |
 |--------------------|-------------------------|------------------------------------------------------------- |
-| **DATA INTEGRITY** | Check Duplicates        | Check for duplicates on (`order_id`, `order_item_id`)        |
-|                    | Check NULL values       | Check for NULL values                                        |
-|                    | Check Empty Strings     | Detect empty string values in key fields                     |
-|                    | Check Unwanted Spaces   | Remove unwanted spaces from text fields                      |
+| **DATA INTEGRITY** | Duplicates Values       | Check for duplicates on (`order_id`, `order_item_id`)        |
+|                    | NULL Values             | Check for NULL values                                        |
+|                    | Empty Strings           | Detect empty string values in key fields                     |
+|                    | Unwanted Spaces         | Remove unwanted spaces from text fields                      |
 |                    | Check Length            | Validate that `order_id` has exactly 32 characters           |
 |                    | Numeric Range           | Ensure `price` and `freight_value` are non-negative          |
 |                    | Logical Consistency     | Detect `price = 0` with positive `freight_value`             |
 |                    | Value Distribution      | Check value distribution in `order_item_id`                  |
-| **DATA VALIDATION**| Check Date Validity     | Ensure `shipping_date` is within reasonable date range       |
+| **DATA VALIDATION**| Date Validity           | Ensure `shipping_date` is within reasonable date range       |
 | **BUSINESS RULES** | Check Sequence          | Ensure item numbers are sequential within each `order_id`    |
 |                    | Derived Column          | Derive `shipping_type` from `freight_value`                  |
 
