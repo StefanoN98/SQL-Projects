@@ -7,22 +7,25 @@
 
 ## ✅ Checks Summary
 
-| Category              | Check Description                                           |
-|-----------------------|-------------------------------------------------------------|
-| Completeness          | Check for NULL values                                       |
-| Numeric range         | Ensure `price` and `freight_value` are non-negative         |
-| Trimmed strings       | Remove unwanted spaces from text fields                     |
-| ID length             | Validate that `order_id` has exactly 32 characters          |
-| Composite key         | Check for duplicates on `(order_id, order_item_id)`         |
-| Item sequence         | Ensure item numbers are sequential within each `order_id`   |
-| Empty strings         | Detect empty string values in key fields                    |
-| Date validity         | Ensure shipping date is within reasonable date range        |
-| Logical consistency   | Detect `price = 0` with positive `freight_value`            |
-| Business logic        | Derive `shipping_type` from `freight_value`                 |
+| Type               | Category                | Check Description                                            |
+|--------------------|-------------------------|------------------------------------------------------------- |
+| **DATA INTEGRITY** | Check Duplicates        | Check for duplicates on (`order_id`, `order_item_id`)        |
+|                    | Check NULL values       | Check for NULL values                                        |
+|                    | Check Empty Strings     | Detect empty string values in key fields                     |
+|                    | Check Unwanted Spaces   | Remove unwanted spaces from text fields                      |
+|                    | Check Length            | Validate that `order_id` has exactly 32 characters           |
+|                    | Numeric Range           | Ensure `price` and `freight_value` are non-negative          |
+|                    | Logical Consistency     | Detect `price = 0` with positive `freight_value`             |
+|                    | Value Distribution      | Check value distribution in `order_item_id                   |
+| **DATA VALIDATION**| Check Date Validity     | Ensure `shipping_date` is within reasonable date range       |
+| **BUSINESS RULES** | Check Sequence          | Ensure item numbers are sequential within each `order_id`    |
+|                    | Derived Column          | Derive `shipping_type` from `freight_value`                  |
+
 
 ---
 
-## 🔎 Section: Duplicate Primary Key
+
+## Duplicate Primary Key
 
 ```sql
 SELECT order_id, order_item_id, COUNT(*) AS occurrences
@@ -35,23 +38,7 @@ HAVING COUNT(*) > 1;
 
 ---
 
-## 🔁 Section: Sequential Item Numbers
-
-```sql
-WITH ranked_items AS (
-  SELECT order_id, order_item_id,
-         ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY order_item_id) AS rn
-  FROM bronze.crm_order_items
-)
-SELECT *
-FROM ranked_items
-WHERE order_item_id <> rn
-ORDER BY order_id;
-```
-
----
-
-## 🚫 Section: NULL Value Check
+## NULL Value Check
 
 ```sql
 SELECT *
@@ -68,7 +55,7 @@ WHERE order_id IS NULL OR
 
 ---
 
-## ❌ Section: Empty String Values
+## Empty String Values
 
 ```sql
 SELECT *
@@ -78,41 +65,7 @@ WHERE order_id = '' OR product_id = '' OR seller_id = '';
 
 ---
 
-## 🧮 Section: Distinct Item IDs
-
-```sql
-SELECT DISTINCT order_item_id
-FROM bronze.crm_order_items
-ORDER BY order_item_id;
--- No anomalies detected
-```
-
----
-
-## 📅 Section: Shipping Date Validation
-
-```sql
-SELECT MIN(shipping_limit_date) AS min_date,
-       MAX(shipping_limit_date) AS max_date,
-       DATEDIFF(YEAR, MIN(shipping_limit_date), MAX(shipping_limit_date)) AS interval_years,
-       IIF(MAX(shipping_limit_date) > GETDATE(), 'Anomaly', 'No Anomaly') AS today_check
-FROM bronze.crm_order_items;
-```
-
----
-
-## 📊 Section: Order Item Distribution
-
-```sql
-SELECT order_id, COUNT(*) AS item_count
-FROM bronze.crm_order_items
-GROUP BY order_id
-ORDER BY item_count DESC;
-```
-
----
-
-## ✂️ Section: Trim Unwanted Spaces
+## Trim Unwanted Spaces
 
 ```sql
 SELECT *
@@ -125,25 +78,31 @@ WHERE TRIM(order_id) != order_id OR
 
 ---
 
-## 🔠 Section: `order_id` Length Check
+## `order_id` Length Check
 
 ```sql
 SELECT DISTINCT order_id,
        LEN(order_id) AS length
 FROM bronze.crm_order_items
-WHERE LEN(order_id) = 32;
+WHERE LEN(order_id) <> 32;
 -- No anomalies detected
 ```
 
 ---
 
-## ⚠️ Section: Data Integrity
+## Numeric range
 
 ```sql
--- Negative values
+
 SELECT *
 FROM bronze.crm_order_items
 WHERE price < 0 OR freight_value < 0;
+```
+
+---
+
+## Logical Consistency
+```sql
 
 -- Zero price but positive freight
 SELECT *
@@ -153,7 +112,47 @@ WHERE price = 0 AND freight_value > 0;
 
 ---
 
-## 🚚 Section: Shipping Type Derivation
+
+## Value Distribution
+
+```sql
+SELECT order_id, COUNT(*) AS item_count
+FROM bronze.crm_order_items
+GROUP BY order_id
+ORDER BY item_count DESC;
+```
+
+---
+
+## Shipping Date Validation
+
+```sql
+SELECT MIN(shipping_limit_date) AS min_date,
+       MAX(shipping_limit_date) AS max_date,
+       DATEDIFF(YEAR, MIN(shipping_limit_date), MAX(shipping_limit_date)) AS interval_years,
+       IIF(MAX(shipping_limit_date) > GETDATE(), 'Anomaly', 'No Anomaly') AS today_check
+FROM bronze.crm_order_items;
+```
+
+---
+
+## Check Sequence
+
+```sql
+WITH ranked_items AS (
+  SELECT order_id, order_item_id,
+         ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY order_item_id) AS rn
+  FROM bronze.crm_order_items
+)
+SELECT *
+FROM ranked_items
+WHERE order_item_id <> rn
+ORDER BY order_id;
+```
+
+---
+
+## Shipping Type Derivation
 
 ```sql
 SELECT *,
@@ -165,6 +164,7 @@ FROM bronze.crm_order_items;
 ```
 
 ---
+
 
 ✅ Ready to promote cleaned data to the **Silver Layer**!
 
