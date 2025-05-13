@@ -16,7 +16,7 @@
 |                    | Check Length            | Validate that `order_id` has exactly 32 characters           |
 |                    | Numeric Range           | Ensure `price` and `freight_value` are non-negative          |
 |                    | Logical Consistency     | Detect `price = 0` with positive `freight_value`             |
-|                    | Value Distribution      | Check value distribution in `order_item_id                   |
+|                    | Value Distribution      | Check value distribution in `order_item_id`                  |
 | **DATA VALIDATION**| Check Date Validity     | Ensure `shipping_date` is within reasonable date range       |
 | **BUSINESS RULES** | Check Sequence          | Ensure item numbers are sequential within each `order_id`    |
 |                    | Derived Column          | Derive `shipping_type` from `freight_value`                  |
@@ -25,7 +25,7 @@
 ---
 
 
-## Duplicate Primary Key
+## Check duplicates composite key (`order_id`, `order_item_id`) 
 
 ```sql
 SELECT order_id, order_item_id, COUNT(*) AS occurrences
@@ -38,7 +38,7 @@ HAVING COUNT(*) > 1;
 
 ---
 
-## NULL Value Check
+## Check NULL values
 
 ```sql
 SELECT *
@@ -55,7 +55,7 @@ WHERE order_id IS NULL OR
 
 ---
 
-## Empty String Values
+## Check Empty Strings
 
 ```sql
 SELECT *
@@ -65,7 +65,7 @@ WHERE order_id = '' OR product_id = '' OR seller_id = '';
 
 ---
 
-## Trim Unwanted Spaces
+## Check Unwanted Spaces 
 
 ```sql
 SELECT *
@@ -78,7 +78,7 @@ WHERE TRIM(order_id) != order_id OR
 
 ---
 
-## `order_id` Length Check
+## Check Length  `order_id`
 
 ```sql
 SELECT DISTINCT order_id,
@@ -90,7 +90,7 @@ WHERE LEN(order_id) <> 32;
 
 ---
 
-## Numeric range
+## Numeric range on `price` & `freight_value` 
 
 ```sql
 
@@ -101,7 +101,7 @@ WHERE price < 0 OR freight_value < 0;
 
 ---
 
-## Logical Consistency
+## Logical Consistency between `price` & `freight_value` 
 ```sql
 
 -- Zero price but positive freight
@@ -113,7 +113,7 @@ WHERE price = 0 AND freight_value > 0;
 ---
 
 
-## Value Distribution
+## Value Distribution on `order_item_id`
 
 ```sql
 SELECT order_id, COUNT(*) AS item_count
@@ -124,7 +124,7 @@ ORDER BY item_count DESC;
 
 ---
 
-## Shipping Date Validation
+## Date Validation on `shipping_limit_date`
 
 ```sql
 SELECT MIN(shipping_limit_date) AS min_date,
