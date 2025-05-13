@@ -157,3 +157,61 @@ HAVING COUNT(*) > 1;
 -- No duplicates detected
 ```
 ---
+
+# DLL Script to load `crm_order_payments` in Silver Layer
+```sql
+CREATE TABLE silver.crm_order_payment (
+    order_id  NVARCHAR(50),
+    payment_sequence NVARCHAR(200),
+    credit_card FLOAT,
+    debit_card FLOAT,
+    boleto FLOAT,
+    voucher FLOAT,
+    total FLOAT,
+);
+
+INSERT INTO silver.crm_order_payment(
+   order_id, payment_sequence, credit_card,debit_card,
+   boleto, voucher, total
+)
+WITH payments_cte AS (
+    SELECT 
+        order_id,
+        payment_type,
+        payment_value
+    FROM bronze.crm_order_payments
+),
+pivoted AS (
+    SELECT 
+        order_id,
+        ISNULL([credit_card], 0) AS credit_card,
+        ISNULL([debit_card], 0) AS debit_card,
+        ISNULL([boleto], 0) AS boleto,
+        ISNULL([voucher], 0) AS voucher,
+        ISNULL([credit_card], 0) +
+        ISNULL([debit_card], 0) +
+        ISNULL([boleto], 0) +
+        ISNULL([voucher], 0) AS total
+    FROM payments_cte
+    PIVOT (
+        SUM(payment_value)
+        FOR payment_type IN ([credit_card],[debit_card],[boleto],[voucher])
+    ) AS p
+),
+payment_sequence AS (
+    SELECT 
+        order_id,
+        STRING_AGG(payment_type, N' → ') 
+        WITHIN GROUP (ORDER BY payment_sequential) AS payment_sequence
+    FROM bronze.crm_order_payments
+    GROUP BY order_id
+)
+SELECT 
+    p.order_id, s.payment_sequence,
+    p.credit_card, p.debit_card, p.boleto, p.voucher, p.total
+FROM pivoted p
+JOIN payment_sequence s ON p.order_id = s.order_id;
+```
+
+---
+
