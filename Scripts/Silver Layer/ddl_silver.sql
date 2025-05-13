@@ -15,7 +15,7 @@ Script Purpose:
 
 -- DROP & CREATE silver.crm_order_items
 IF OBJECT_ID('silver.crm_order_items', 'U') IS NOT NULL
-	DROP TABLE bronze.crm_order_items;
+	DROP TABLE silver.crm_order_items;
 GO
   
 CREATE TABLE silver.crm_order_items (
@@ -34,7 +34,7 @@ GO
 
 -- DROP & CREATE silver.crm_order_payment
 IF OBJECT_ID('silver.crm_order_payment', 'U') IS NOT NULL
-	DROP TABLE bronze.crm_order_items;
+	DROP TABLE silver.crm_order_payment;
 GO
 
 CREATE TABLE silver.crm_order_payment (
