@@ -160,6 +160,9 @@ HAVING COUNT(*) > 1;
 
 # DLL Script to load `crm_order_payments` in Silver Layer
 ```sql
+IF OBJECT_ID('silver.crm_order_payment', 'U') IS NOT NULL
+	DROP TABLE silver.crm_order_payment;
+
 CREATE TABLE silver.crm_order_payment (
     order_id  NVARCHAR(50),
     payment_sequence NVARCHAR(200),
