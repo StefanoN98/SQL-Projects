@@ -34,12 +34,12 @@
 ## Layer-Specific Naming Rules
 
 ### 🥉 **Bronze Rules**
-- All table names must **start with the source system name** (e.g., `erp_raw_orders`, `crm_raw_contacts`).
+- All table names must **start with the source system name** (e.g., `erp_orders`, `crm_contacts`).
 - Table names must **exactly match the original structure and naming** in the source system — **no renaming**.
 - Schema: `bronze`
 
 ### 🥈 **Silver Rules**
-- Table names must **still retain the source system reference** (e.g., `erp_stg_orders`).
+- Table names must **still retain the source system reference** (e.g., `erp_orders`).
 - Tables may include **basic business-standard column names**, but structural mapping must remain close to source.
 - Schema: `silver`
 
