@@ -174,7 +174,7 @@ FROM bronze.crm_order_items;
 
 
 
-# DLL Script to load the table in Silver Layer
+# DLL Script to load `crm_order_items` in Silver Layer
 
 ```sql
 CREATE TABLE silver.crm_order_items (
