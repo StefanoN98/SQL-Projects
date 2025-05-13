@@ -32,7 +32,7 @@ SELECT order_id, order_item_id, COUNT(*) AS occurrences
 FROM bronze.crm_order_items
 GROUP BY order_id, order_item_id
 HAVING COUNT(*) > 1;
--- No duplicates
+-- No duplicates detected
 
 ```
 
@@ -61,6 +61,7 @@ WHERE order_id IS NULL OR
 SELECT *
 FROM bronze.crm_order_items
 WHERE order_id = '' OR product_id = '' OR seller_id = '';
+--No empty strings detected
 ```
 
 ---
@@ -85,7 +86,7 @@ SELECT DISTINCT order_id,
        LEN(order_id) AS length
 FROM bronze.crm_order_items
 WHERE LEN(order_id) <> 32;
--- No anomalies detected
+-- No anomalies detected, the lenght for all the strings is 32
 ```
 
 ---
@@ -97,6 +98,7 @@ WHERE LEN(order_id) <> 32;
 SELECT *
 FROM bronze.crm_order_items
 WHERE price < 0 OR freight_value < 0;
+-- No negative values
 ```
 
 ---
@@ -108,6 +110,7 @@ WHERE price < 0 OR freight_value < 0;
 SELECT *
 FROM bronze.crm_order_items
 WHERE price = 0 AND freight_value > 0;
+-- No issue detected
 ```
 
 ---
