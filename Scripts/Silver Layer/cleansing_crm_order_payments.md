@@ -1,19 +1,14 @@
 # 🧹 Data Cleansing: `crm_order_payments` (Bronze Layer)
 
-> This script performs data quality checks and cleansing operations on the `bronze.crm_order_payments` table before promoting the data to the **Silver Layer**.  
-> The goal is to ensure that all records are complete, clean, and logically consistent prior to transformation and standardization.
-
----
-
 ## ✅ Checks Summary
 
-| Type               | Category                | Check Description                                            |
-|--------------------|-------------------------|------------------------------------------------------------- |
-| **DATA INTEGRITY** | Duplicates Values       | Check for duplicates on (`order_id`, `payment_sequential`)    |
-|                    | NULL Values             | Check for NULL or zero `payment_value`                       |
-|                    | Distinct Values         | Check distinct values for `payment_type`                      |
-|                    | Payment Value Range     | Ensure `payment_value` is valid (non-negative and non-null)   |
-|                    | Payment Sequence        | Ensure correct sequence of payments (`payment_sequential`)    |
+| Type                 | Category                | Check Description                                            |
+|--------------------  |-------------------------|------------------------------------------------------------- |
+| **DATA INTEGRITY**   | Duplicates Values       | Check for duplicates on (`order_id`, `payment_sequential`)    |
+|                      | NULL Values             | Check for NULL or zero `payment_value`                       |
+|                      | Distinct Values         | Check distinct values for `payment_type`                      |
+|                      | Payment Value Range     | Ensure `payment_value` is valid (non-negative and non-null)   |
+| **DATA CONSISTENCY** | Payment Sequence        | Ensure correct sequence of payments (`payment_sequential`)    |
 
 ---
 
