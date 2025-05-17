@@ -39,7 +39,7 @@ GO
 
 CREATE TABLE silver.crm_order_payment (
     order_id  NVARCHAR(50),
-    payment_sequence NVARCHAR(200),
+    payment_sequence NVARCHAR(MAX),
     credit_card FLOAT,
     debit_card FLOAT,
     boleto FLOAT,
