@@ -155,26 +155,25 @@ HAVING COUNT(*) > 1;
 
 # DLL Script to load `crm_order_payments` in Silver Layer
 ```sql
+-- DROP & CREATE the silver table
 IF OBJECT_ID('silver.crm_order_payment', 'U') IS NOT NULL
 	DROP TABLE silver.crm_order_payment;
 
 CREATE TABLE silver.crm_order_payment (
-    order_id  NVARCHAR(50),
-    payment_sequence NVARCHAR(200),
+    order_id NVARCHAR(50),
+    payment_sequence NVARCHAR(MAX),
     credit_card FLOAT,
     debit_card FLOAT,
     boleto FLOAT,
     voucher FLOAT,
-    total FLOAT,
+    total FLOAT
 );
 
-INSERT INTO silver.crm_order_payment(
-   order_id, payment_sequence, credit_card,debit_card,
-   boleto, voucher, total
-)
+-- INSERT into silver table
 WITH payments_cte AS (
     SELECT 
         order_id,
+        payment_sequential,
         payment_type,
         payment_value
     FROM bronze.crm_order_payments
@@ -200,13 +199,23 @@ payment_sequence AS (
     SELECT 
         order_id,
         STRING_AGG(payment_type, N' → ') 
-        WITHIN GROUP (ORDER BY payment_sequential) AS payment_sequence
-    FROM bronze.crm_order_payments
+            WITHIN GROUP (ORDER BY payment_sequential) AS payment_sequence
+    FROM payments_cte
     GROUP BY order_id
 )
+
+INSERT INTO silver.crm_order_payment (
+    order_id, payment_sequence, credit_card, debit_card,
+    boleto, voucher, total
+)
 SELECT 
-    p.order_id, s.payment_sequence,
-    p.credit_card, p.debit_card, p.boleto, p.voucher, p.total
+    p.order_id, 
+    s.payment_sequence,
+    p.credit_card, 
+    p.debit_card, 
+    p.boleto, 
+    p.voucher, 
+    p.total
 FROM pivoted p
 JOIN payment_sequence s ON p.order_id = s.order_id;
 ```
