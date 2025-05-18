@@ -6,8 +6,6 @@
 
 ## Initial DDL Script to load `crm_order_payments` from broze layer (no structure changes)
 ```sql
--- DROP & CREATE silver.crm_order_payments
-
 IF OBJECT_ID('silver.crm_order_payments', 'U') IS NOT NULL
 	DROP TABLE silver.crm_order_payments;
 GO
