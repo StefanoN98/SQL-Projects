@@ -53,172 +53,22 @@ FROM BRONZE.crm_order_payments;
 ```
 ---
 
-## Pivot Tables
-For each row there will be an unique order_id,
-	the sequence in case of multiple payments, the payment value for each payment type
-	and the total.
-	
-```sql
-WITH payments_cte AS (
-    SELECT 
-        order_id,
-        payment_type,
-        payment_value
-    FROM bronze.crm_order_payments
-),
-pivoted AS (
-    SELECT 
-        order_id,
-        ISNULL([credit_card], 0) AS credit_card,
-        ISNULL([debit_card], 0) AS debit_card,
-        ISNULL([boleto], 0) AS boleto,
-        ISNULL([voucher], 0) AS voucher,
-        -- Total column (sum of all payment types)
-        ISNULL([credit_card], 0) +
-        ISNULL([debit_card], 0) +
-        ISNULL([boleto], 0) +
-        ISNULL([voucher], 0) AS total
-    FROM payments_cte
-    PIVOT (
-        SUM(payment_value)
-        FOR payment_type IN ([credit_card],[debit_card],[boleto],[voucher])
-    ) AS p
-),
-payment_sequence AS (
-    SELECT 
-        order_id,
-        STRING_AGG(payment_type, N' → ') WITHIN GROUP (ORDER BY payment_sequential) AS payment_sequence
-    FROM bronze.crm_order_payments
-    GROUP BY order_id
-)
-
--- Final result: pivot + sequence column
-SELECT 
-    p.order_id, s.payment_sequence,
-    p.credit_card, p.debit_card, p.boleto, p.voucher, p.total
-FROM pivoted p
-JOIN payment_sequence s ON p.order_id = s.order_id;
-```
----
-
-## Check for Duplicates in Pivot Table
-```sql
-WITH payments_cte AS (
-    SELECT 
-        order_id,
-        payment_type,
-        payment_value
-    FROM bronze.crm_order_payments
-),
-pivoted AS (
-    SELECT 
-        order_id,
-        ISNULL([credit_card], 0) AS credit_card,
-        ISNULL([debit_card], 0) AS debit_card,
-        ISNULL([boleto], 0) AS boleto,
-        ISNULL([voucher], 0) AS voucher,
-        -- Total column (sum of all payment types)
-        ISNULL([credit_card], 0) +
-        ISNULL([debit_card], 0) +
-        ISNULL([boleto], 0) +
-        ISNULL([voucher], 0) AS total
-    FROM payments_cte
-    PIVOT (
-        SUM(payment_value)
-        FOR payment_type IN ([credit_card],[debit_card],[boleto],[voucher])
-    ) AS p
-),
-payment_sequence AS (
-    SELECT 
-        order_id,
-        STRING_AGG(payment_type, N' → ') WITHIN GROUP (ORDER BY payment_sequential) AS payment_sequence
-    FROM bronze.crm_order_payments
-    GROUP BY order_id
-),
-
-pivot_result AS (
-    -- Final result: pivot + sequence column
-    SELECT 
-        p.order_id, s.payment_sequence,
-        p.credit_card, p.debit_card, p.boleto, p.voucher, p.total
-    FROM pivoted p
-    JOIN payment_sequence s ON p.order_id = s.order_id
-)
--- Check for duplicates in pivoted table
-SELECT order_id, COUNT(*) AS occurrences
-FROM pivot_result
-GROUP BY order_id
-HAVING COUNT(*) > 1;
--- No duplicates detected
-```
----
 
 # DLL Script to load `crm_order_payments` in Silver Layer
 ```sql
--- DROP & CREATE the silver table
-IF OBJECT_ID('silver.crm_order_payment', 'U') IS NOT NULL
-	DROP TABLE silver.crm_order_payment;
+-- DROP & CREATE silver.crm_order_payments
 
-CREATE TABLE silver.crm_order_payment (
+IF OBJECT_ID('silver.crm_order_payments', 'U') IS NOT NULL
+	DROP TABLE silver.crm_order_payments;
+GO
+
+CREATE TABLE silver.crm_order_payments (
     order_id NVARCHAR(50),
-    payment_sequence NVARCHAR(MAX),
-    credit_card FLOAT,
-    debit_card FLOAT,
-    boleto FLOAT,
-    voucher FLOAT,
-    total FLOAT
-);
+    payment_sequential INT,
+    payment_type NVARCHAR(50),
+    payment_installments INT,
+    payment_value FLOAT
+    );
+GO
 
--- INSERT into silver table
-WITH payments_cte AS (
-    SELECT 
-        order_id,
-        payment_sequential,
-        payment_type,
-        payment_value
-    FROM bronze.crm_order_payments
-),
-pivoted AS (
-    SELECT 
-        order_id,
-        ISNULL([credit_card], 0) AS credit_card,
-        ISNULL([debit_card], 0) AS debit_card,
-        ISNULL([boleto], 0) AS boleto,
-        ISNULL([voucher], 0) AS voucher,
-        ISNULL([credit_card], 0) +
-        ISNULL([debit_card], 0) +
-        ISNULL([boleto], 0) +
-        ISNULL([voucher], 0) AS total
-    FROM payments_cte
-    PIVOT (
-        SUM(payment_value)
-        FOR payment_type IN ([credit_card],[debit_card],[boleto],[voucher])
-    ) AS p
-),
-payment_sequence AS (
-    SELECT 
-        order_id,
-        STRING_AGG(payment_type, N' → ') 
-            WITHIN GROUP (ORDER BY payment_sequential) AS payment_sequence
-    FROM payments_cte
-    GROUP BY order_id
-)
-
-INSERT INTO silver.crm_order_payment (
-    order_id, payment_sequence, credit_card, debit_card,
-    boleto, voucher, total
-)
-SELECT 
-    p.order_id, 
-    s.payment_sequence,
-    p.credit_card, 
-    p.debit_card, 
-    p.boleto, 
-    p.voucher, 
-    p.total
-FROM pivoted p
-JOIN payment_sequence s ON p.order_id = s.order_id;
-```
-
----
 
