@@ -71,4 +71,17 @@ CREATE TABLE silver.crm_order_payments (
     );
 GO
 
+INSERT INTO silver.crm_order_payments(
+    order_id , payment_sequential,
+    payment_type , payment_installments, payment_value 
+)
+
+SELECT 
+    order_id ,
+    payment_sequential,
+    payment_type ,
+    payment_installments,
+    payment_value 
+FROM bronze.crm_order_payments;
+
 
