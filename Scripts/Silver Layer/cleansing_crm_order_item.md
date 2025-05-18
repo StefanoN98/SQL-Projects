@@ -1,11 +1,11 @@
 # 🧹 Data Cleansing: `crm_order_items` (Bronze ➝ Silver Layer)
 
 
-> This script performs data quality checks and cleansing operations on the `bronze.crm_order_items` table before promoting the data to the **Silver Layer**.  
-> The goal is to ensure that all records are complete, clean, and logically consistent prior to transformation and standardization.
+> This script performs data quality checks and cleansing operations on the `silver.crm_order_items`.  
+> The goal is to ensure that all records are complete, clean, and logically consistent.
 
 ---
-## Initial DDL Script to load `crm_order_items` from broze layer (no changes)
+## Initial DDL Script to load `crm_order_items` from broze layer (no structure changes)
 ```sql
 IF OBJECT_ID('silver.crm_order_items', 'U') IS NOT NULL
 	DROP TABLE silver.crm_order_items;
@@ -61,7 +61,7 @@ FROM bronze.crm_order_items;
 
 ```sql
 SELECT order_id, order_item_id, COUNT(*) AS occurrences
-FROM bronze.crm_order_items
+FROM silver.crm_order_items
 GROUP BY order_id, order_item_id
 HAVING COUNT(*) > 1;
 -- No duplicates detected
@@ -74,7 +74,7 @@ HAVING COUNT(*) > 1;
 
 ```sql
 SELECT *
-FROM bronze.crm_order_items
+FROM silver.crm_order_items
 WHERE order_id IS NULL OR 
       order_item_id IS NULL OR
       product_id IS NULL OR
@@ -91,7 +91,7 @@ WHERE order_id IS NULL OR
 
 ```sql
 SELECT *
-FROM bronze.crm_order_items
+FROM silver.crm_order_items
 WHERE order_id = '' OR product_id = '' OR seller_id = '';
 --No empty strings detected
 ```
@@ -102,7 +102,7 @@ WHERE order_id = '' OR product_id = '' OR seller_id = '';
 
 ```sql
 SELECT *
-FROM bronze.crm_order_items
+FROM silver.crm_order_items
 WHERE TRIM(order_id) != order_id OR
       TRIM(product_id) != product_id OR
       TRIM(seller_id) != seller_id;
@@ -116,7 +116,7 @@ WHERE TRIM(order_id) != order_id OR
 ```sql
 SELECT DISTINCT order_id,
        LEN(order_id) AS length
-FROM bronze.crm_order_items
+FROM silver.crm_order_items
 WHERE LEN(order_id) <> 32;
 -- No anomalies detected, the lenght for all the strings is 32
 ```
@@ -128,7 +128,7 @@ WHERE LEN(order_id) <> 32;
 ```sql
 
 SELECT *
-FROM bronze.crm_order_items
+FROM silver.crm_order_items
 WHERE price < 0 OR freight_value < 0;
 -- No negative values
 ```
@@ -140,7 +140,7 @@ WHERE price < 0 OR freight_value < 0;
 
 -- Zero price but positive freight
 SELECT *
-FROM bronze.crm_order_items
+FROM silver.crm_order_items
 WHERE price = 0 AND freight_value > 0;
 -- No issue detected
 ```
@@ -152,7 +152,7 @@ WHERE price = 0 AND freight_value > 0;
 
 ```sql
 SELECT order_id, COUNT(*) AS item_count
-FROM bronze.crm_order_items
+FROM silver.crm_order_items
 GROUP BY order_id
 ORDER BY item_count DESC;
 ```
@@ -166,7 +166,7 @@ SELECT MIN(shipping_limit_date) AS min_date,
        MAX(shipping_limit_date) AS max_date,
        DATEDIFF(YEAR, MIN(shipping_limit_date), MAX(shipping_limit_date)) AS interval_years,
        IIF(MAX(shipping_limit_date) > GETDATE(), 'Anomaly', 'No Anomaly') AS today_check
-FROM bronze.crm_order_items;
+FROM silver.crm_order_items;
 ```
 
 ---
@@ -177,7 +177,7 @@ FROM bronze.crm_order_items;
 WITH ranked_items AS (
   SELECT order_id, order_item_id,
          ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY order_item_id) AS rn
-  FROM bronze.crm_order_items
+  FROM silver.crm_order_items
 )
 SELECT *
 FROM ranked_items
@@ -195,7 +195,7 @@ SELECT *,
         WHEN freight_value > 0 THEN 'Standard Shipping'
         ELSE 'Free Shipping'
     END AS shipping_type
-FROM bronze.crm_order_items;
+FROM silver.crm_order_items;
 ```
 
 ---
