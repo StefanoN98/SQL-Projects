@@ -185,6 +185,7 @@ SELECT *
 FROM ranked_items
 WHERE order_item_id <> rn
 ORDER BY order_id;
+-- Each following item has the correcte senquence number
 ```
 
 ---
