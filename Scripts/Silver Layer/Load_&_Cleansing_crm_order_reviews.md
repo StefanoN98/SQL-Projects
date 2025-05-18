@@ -156,3 +156,119 @@ WHERE occurences > 1
 	-- Now all the order_id lenght is 32
 ```
 ---
+
+## `review_score` cleaning
+### 1) Analyze DISTINCT values
+ ```sql
+  SELECT DISTINCT review_score
+  FROM silver.crm_order_reviews
+  -- No score anomalies detected
+```
+---
+## `review_comment_title` & `review_comment_message` cleaning
+In this case we'll not consider title or comment when we have:
+  - Only numbers
+  - Only special charaters
+  - Less than 3 characters --> no sense title/comment
+
+### Standardize and fix values in `review_comment_title` & `review_comment_message`
+```sql
+SELECT 
+   CASE
+      WHEN review_comment_title IS NULL OR --Check NULL values
+           review_comment_title NOT LIKE '%[^0-9]%' OR  --Check only numbers
+           review_comment_title NOT LIKE '%[0-9A-Za-z]%' --Check only special characters
+      THEN 'No title'
+      ELSE 
+         CASE
+            WHEN LEN(REPLACE(REPLACE(REPLACE(review_comment_title, ';', ' '), '?', ' '), '"', ' ')) < 3 THEN 'no sense' --Check too short values
+            ELSE TRIM(REPLACE(REPLACE(REPLACE(review_comment_title, ';', ' '), '?', ' '), '"', ' '))
+         END
+   END AS review_comment_title,
+   
+   CASE
+      WHEN review_comment_message IS NULL OR --Check NULL values
+           review_comment_message NOT LIKE '%[^0-9]%' OR --Check only numbers
+           review_comment_message NOT LIKE '%[0-9A-Za-z]%' --Check only special characters
+      THEN 'No comment'
+      ELSE 
+         CASE
+            WHEN LEN(REPLACE(REPLACE(REPLACE(review_comment_message, ';', ' '), '?', ' '), '"', ' ')) < 3 THEN 'no sense' --Check too short values
+            ELSE TRIM(REPLACE(REPLACE(REPLACE(review_comment_message, ';', ' '), '?', ' '), '"', ' '))
+         END
+   END AS review_comment_message
+FROM silver.crm_order_reviews;
+
+
+--UPDATE statement: replace invalid titles and comment
+UPDATE silver.crm_order_reviews
+SET 
+    review_comment_title = 
+        CASE
+            WHEN review_comment_title IS NULL OR
+                 review_comment_title NOT LIKE '%[^0-9]%' OR
+                 review_comment_title NOT LIKE '%[0-9A-Za-z]%'
+            THEN 'No title'
+            ELSE 
+                CASE
+                    WHEN LEN(REPLACE(REPLACE(REPLACE(review_comment_title, ';', ' '), '?', ' '), '"', ' ')) < 3 THEN 'no sense'
+                    ELSE LTRIM(RTRIM(REPLACE(REPLACE(REPLACE(review_comment_title, ';', ' '), '?', ' '), '"', ' ')))
+                END
+        END,
+        
+    review_comment_message = 
+        CASE
+            WHEN review_comment_message IS NULL OR
+                 review_comment_message NOT LIKE '%[^0-9]%' OR
+                 review_comment_message NOT LIKE '%[0-9A-Za-z]%'
+            THEN 'No comment'
+            ELSE 
+                CASE
+                    WHEN LEN(REPLACE(REPLACE(REPLACE(review_comment_message, ';', ' '), '?', ' '), '"', ' ')) < 3 THEN 'no sense'
+                    ELSE LTRIM(RTRIM(REPLACE(REPLACE(REPLACE(review_comment_message, ';', ' '), '?', ' '), '"', ' ')))
+                END
+        END;
+```
+---
+
+## `review_creation_date` & `review_answer_timestamp` cleaning
+Only datetime values are accepted (lenght 19), all the other results will be displayed as NULL
+### 1 ) Fix invalid datetime and replace them with NULL values
+```sql
+SELECT  CASE
+		 WHEN ISDATE(LEFT(review_creation_date,19))=1 THEN LEFT(review_creation_date,19)
+		 ELSE NULL
+		 END AS review_creation_date,
+		CASE
+		 WHEN ISDATE(LEFT(review_answer_timestamp,19))=1 THEN LEFT(review_answer_timestamp,19)
+		 ELSE NULL
+		 END AS review_answer_timestamp
+		
+FROM silver.crm_order_reviews
+
+--UPDATE statement: replace invalid datetime
+UPDATE silver.crm_order_reviews
+SET 
+    review_creation_date = 
+        CASE 
+            WHEN ISDATE(LEFT(review_creation_date, 19)) = 1 THEN LEFT(review_creation_date, 19)
+            ELSE NULL
+        END,
+        
+    review_answer_timestamp = 
+        CASE 
+            WHEN ISDATE(LEFT(review_answer_timestamp, 19)) = 1 THEN LEFT(review_answer_timestamp, 19)
+            ELSE NULL
+        END;
+```
+### 2 ) Verify review_creation_date are earlier than review_answer_timestamp
+``` sql
+SELECT  
+    review_creation_date,
+    review_answer_timestamp,
+    IIF(review_creation_date > review_answer_timestamp, 'Anomaly', 'OK') AS check_date_sequence
+FROM silver.crm_order_reviews
+WHERE review_creation_date > review_answer_timestamp;
+--No anomalies detected
+```
+---
