@@ -201,7 +201,7 @@ FROM silver.crm_order_items;
 ---
 
 
-✅ Ready to promote cleaned data to the **Silver Layer**!
+✅ Data cleaned!
 
 
 
