@@ -22,6 +22,7 @@ IF OBJECT_ID('silver.crm_order_reviews', 'U') IS NOT NULL
 		dwh_create_date DATETIME2 DEFAULT GETDATE()
 		);
 	GO
+
 ⚠️ *Note:* This table was initially created with relaxed types to accommodate raw Bronze data.  
 After cleaning, an `ALTER TABLE` will be used to align column types with the expected domain logic and improve performance.
 
@@ -31,7 +32,13 @@ After cleaning, an `ALTER TABLE` will be used to align column types with the exp
 	review_creation_date, review_answer_timestamp
     )
 
-	SELECT *
+	SELECT  review_id,
+		order_id,
+		review_score,
+		review_comment_title,
+		review_comment_message,
+		review_creation_date,
+		review_answer_timestamp,
 	FROM bronze.crm_order_reviews;
 	--Starting with 99225 rows
 ```
