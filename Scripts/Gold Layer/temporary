@@ -1,3 +1,5 @@
+qui andiamo a creare una gold table in cui facciamo pivot della silver
+
 ## Pivot Tables
 For each row there will be an unique order_id,
 	the sequence in case of multiple payments, the payment value for each payment type
@@ -9,7 +11,7 @@ WITH payments_cte AS (
         order_id,
         payment_type,
         payment_value
-    FROM bronze.crm_order_payments
+    FROM silver.crm_order_payments
 ),
 pivoted AS (
     SELECT 
@@ -33,7 +35,7 @@ payment_sequence AS (
     SELECT 
         order_id,
         STRING_AGG(payment_type, N' → ') WITHIN GROUP (ORDER BY payment_sequential) AS payment_sequence
-    FROM bronze.crm_order_payments
+    FROM silver.crm_order_payments
     GROUP BY order_id
 )
 
@@ -53,7 +55,7 @@ WITH payments_cte AS (
         order_id,
         payment_type,
         payment_value
-    FROM bronze.crm_order_payments
+    FROM silver.crm_order_payments
 ),
 pivoted AS (
     SELECT 
@@ -77,7 +79,7 @@ payment_sequence AS (
     SELECT 
         order_id,
         STRING_AGG(payment_type, N' → ') WITHIN GROUP (ORDER BY payment_sequential) AS payment_sequence
-    FROM bronze.crm_order_payments
+    FROM silver.crm_order_payments
     GROUP BY order_id
 ),
 
@@ -98,13 +100,13 @@ HAVING COUNT(*) > 1;
 ```
 ---
 
-# DLL Script to load `crm_order_payments` in Silver Layer
+# DLL Script to load `crm_order_payments` in Gold Layer
 ```sql
--- DROP & CREATE the silver table
-IF OBJECT_ID('silver.crm_order_payment', 'U') IS NOT NULL
-	DROP TABLE silver.crm_order_payment;
+-- DROP & CREATE the gold table--> NO è una VIEW !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+IF OBJECT_ID('gold.crm_order_payment', 'U') IS NOT NULL
+	DROP TABLE gold.crm_order_payment;
 
-CREATE TABLE silver.crm_order_payment (
+CREATE TABLE gold.crm_order_payment (
     order_id NVARCHAR(50),
     payment_sequence NVARCHAR(MAX),
     credit_card FLOAT,
@@ -114,14 +116,14 @@ CREATE TABLE silver.crm_order_payment (
     total FLOAT
 );
 
--- INSERT into silver table
+-- INSERT into gold VIEWWWS table
 WITH payments_cte AS (
     SELECT 
         order_id,
         payment_sequential,
         payment_type,
         payment_value
-    FROM bronze.crm_order_payments
+    FROM silver.crm_order_payments
 ),
 pivoted AS (
     SELECT 
@@ -149,7 +151,7 @@ payment_sequence AS (
     GROUP BY order_id
 )
 
-INSERT INTO silver.crm_order_payment (
+INSERT INTO gold.crm_order_payment (
     order_id, payment_sequence, credit_card, debit_card,
     boleto, voucher, total
 )
