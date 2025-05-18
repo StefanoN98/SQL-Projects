@@ -79,12 +79,27 @@ After cleaning, an `ALTER TABLE` will be used to align column types with the exp
 
 ### 1) Analyze & fix review_id lenght
 ```sql
-SELECT  LEN(review_id) as lenght_review_id, count(*)
+SELECT  LEN(review_id) as lenght_review_id, count(*) AS counting
 	FROM silver.crm_order_reviews
 	GROUP BY LEN(review_id)
 	ORDER by count(*) DESC
-	/*The correct lenght is 32. All the other lenghts are incorrect or not valid.
-	In particular where we have 33 there is an additional " at the beginning*/
+	--The correct lenght is 32. All the other lenghts are incorrect or not valid.
+	
+	| lenght_review_id | counting |
+	|------------------|----------|
+	| 32               | 77982    |
+	| 33               | 20465    |
+	| 34               | 256      |
+	| 1                | 120      |
+	| 9                | 25       |
+	| 16               | 13       |
+	| 19               | 12       |
+
+	-- In particular where we have 33 there is an additional " at the beginning
+	| review_id                         |
+	|-----------------------------------|
+	| "7122dc3d9094676b780465db6b226600 |
+        | "0a044c92844616a59bf4d1ea68bf75ac |
 
 
 --Replace " character at the beginning of review_id
@@ -93,6 +108,10 @@ SELECT  LEN(review_id) as lenght_review_id, count(*)
 		ELSE review_id
 		END as review_id
 	FROM silver.crm_order_reviews
+	| review_id                         |
+	|-----------------------------------|
+	| 7122dc3d9094676b780465db6b226600 |
+        | 0a044c92844616a59bf4d1ea68bf75ac |
 
 --UPDATE statement: replacing " at the beginning
 	UPDATE silver.crm_order_reviews
