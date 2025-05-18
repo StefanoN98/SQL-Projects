@@ -292,6 +292,14 @@ SET
 
 ## `review_creation_date` & `review_answer_timestamp` cleaning
 Only datetime values are accepted (lenght 19), all the other results will be displayed as NULL
+
+| review_creation_date              | review_answer_timestamp                        |
+|---------------------------------|-----------------------------------------------|
+| 2018-06-20 00:00:00             | 2018-06-21 12:30:16";;;;;;                     |
+| Não sei porque tanto atraso      | sempre compro na lannister nunca tive problemas.."" |
+| 2017-11-08 00:00:00             | 2017-11-08 15:42:33";;;;;;                     |
+| produto ainda não chegou""       | 2018-03-07 00:00:00,2018-03-07 12:24:06";;;;;; |
+
 ### 1 ) Fix invalid datetime and replace them with NULL values
 ```sql
 SELECT  CASE
@@ -375,3 +383,9 @@ CREATE TABLE silver.crm_order_reviews (
 		dwh_create_date DATETIME2 DEFAULT GETDATE()
 		);
 ```
+| review_id                          | order_id                          | review_score | review_comment_title | review_comment_message                                            | review_creation_date       | review_answer_timestamp    | dwh_create_date           |
+|----------------------------------|---------------------------------|--------------|----------------------|------------------------------------------------------------------|---------------------------|----------------------------|--------------------------|
+| 55e8dbe55085ca8c565f00d87dc07777 | 7b5004a23c4918b7c96c9d0cfd6107b6 | 5            | No title             | No comment                                                       | NULL                      | NULL                       | 2025-05-18 12:34:52.5966667 |
+| d6c0b888949f0c3f236d67f588913930 | 4cd9478b63edacb631dcf780b036b157 | 4            | recomendo            | trabalho com profissionalismo das lojas lannister. indico com certeza | 2018-01-07 00:00:00.000   | 2018-03-07 22:47:44.000    | 2025-05-18 12:34:52.5966667 |
+| 89ce1bf13facec183ff6e592ff4e305d | ada32b6f0cb6b0a58d13dc20a423f2fa | 5            | No title             | No comment                                                       | NULL                      | NULL                       | 2025-05-18 12:34:52.5966667 |
+
