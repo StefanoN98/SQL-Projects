@@ -22,8 +22,8 @@ IF OBJECT_ID('silver.crm_order_reviews', 'U') IS NOT NULL
 		dwh_create_date DATETIME2 DEFAULT GETDATE()
 		);
 	GO
-  > ⚠️ *Note:* This table was initially created with relaxed types to accommodate raw Bronze data.  
-  > After cleaning, an `ALTER TABLE` will be used to align column types with the expected domain logic and improve performance.
+⚠️ *Note:* This table was initially created with relaxed types to accommodate raw Bronze data.  
+After cleaning, an `ALTER TABLE` will be used to align column types with the expected domain logic and improve performance.
 
 
 	INSERT INTO silver.crm_order_reviews (
