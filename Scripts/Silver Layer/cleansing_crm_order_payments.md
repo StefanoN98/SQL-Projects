@@ -1,4 +1,40 @@
-# 🧹 Data Cleansing: `crm_order_payments` (Bronze Layer)
+# 🧹 Data Loading & Cleansing: `crm_order_payments` (Bronze ➝ Silver Layer)
+
+
+> This script performs data quality checks and cleansing operations on the `silver.crm_order_items`.  
+> The goal is to ensure that all records are complete, clean, and logically consistent.
+
+## Initial DDL Script to load `crm_order_payments` from broze layer (no structure changes)
+```sql
+-- DROP & CREATE silver.crm_order_payments
+
+IF OBJECT_ID('silver.crm_order_payments', 'U') IS NOT NULL
+	DROP TABLE silver.crm_order_payments;
+GO
+
+CREATE TABLE silver.crm_order_payments (
+    order_id NVARCHAR(50),
+    payment_sequential INT,
+    payment_type NVARCHAR(50),
+    payment_installments INT,
+    payment_value FLOAT
+    );
+GO
+
+INSERT INTO silver.crm_order_payments(
+    order_id , payment_sequential,
+    payment_type , payment_installments, payment_value 
+)
+
+SELECT 
+    order_id ,
+    payment_sequential,
+    payment_type ,
+    payment_installments,
+    payment_value 
+FROM bronze.crm_order_payments;
+```
+---
 
 ## ✅ Checks Summary
 
@@ -54,34 +90,6 @@ FROM BRONZE.crm_order_payments;
 ---
 
 
-# DLL Script to load `crm_order_payments` in Silver Layer
-```sql
--- DROP & CREATE silver.crm_order_payments
-
-IF OBJECT_ID('silver.crm_order_payments', 'U') IS NOT NULL
-	DROP TABLE silver.crm_order_payments;
-GO
-
-CREATE TABLE silver.crm_order_payments (
-    order_id NVARCHAR(50),
-    payment_sequential INT,
-    payment_type NVARCHAR(50),
-    payment_installments INT,
-    payment_value FLOAT
-    );
-GO
-
-INSERT INTO silver.crm_order_payments(
-    order_id , payment_sequential,
-    payment_type , payment_installments, payment_value 
-)
-
-SELECT 
-    order_id ,
-    payment_sequential,
-    payment_type ,
-    payment_installments,
-    payment_value 
-FROM bronze.crm_order_payments;
-
+## Final DDL script with the new changes for `crm_order_items`
+No changes necessary to apply to structure, datatype and columns of this table. Initial DDL script unchanged.
 
