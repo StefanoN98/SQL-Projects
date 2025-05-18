@@ -272,3 +272,47 @@ WHERE review_creation_date > review_answer_timestamp;
 --No anomalies detected
 ```
 ---
+✅ Data cleaned!
+## Final DDL script with the new changes for `crm_order_reviews`
+Alter the initial DDL script with the new changes to optimize memory & performance
+``` sql
+--Change lenght review_id
+ALTER TABLE silver.crm_order_reviews
+ALTER COLUMN review_id NVARCHAR(50)
+
+--Change lenght order_id
+ALTER TABLE silver.crm_order_reviews
+ALTER COLUMN order_id NVARCHAR(50)
+
+--Change review_score datatype
+ALTER TABLE silver.crm_order_reviews
+ALTER COLUMN review_score INT
+
+--Change lenght review_comment_title
+ALTER TABLE silver.crm_order_reviews
+ALTER COLUMN review_comment_title NVARCHAR(80)
+
+--Change lenght review_comment_title
+ALTER TABLE silver.crm_order_reviews
+ALTER COLUMN review_comment_message NVARCHAR(500)
+
+--Change review_score datatype
+ALTER TABLE silver.crm_order_reviews
+ALTER COLUMN review_creation_date DATETIME
+
+--Change review_answer_timestamp datatype
+ALTER TABLE silver.crm_order_reviews
+ALTER COLUMN review_answer_timestamp DATETIME
+
+--The updated dll script appears in this way:
+CREATE TABLE silver.crm_order_reviews (
+		review_id NVARCHAR(50),
+		order_id NVARCHAR(50),
+		review_score INT,
+		review_comment_title NVARCHAR(80),
+		review_comment_message NVARCHAR(500),
+		review_creation_date DATETIME,
+		review_answer_timestamp DATETIME,
+		dwh_create_date DATETIME2 DEFAULT GETDATE()
+		);
+```
