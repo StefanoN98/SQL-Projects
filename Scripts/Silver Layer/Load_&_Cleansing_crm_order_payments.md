@@ -1,7 +1,7 @@
 # 🧹 Data Loading & Cleansing: `crm_order_payments` (Bronze ➝ Silver Layer)
 
 
-> This script performs data quality checks and cleansing operations on the `silver.crm_order_items`.  
+> This script performs data quality checks and cleansing operations on the `silver.crm_order_payments`.  
 > The goal is to ensure that all records are complete, clean, and logically consistent.
 
 ## Initial DDL Script to load `crm_order_payments` from broze layer (no structure changes)
