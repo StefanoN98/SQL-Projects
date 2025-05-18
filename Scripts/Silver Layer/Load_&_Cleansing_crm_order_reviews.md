@@ -42,6 +42,13 @@ After cleaning, an `ALTER TABLE` will be used to align column types with the exp
 	FROM bronze.crm_order_reviews;
 	--Starting with 99225 rows
 ```
+| review_id                         | order_id                         | review_score | review_comment_title | review_comment_message                                                                                                                                                      | review_creation_date   | review_answer_timestamp   |
+|------------------------------------|-----------------------------------|----------------|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------|-----------------------------|
+| 0a044c92844616a59bf4d1ea68bf75ac" | e977b374d773afa133c09a9215ed08c2 | 1            | NULL                | NULL                                                                                                                                                                         | 2017-12-20 00:00:00   | 2017-12-20 09:04:44";;;;;;       |
+| ""7122dc3d9094676b780465db6b226600" | "334fe6d31dfa8c49583196dda4b260e6 | 5            | *****                | NULL                                                                                                                                                                         | 2018-05-04 00:00:00   | 2018-05-05 02:35:37       |
+| "fb2e6c662f767b55033f5583b5bf77fd" | 6d9cc2a706027666e20ffb8e008de464" | 4           | embalagem em excesso | 16656526 | Muito plástico e papelão. Cade a preocupação com a sustentabilidade?"                                             | 2018-06-20 00:00:00   | "2018-06-21 12:30:16"       |
+| d06e693cf25b87851321187dc9fb7bdd | 2d0805e3e830d6d2d694ee7a3aa58502 | 1            | so good               | Ainda não recebi. Não sei porque tanto atraso. Sempre compro na lannister nunca tive problemas..                                                                            | 2018-01-13 00:00:00   | 2018-01-18 09:29:13       |
+
 ---
 
 ## ✅ Checks Summary
