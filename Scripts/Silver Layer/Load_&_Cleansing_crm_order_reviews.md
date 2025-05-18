@@ -63,8 +63,8 @@ After cleaning, an `ALTER TABLE` will be used to align column types with the exp
 
 ---
 
-## review_id cleaning
-review_id has 32 alfanumeric characters. The rows with the following things will be eliminates:
+## `review_id` cleaning
+`review_id` has 32 alfanumeric characters. The rows with the following things will be eliminates:
   - review_id with only special characters
   - empty string
   - NULL strings
@@ -99,7 +99,7 @@ SELECT  LEN(review_id) as lenght_review_id, count(*)
 ```
 
 
-### 2) Analyze & fix review_id with a different lenght,with special characters or NULL
+### 2) Analyze & delete review_id with a different lenght,with special characters or NULL
 ```sql
 SELECT review_id
 FROM silver.crm_order_reviews
@@ -115,3 +115,22 @@ WHERE LEN(review_id) <> 32
 --786 rows deleted
 ```
 
+### 3) Remove duplicates on cleaned review_id
+```sql
+SELECT review_id, COUNT(*) AS occurrences
+FROM silver.crm_order_reviews
+GROUP BY review_id
+HAVING COUNT(*) > 1;
+
+
+--DELETE statement, remove duplicates
+WITH duplicates as(
+	SELECT review_id, 
+	ROW_NUMBER() OVER (PARTITION BY review_id ORDER BY review_id) as occurences
+	FROM silver.crm_order_reviews
+	)
+DELETE FROM duplicates
+WHERE occurences > 1
+--802 rows deleted
+```
+---
