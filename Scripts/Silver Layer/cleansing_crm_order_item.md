@@ -1,10 +1,11 @@
-# 🧹 Data Cleansing: `crm_order_items` (Bronze Layer)
+# 🧹 Data Cleansing: `crm_order_items` (Bronze ➝ Silver Layer)
+
 
 > This script performs data quality checks and cleansing operations on the `bronze.crm_order_items` table before promoting the data to the **Silver Layer**.  
 > The goal is to ensure that all records are complete, clean, and logically consistent prior to transformation and standardization.
 
 ---
-## DLL Script to load `crm_order_items` from broze layer (no changes)
+## Initial DDL Script to load `crm_order_items` from broze layer (no changes)
 ```sql
 IF OBJECT_ID('silver.crm_order_items', 'U') IS NOT NULL
 	DROP TABLE silver.crm_order_items;
@@ -205,7 +206,7 @@ FROM bronze.crm_order_items;
 
 
 
-## Adapt dll script to the new changes for `crm_order_items`
+## Final DDL script with the new changes for `crm_order_items`
 
 ```sql
 IF OBJECT_ID('silver.crm_order_items', 'U') IS NOT NULL
