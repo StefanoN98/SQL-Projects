@@ -134,3 +134,25 @@ WHERE occurences > 1
 --802 rows deleted
 ```
 ---
+
+## `order_id` cleaning
+  `order_id` has 32 alfanumeric characters. No special characters are allowed.
+### 1 )Analyze lenght of a order_id
+```sql
+	SELECT  LEN(order_id) as lenght_order_id, count(*)
+	FROM silver.crm_order_reviews
+	GROUP BY LEN(order_id)
+	ORDER by count(*) DESC
+	/*The correct lenght is 32, while all the orders are incorrect.
+	In particular where we have 36 there are additional " charactera at the beginning and at the end*/
+
+	-- Replace " characters
+	SELECT  REPLACE(order_id,'"','') as order_id
+	FROM silver.crm_order_reviews
+
+	--UPDATE statement: replace " characters
+	UPDATE silver.crm_order_reviews
+	SET order_id= REPLACE(order_id,'"','')
+	-- Now all the order_id lenght is 32
+```
+---
