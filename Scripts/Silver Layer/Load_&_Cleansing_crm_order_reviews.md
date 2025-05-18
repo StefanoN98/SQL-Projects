@@ -108,10 +108,11 @@ SELECT  LEN(review_id) as lenght_review_id, count(*) AS counting
 		ELSE review_id
 		END as review_id
 	FROM silver.crm_order_reviews
+
 	| review_id                         |
 	|-----------------------------------|
-	| 7122dc3d9094676b780465db6b226600 |
-        | 0a044c92844616a59bf4d1ea68bf75ac |
+	| 7122dc3d9094676b780465db6b226600  |
+        | 0a044c92844616a59bf4d1ea68bf75ac  |
 
 --UPDATE statement: replacing " at the beginning
 	UPDATE silver.crm_order_reviews
@@ -131,7 +132,17 @@ SELECT review_id
 FROM silver.crm_order_reviews
 WHERE LEN(review_id)<>32
           OR review_id COLLATE Latin1_General_BIN  LIKE '%[^a-zA-Z0-9]%'
-          OR review_id IS NULL 
+          OR review_id IS NULL
+/*
+| review_id            |
+|----------------------|
+| "                    |
+| ;;;;;;               |
+| GT. KEYLA            |
+| Recomendo a Loja     |
+| SEM NENHUM CONTATO"  |
+| ;;;;;;               |
+| E aii???"            |*/
 
 -- DELETE statement: remove rows with different lenght, special characters or NULL
 DELETE FROM silver.crm_order_reviews
@@ -165,12 +176,18 @@ WHERE occurences > 1
   `order_id` has 32 alfanumeric characters. No special characters are allowed.
 ### 1 )Analyze lenght of a order_id
 ```sql
-	SELECT  LEN(order_id) as lenght_order_id, count(*)
+	SELECT  LEN(order_id) as lenght_order_id, count(*) AS counting
 	FROM silver.crm_order_reviews
 	GROUP BY LEN(order_id)
 	ORDER by count(*) DESC
-	/*The correct lenght is 32, while all the orders are incorrect.
-	In particular where we have 36 there are additional " charactera at the beginning and at the end*/
+	--The correct lenght is 32, while all the orders are incorrect.
+
+	| lenght_order_id | counting |
+	|-----------------|----------|
+	| 32              | 77981    |
+	| 36              | 20716    |
+
+	--In particular where we have 36 there are additional " characters at the beginning and at the end
 
 	-- Replace " characters
 	SELECT  REPLACE(order_id,'"','') as order_id
@@ -186,9 +203,17 @@ WHERE occurences > 1
 ## `review_score` cleaning
 ### 1) Analyze DISTINCT values
  ```sql
-  SELECT DISTINCT review_score
-  FROM silver.crm_order_reviews
-  -- No score anomalies detected
+	SELECT DISTINCT review_score
+	FROM silver.crm_order_reviews
+	-- No score anomalies detected
+	| review_score |
+	|--------------|
+	| 1            |
+	| 2            |
+	| 3            |
+	| 4            |
+	| 5            |
+
 ```
 ---
 ## `review_comment_title` & `review_comment_message` cleaning
@@ -196,6 +221,14 @@ In this case we'll not consider title or comment when we have:
   - Only numbers
   - Only special charaters
   - Less than 3 characters --> no sense title/comment
+
+| review_comment_title | review_comment_message                 |
+|----------------------|----------------------------------------|
+| NULL                 | NULL                                   |
+| Bm                  | "Vou ver se o produto                  |
+| 1565                 | Satisfeito;;;;                         |
+| NULL                 | **''                                   |
+
 
 ### Standardize and fix values in `review_comment_title` & `review_comment_message`
 ```sql
