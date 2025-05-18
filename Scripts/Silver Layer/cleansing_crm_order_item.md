@@ -4,6 +4,37 @@
 > The goal is to ensure that all records are complete, clean, and logically consistent prior to transformation and standardization.
 
 ---
+## DLL Script to load `crm_order_items` from broze layer (no changes)
+```sql
+IF OBJECT_ID('silver.crm_order_items', 'U') IS NOT NULL
+	DROP TABLE silver.crm_order_items;
+  
+CREATE TABLE silver.crm_order_items (
+    order_id NVARCHAR(50),
+    order_item_id INT,
+    product_id NVARCHAR(50),
+    seller_id NVARCHAR(50),
+    shipping_limit_date DATETIME,
+    price FLOAT,
+    freight_value FLOAT,
+    dwh_create_date DATETIME2 DEFAULT GETDATE()
+);
+
+INSERT INTO silver.crm_order_items (
+    order_id, order_item_id, product_id, seller_id,
+    shipping_limit_date, price, freight_value
+)
+SELECT 
+    order_id,
+    order_item_id,
+    product_id,
+    seller_id,
+    shipping_limit_date,
+    price,
+    freight_value
+FROM bronze.crm_order_items;
+```
+---
 
 ## ✅ Checks Summary
 
@@ -174,7 +205,7 @@ FROM bronze.crm_order_items;
 
 
 
-# DLL Script to load `crm_order_items` in Silver Layer
+## Adapt dll script to the new changes for `crm_order_items`
 
 ```sql
 IF OBJECT_ID('silver.crm_order_items', 'U') IS NOT NULL
@@ -188,7 +219,8 @@ CREATE TABLE silver.crm_order_items (
     shipping_limit_date DATETIME,
     price FLOAT,
     freight_value FLOAT,
-    shipping_type NVARCHAR(50)
+    shipping_type NVARCHAR(50), --Added derived column
+    dwh_create_date DATETIME2 DEFAULT GETDATE()
 );
 
 INSERT INTO silver.crm_order_items (
