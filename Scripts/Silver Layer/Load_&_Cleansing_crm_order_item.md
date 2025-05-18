@@ -167,6 +167,7 @@ SELECT MIN(shipping_limit_date) AS min_date,
        DATEDIFF(YEAR, MIN(shipping_limit_date), MAX(shipping_limit_date)) AS interval_years,
        IIF(MAX(shipping_limit_date) > GETDATE(), 'Anomaly', 'No Anomaly') AS today_check
 FROM silver.crm_order_items;
+-- Shipping data from 19/09/2016 to 09/04/2020
 ```
 
 ---
