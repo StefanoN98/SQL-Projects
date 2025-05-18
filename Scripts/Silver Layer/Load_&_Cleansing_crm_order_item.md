@@ -155,6 +155,7 @@ SELECT order_id, COUNT(*) AS item_count
 FROM silver.crm_order_items
 GROUP BY order_id
 ORDER BY item_count DESC;
+-- 21 is th maximum number of items purchased in an unique order 
 ```
 
 ---
