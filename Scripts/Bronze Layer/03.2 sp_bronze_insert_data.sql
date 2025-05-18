@@ -74,9 +74,9 @@ BEGIN
 		BULK INSERT bronze.crm_order_reviews
 		FROM 'C:\Users\Stefano\Desktop\SQL\PROGETTI\Brazilian E-Commerce Public Dataset by Olist\Data\crm_order_reviews.csv'
 		WITH(
-			DATAFILETYPE = 'widechar',
-    			CODEPAGE = '65001',
 			FIRSTROW=2,
+			DATAFILETYPE = 'widechar',  
+			CODEPAGE = '65001',
 			FIELDTERMINATOR =',',
 			TABLOCK
 		)
@@ -202,4 +202,4 @@ BEGIN
 
 END
 
-EXEC dbo.sp_bronze_insert_data
+--EXEC dbo.sp_bronze_insert_data
