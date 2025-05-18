@@ -33,6 +33,13 @@ SELECT
     payment_value 
 FROM bronze.crm_order_payments;
 ```
+| order_id                             | pay_seq | pay_type     | installments | value  | dwh_date                   |
+|-------------------------------------|---------|--------------|--------------|--------|----------------------------|
+| 0015ebb40fb17286bea51d4607c4733c    | 1       | credit_card  | 1            | 37     | 2025-05-18 16:05:38.573333 |
+| 00169e31ef4b29deaae414f9a5e95929    | 1       | boleto       | 1            | 55,11  | 2025-05-18 16:05:38.573333 |
+| 0016dfedd97fc2950e388d2971d718c7    | 1       | credit_card  | 5            | 52,63  | 2025-05-18 16:05:38.573333 |
+| 0016dfedd97fc2950e388d2971d718c7    | 2       | voucher      | 1            | 17,92  | 2025-05-18 16:05:38.573333 |
+
 ---
 
 ## ✅ Checks Summary
@@ -52,7 +59,7 @@ FROM bronze.crm_order_payments;
 ```sql
 SELECT order_id + '_' + CAST(payment_sequential AS nvarchar(5)) AS composite_key,
        COUNT(*)
-FROM BRONZE.crm_order_payments
+FROM silver.crm_order_payments
 GROUP BY order_id + '_' + CAST(payment_sequential AS nvarchar(5))
 HAVING COUNT(*) > 1;
 -- No duplicates detected
@@ -63,7 +70,7 @@ HAVING COUNT(*) > 1;
 
 ```sql
 SELECT DISTINCT payment_type
-FROM BRONZE.crm_order_payments;
+FROM silver.crm_order_payments;
 -- No anomalies detected in payment types
 ```
 ---
@@ -71,10 +78,10 @@ FROM BRONZE.crm_order_payments;
 ## Check for Zero or NULL Payments
 ```sql
 SELECT * 
-FROM BRONZE.crm_order_payments
+FROM silver.crm_order_payments
 WHERE payment_value <= 0 OR payment_value IS NULL;
-/* There are payments equal to zero where the transaction failed,
- these payments belong to the "not_defined" type and will be excluded */
+/* There are payments equal to zero where the transaction failed, these payments belong to the "not_defined" or "voucher" type.
+ They will be kept to understand and repsect the payments sequence*/
 ```
 ---
 
@@ -83,8 +90,8 @@ WHERE payment_value <= 0 OR payment_value IS NULL;
 SELECT 
        MIN(payment_value) AS min_payment,
        MAX(payment_value) AS max_payment
-FROM BRONZE.crm_order_payments;
--- Ensure all payments have a valid payment value
+FROM silver.crm_order_payments;
+-- Ensure all payments have a valid payment value--> no negative payments
 ```
 ---
 ✅ Data cleaned!
