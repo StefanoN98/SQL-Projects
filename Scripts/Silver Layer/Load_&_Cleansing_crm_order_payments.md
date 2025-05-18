@@ -89,7 +89,7 @@ FROM BRONZE.crm_order_payments;
 -- Ensure all payments have a valid payment value
 ```
 ---
-
+✅ Data cleaned!
 
 ## Final DDL script with the new changes for `crm_order_items`
 No changes necessary to apply to structure, datatype and columns of this table. Initial DDL script unchanged.
