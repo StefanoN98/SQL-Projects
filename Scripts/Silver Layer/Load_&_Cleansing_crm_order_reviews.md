@@ -44,3 +44,4 @@ After cleaning, an `ALTER TABLE` will be used to align column types with the exp
 ```
 ---
 
+## ✅ Checks Summary
