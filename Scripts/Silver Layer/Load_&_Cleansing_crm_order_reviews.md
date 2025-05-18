@@ -99,3 +99,19 @@ SELECT  LEN(review_id) as lenght_review_id, count(*)
 ```
 
 
+### 2) Analyze & fix review_id with a different lenght,with special characters or NULL
+```sql
+SELECT review_id
+FROM silver.crm_order_reviews
+WHERE LEN(review_id)<>32
+          OR review_id COLLATE Latin1_General_BIN  LIKE '%[^a-zA-Z0-9]%'
+          OR review_id IS NULL 
+
+-- DELETE statement: remove rows with different lenght, special characters or NULL
+DELETE FROM silver.crm_order_reviews
+WHERE LEN(review_id) <> 32
+	  OR review_id COLLATE Latin1_General_BIN LIKE '%[^a-zA-Z0-9]%'
+          OR review_id IS NULL;
+--786 rows deleted
+```
+
