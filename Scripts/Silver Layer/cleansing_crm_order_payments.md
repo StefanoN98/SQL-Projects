@@ -17,7 +17,8 @@ CREATE TABLE silver.crm_order_payments (
     payment_sequential INT,
     payment_type NVARCHAR(50),
     payment_installments INT,
-    payment_value FLOAT
+    payment_value FLOAT,
+    dwh_create_date DATETIME2 DEFAULT GETDATE()
     );
 GO
 
