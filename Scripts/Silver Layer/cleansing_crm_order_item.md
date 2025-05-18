@@ -1,4 +1,4 @@
-# 🧹 Data Cleansing: `crm_order_items` (Bronze ➝ Silver Layer)
+# 🧹 Data Loading & Cleansing: `crm_order_items` (Bronze ➝ Silver Layer)
 
 
 > This script performs data quality checks and cleansing operations on the `silver.crm_order_items`.  
