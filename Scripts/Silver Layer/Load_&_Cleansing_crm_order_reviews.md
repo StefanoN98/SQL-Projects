@@ -170,6 +170,16 @@ DELETE FROM duplicates
 WHERE occurences > 1
 --802 rows deleted
 ```
+## però meglio questa query in teoria:
+```sql
+WITH duplicates AS (
+    SELECT review_id, 
+    ROW_NUMBER() OVER (PARTITION BY review_id ORDER BY review_id) as occurences
+    FROM silver.crm_order_reviews
+)
+DELETE FROM silver.crm_order_reviews
+WHERE review_id IN (SELECT review_id FROM duplicates WHERE occurences > 1);
+```
 ---
 
 ## `order_id` cleaning
