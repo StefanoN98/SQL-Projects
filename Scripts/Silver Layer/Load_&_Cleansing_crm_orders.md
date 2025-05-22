@@ -1,4 +1,4 @@
-sql
+```sql
 IF OBJECT_ID('silver.crm_orders', 'U') IS NOT NULL
 	DROP TABLE silver.crm_orders;
 GO
@@ -202,6 +202,7 @@ WHERE  order_approved_at > order_delivered_carrier_date ;
 UPDATE silver.crm_orders
 SET order_delivered_customer_date = DATEADD(DAY, 1, order_delivered_carrier_date)
 WHERE  order_delivered_carrier_date > order_delivered_customer_date ;
+```
 
 
 
