@@ -1,3 +1,13 @@
+# 🧹 Data Loading & Cleansing: `crm_orders` (Bronze ➝ Silver Layer)
+
+
+> This script performs data quality checks and cleansing operations on the `silver.crm_crm_orders`.  
+> The goal is to ensure that all records are complete, clean, and logically consistent.
+
+---
+## Initial DDL Script to load `crm_orders from broze layer (no structure changes)
+
+
 ```sql
 IF OBJECT_ID('silver.crm_orders', 'U') IS NOT NULL
 	DROP TABLE silver.crm_orders;
