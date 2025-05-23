@@ -44,6 +44,8 @@ SELECT order_id ,
 	   order_estimated_delivery_date
 FROM bronze.crm_orders
 ```
+aggiungi tabella
+aggiungi check summary
 ---
 
 ## `order_id` cleaning
@@ -129,7 +131,7 @@ SELECT *
 FROM silver.crm_orders
 WHERE order_status = 'delivered'
   AND order_delivered_customer_date IS NULL;
-	-- 4 Anomalies detected, in this case the status is only shippe
+	-- 4 Anomalies detected, in this case the status is only shipped
 
 -- UPDATE statement: fix `order_status` to 'shipped' when `order_delivered_customer_date` IS NULL
 UPDATE silver.crm_orders
@@ -161,24 +163,10 @@ WHERE order_status = 'canceled' AND order_delivered_customer_date IS NOT NULL
 ---
 
 
+## `order_purchase_timestamp`, order_approved_at`, `order_delivered_carrier_date,`order_delivered_customer_date`,`order_estimated_delivery_date` cleaning
+
+### 1) Check dates range 
 ```sql
-/*======================
-  order_purchase_timestamp cleaning
-======================*/
---Check range
-SELECT MIN(order_purchase_timestamp) AS min_date_purchase,
-	   MAX(order_purchase_timestamp) AS max_date_purchase
-FROM silver.crm_orders
--- From 04/09/2016 to 17/10/2018
-
-----------------------------------------------------------------
-
-/*======================
-  order_purchase_timestamp,order_approved_at,
-	   order_delivered_carrier_date,order_delivered_customer_date,
-	   order_estimated_delivery_date cleaning
-======================*/
--- Check range
 SELECT 
 	   MIN(order_purchase_timestamp) AS min_date_purchase,
 	   MAX(order_purchase_timestamp) AS max_date_purchase,
@@ -198,8 +186,10 @@ Date delivered carrier --> from 08/10/2016 to 11/09/2018
 Date delivered customer --> from 11/10/2016 to 17/10/2018
 date estimatd delivery --> from 30/09/2016 to 12/11/2018
 */
+```
 
--- Verify correctness of date sequence
+### 2) Verify correctness of date sequence
+```sql
 SELECT order_id,
        customer_id,
        order_status,
@@ -220,6 +210,7 @@ ORDER BY order_id;
 -- no issue with approved_before_purchase
 -- 1382 rows with issue about delivered_carrier_before_approved &  delivered_customer_before_carrier
 -- In these cases the CRM inverted the 2 dates, so to fix it it is necessary to replace inverting dates
+
 
 -- Fix when order_approved_at > order_delivered_carrier_date add 1 day because it will be sent the day after (BUSINESS RULE)
 -- this rule works only when the crm make this kind of inversion
