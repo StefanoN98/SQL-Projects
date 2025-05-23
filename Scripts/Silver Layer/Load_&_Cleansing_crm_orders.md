@@ -5,7 +5,7 @@
 > The goal is to ensure that all records are complete, clean, and logically consistent.
 
 ---
-## Initial DDL Script to load `crm_orders from broze layer (no structure changes)
+## Initial DDL Script to load `crm_orders` from broze layer (no structure changes)
 
 
 ```sql
