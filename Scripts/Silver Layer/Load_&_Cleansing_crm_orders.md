@@ -79,13 +79,12 @@ GROUP BY LEN(customer_id)
 ORDER BY LEN(customer_id) DESC
 -- All the customer_id has 32 characters
 ```
-----------------------------------------------------------------
+---
 
-/*======================
-  order_status cleaning
-======================*/
 
--- Analyze distinct values
+## `order_status` cleaning
+### 1) Analyze distinct values
+```sql
 SELECT DISTINCT order_status
 FROM silver.crm_orders
 -- No anomalies values
