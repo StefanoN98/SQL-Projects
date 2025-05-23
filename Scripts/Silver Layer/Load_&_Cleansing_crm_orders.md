@@ -87,13 +87,15 @@ ORDER BY LEN(customer_id) DESC
 ```sql
 SELECT DISTINCT order_status
 FROM silver.crm_orders
--- No anomalies values
--- created -approved-  processing - invoiced - shipped- delivered 
---unavailable - canceled 
---------------------------------------------------------------------------------
--- Verify correcteness of order_status and dates
+/*No anomalies values
+  created -approved-  processing - invoiced - shipped- delivered 
+  unavailable - canceled */
+```
 
--- Verify when order is only CREATED order_approved_at , order_delivered_carrier_date and order_delivered_customer_date should be NULL
+
+### 2) Verify correcteness of order_status and dates
+Verify when order is only **CREATED** `order_approved_at` , `order_delivered_carrier_date` and `order_delivered_customer_date` should be NULL
+```sql
 SELECT *
 FROM silver.crm_orders
 WHERE order_status = 'created'
@@ -101,28 +103,35 @@ WHERE order_status = 'created'
 	   order_delivered_carrier_date IS NOT NULL OR 
 	   order_delivered_customer_date IS NOT NULL);
 	-- No anomalies
+```
 
--- Verify when order is PROCESSING, APPROVED OR INVOICED order_delivered_carrier_date and order_delivered_customer_date should be NULL
+Verify when order is **PROCESSING, APPROVED OR INVOICED** `order_delivered_carrier_date` and `order_delivered_customer_date` should be NULL
+```sql
 SELECT *
 FROM silver.crm_orders
 WHERE order_status IN ( 'processing','approved', 'invoiced')
   AND (order_delivered_carrier_date IS NOT NULL OR 
 	   order_delivered_customer_date IS NOT NULL);
 	-- No anomalies
+```
 
--- Verify when order is SHIPPED order_delivered_customer_date should be NULL
+Verify when order is **SHIPPED** `order_delivered_customer_date` should be NULL
+```sql
 SELECT *
 FROM silver.crm_orders
 WHERE order_status = 'shipped'
   AND order_delivered_customer_date IS NOT NULL;
 	-- No anomalies
+```
 
--- Verify when order is DELIVERED order_delivered_customer_date should be NOT NULL
+Verify when order is **DELIVERED** `order_delivered_customer_date` should be NOT NULL
+```sql
 SELECT *
 FROM silver.crm_orders
 WHERE order_status = 'delivered'
   AND order_delivered_customer_date IS NULL;
 	-- 4 Anomalies detected, in this case the status is only shippe
+```
 
 UPDATE silver.crm_orders
 SET order_status = 'shipped'
@@ -143,8 +152,8 @@ WHERE order_status = 'canceled' AND order_delivered_customer_date IS NOT NULL
 UPDATE silver.crm_orders
 SET order_status = 'delivered'
 WHERE order_status = 'canceled' AND order_delivered_customer_date IS NOT NULL
-
-----------------------------------------------------------------
+```
+---
 
 /*======================
   order_purchase_timestamp cleaning
