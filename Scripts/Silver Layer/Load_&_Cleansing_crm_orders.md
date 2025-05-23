@@ -131,30 +131,38 @@ FROM silver.crm_orders
 WHERE order_status = 'delivered'
   AND order_delivered_customer_date IS NULL;
 	-- 4 Anomalies detected, in this case the status is only shippe
-```
 
+-- UPDATE statement: fix `order_status` to 'shipped' when `order_delivered_customer_date` IS NULL
 UPDATE silver.crm_orders
 SET order_status = 'shipped'
 WHERE order_status = 'delivered' AND order_delivered_customer_date IS NULL
+```
 
 
--- Verify when order is UNAVAILABLE order_delivered_carrier_date & order_delivered_customer_date should be  NULL
+Verify when order is **UNAVAILABLE** `order_delivered_carrier_date` & `order_delivered_customer_date` should be  NULL
+```sql
 SELECT *
 FROM silver.crm_orders
 WHERE order_status = 'unavailable' AND order_delivered_carrier_date IS NOT NULL AND order_delivered_customer_date IS NOT NULL
+	-- No anomalies
+```
 
--- Verify when order is CANCELED order_delivered_customer_date should be  NULL
+Verify when order is **CANCELED** `order_delivered_customer_date` should be  NULL
+```sql
 SELECT *
 FROM silver.crm_orders
 WHERE order_status = 'canceled' AND order_delivered_customer_date IS NOT NULL
 -- we have 6 anomalies , so in this case the status should be delivered
 
+-- UPDATE statement: fix `order_status` to 'delivered' when `order_delivered_customer_date` IS NOT NULL
 UPDATE silver.crm_orders
 SET order_status = 'delivered'
 WHERE order_status = 'canceled' AND order_delivered_customer_date IS NOT NULL
 ```
 ---
 
+
+```sql
 /*======================
   order_purchase_timestamp cleaning
 ======================*/
