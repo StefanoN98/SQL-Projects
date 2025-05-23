@@ -87,9 +87,8 @@ ORDER BY LEN(customer_id) DESC
 ```sql
 SELECT DISTINCT order_status
 FROM silver.crm_orders
-/*No anomalies values
-  created -approved-  processing - invoiced - shipped- delivered 
-  unavailable - canceled */
+/*No anomalies values.
+  We have the following results created -approved-  processing - invoiced - shipped- delivered - unavailable - canceled*/
 ```
 
 
