@@ -1,7 +1,7 @@
 # 🧹 Data Loading & Cleansing: `crm_orders` (Bronze ➝ Silver Layer)
 
 
-> This script performs data quality checks and cleansing operations on the `silver.crm_crm_orders`.  
+> This script performs data quality checks and cleansing operations on the `silver.crm_orders`.  
 > The goal is to ensure that all records are complete, clean, and logically consistent.
 
 ---
