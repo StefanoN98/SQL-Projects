@@ -43,38 +43,42 @@ SELECT order_id ,
 	   order_delivered_customer_date,
 	   order_estimated_delivery_date
 FROM bronze.crm_orders
-------------------------------------------------------------------------------
-/*======================
-  order_id cleaning
-======================*/
+```
+---
 
--- Check order_id lenght
+## `order_id` cleaning
+### 1) Check order_id lenght
+```sql
 SELECT LEN(order_id) AS lenght_order_id,
 	   COUNT(*) AS counting
 FROM silver.crm_orders
 GROUP BY LEN(order_id)
 ORDER BY LEN(order_id) DESC
 -- All the order_id has 32 characters
+```
 
--- Check duplicates
+### 2) Check duplicates
+```sql
 SELECT order_id,
 	   COUNT(*) AS counting
 FROM silver.crm_orders
 GROUP BY order_id
 HAVING COUNT(*)>1
 -- NO duplicates detected
-----------------------------------------------------------------
+```
+---
 
-/*======================
-  customer_id cleaning
-======================*/
--- Check customer_id lenght
+
+## `customer_id` cleaning
+### 1) Check customer_id lenght
+```sql
 SELECT LEN(customer_id) AS lenght_customer_id,
 	   COUNT(*)
 FROM silver.crm_orders
 GROUP BY LEN(customer_id)
 ORDER BY LEN(customer_id) DESC
 -- All the customer_id has 32 characters
+```
 ----------------------------------------------------------------
 
 /*======================
