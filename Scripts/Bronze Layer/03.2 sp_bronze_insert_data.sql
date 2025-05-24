@@ -129,6 +129,8 @@ BEGIN
 		FROM 'C:\Users\Stefano\Desktop\SQL\PROGETTI\Brazilian E-Commerce Public Dataset by Olist\Data\erp_geolocation.csv'
 		WITH(
 			FIRSTROW=2,
+			DATAFILETYPE = 'widechar',  
+			CODEPAGE = '65001',
 			FIELDTERMINATOR =',',
 			TABLOCK
 		)
