@@ -50,7 +50,20 @@ FROM bronze.crm_orders
 | 15bed8e2fec7fdbadb186b57c46c92f2    | f3f0e613e0bdb9c7cee75504f0f90679    | processing   | 2017-09-03 14:22:03.000   | 2017-09-03 14:30:09.000   | NULL                          | NULL                          | 2017-10-03 00:00:00.000       |
 | 6942b8da583c2f9957e990d028607019    | 52006a9383bf149a4fb24226b173106f    | shipped      | 2018-01-10 11:33:07.000   | 2018-01-11 02:32:30.000   | 2018-01-11 19:39:23.000       | NULL                          | 2018-02-07 00:00:00.000       |
 
-aggiungi check summary
+## ✅ Checks Summary
+
+| **Type**           | **Category**           | **Check Description**                                                                 |
+|--------------------|------------------------|----------------------------------------------------------------------------------------|
+| **DATA INTEGRITY** | `order_id` Format      | Ensure `order_id` has 32 alphanumeric characters                                     |
+|                    | `customer_id` Format   | Ensure `customer_id` has 32 alphanumeric characters                                  |
+|                    | Duplicate Check        | Check for duplicates on `order_id`                                                   |
+| **DATA QUALITY**   | `order_status` Values  | Validate distinct status values                                                      |
+|                    | Status-Date Consistency| Ensure date fields align with expected `order_status` behavior (e.g., delivered)     |
+|                    | Temporal Logic         | Validate correct sequence between status timestamps (purchase → approved → delivery) |
+| **DATA CLEANING**  | Status Correction      | Update `order_status` when inconsistent with corresponding delivery dates            |
+|                    | Fix Swapped Dates      | Invert incorrect dates using business rule logic (e.g., add 1 day if inverted)       |
+| **DATA VALIDATION**| Date Range Validation  | Check min/max ranges for all date fields                                             |
+
 ---
 
 ## `order_id` cleaning
@@ -136,7 +149,13 @@ SELECT *
 FROM silver.crm_orders
 WHERE order_status = 'delivered'
   AND order_delivered_customer_date IS NULL;
-	-- 4 Anomalies detected, in this case the status is only shipped
+	-- 8 Anomalies detected, in this case the status is only shipped
+| Order ID     | Cust ID   | Status    | Purchase Timestamp  | Approved At         | Carrier Date        | Cust Date | Est. Delivery|
+|--------------------------|---------------------------------|---------------------|---------------------|-----------|--------------|
+| 2d1e2d5bf4.. | ec05a6d.. | delivered | 2017-11-28 17:44:07 | 2017-11-28 17:56:40 | 2017-11-30 18:12:23 | NULL      | 2017-12-18   |
+| f5dd62b788.. | 5e89028.. | delivered | 2018-06-20 06:58:43 | 2018-06-20 07:19:05 | 2018-06-25 08:05:00 | NULL      | 2018-07-16   |
+| 2ebdfc4f15.. | 29f0540.. | delivered | 2018-07-01 17:05:11 | 2018-07-01 17:15:12 | 2018-07-03 13:57:00 | NULL      | 2018-07-30   |
+| e69f75a717.. | cfda40c.. | delivered | 2018-07-01 22:05:55 | 2018-07-01 22:15:14 | 2018-07-03 13:57:00 | NULL      | 2018-07-30   |
 
 -- UPDATE statement: fix `order_status` to 'shipped' when `order_delivered_customer_date` IS NULL
 UPDATE silver.crm_orders
