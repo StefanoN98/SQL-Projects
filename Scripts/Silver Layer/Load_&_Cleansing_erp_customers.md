@@ -134,7 +134,7 @@ select DISTINCT customer_city
 from silver.erp_customers
 WHERE customer_city LIKE '%[0-9]%'
 ORDER BY customer_city
--- 1 value found : 'quilometro 14 do mutum' --> it is correct becuase it represent a brasilian district name
+-- 1 value found : 'quilometro 14 do mutum' --> it is correct becuase it represents a brasilian district name
 ```
 ---
 
