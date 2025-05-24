@@ -82,3 +82,75 @@ GROUP BY LEN(customer_id)
 ORDER BY LEN(customer_id) DESC
 -- All the customer_id has 32 characters
 ```
+---
+
+## `customer_unique_id` cleaning
+### 1) Check NULL values
+```sql
+SELECT customer_unique_id
+FROM silver.erp_customers
+WHERE customer_unique_id IS NULL
+-- No NULL values
+```
+
+### 2) Check duplicates
+```sql
+SELECT customer_id,
+	   customer_unique_id,
+	   COUNT(*) AS counting
+FROM silver.erp_customers
+GROUP BY customer_id,customer_unique_id
+HAVING COUNT(*) > 1
+-- No duplicates detected
+```
+
+### 3) Check customer_unique_id lenght
+```sql
+SELECT LEN(customer_unique_id) AS lenght_customer_unique_id,
+	   COUNT(*)
+FROM silver.erp_customers
+GROUP BY LEN(customer_unique_id)
+ORDER BY LEN(customer_unique_id) DESC
+-- All the customer_id has 32 characters
+```
+---
+
+## `customer_zip_code_prefix` cleaning
+### 1) Verify the zip code prefix lenght is 5
+```sql
+SELECT LEN(customer_zip_code_prefix) AS lenght_customer_zip_code_prefix,
+	   COUNT(*)
+FROM silver.erp_customers
+GROUP BY LEN(customer_zip_code_prefix)
+ORDER BY LEN(customer_zip_code_prefix) DESC
+-- All the prefix have lenght 5
+```
+---
+
+## `customer_city` cleaning
+### 1) verify there are no city names with numbers
+```sql
+select DISTINCT customer_city
+from silver.erp_customers
+WHERE customer_city LIKE '%[0-9]%'
+ORDER BY customer_city
+-- 1 value found : 'quilometro 14 do mutum' --> it is correct becuase it represent a brasilian district name
+```
+---
+
+## `customer_state` cleaning
+### 1) Verify the customer_state lenght is 2
+```sql
+SELECT LEN(customer_state) AS lenght_customer_state,
+	   COUNT(*)
+FROM silver.erp_customers
+GROUP BY LEN(customer_state)
+ORDER BY LEN(customer_state) DESC
+-- All the customer_state have lenght 2
+```
+---
+✅ Data cleaned!
+
+## Final DDL script with the new changes for `erp_customers`
+No changes necessary to apply to structure, datatype and columns of this table. Initial DDL script unchanged.
+
