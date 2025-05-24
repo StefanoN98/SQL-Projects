@@ -180,12 +180,12 @@ FROM silver.crm_orders
 WHERE order_status = 'canceled' AND order_delivered_customer_date IS NOT NULL
 -- we have 6 anomalies , so in this case the status should be delivered
 
-| Order ID | Cust ID   | Status   | Purchase Timestamp  | Approved At | Carrier Date        | Cust Date                | Est. Delivery |
-|----------------------|--------------------------------|-------------|---------------------|--------------------------|---------------|
-| 26f224.. | 5ds6a6d.. | canceled | 2017-11-28 17:44:07 | 2017-11-28  | 2017-11-30 18:12:23 | 2017-12-03 11:32:23      | 2017-12-18    |
-| f5d2b7.. | df89028.. | canceled | 2018-06-20 06:58:43 | 2018-06-20  | 2018-06-25 08:05:00 | 2018-06-28 08:05:00      | 2018-07-16    |
-| fc4f15.. | 51sd540.. | canceled | 2018-07-01 17:05:11 | 2018-07-01  | 2018-07-03 13:57:00 | 2018-07-14 09:37:00      | 2018-07-30    |
-| 52s717.. | dsfa40c.. | canceled | 2018-07-01 22:05:55 | 2018-07-01  | 2018-07-03 13:57:00 | 2018-07-13 11:58:00      | 2018-07-30    |
+| Order ID | Cust ID   | Status   | Purchase Timestamp  | Approved At | Carrier Date        | Cust Date           | Est. Delivery |
+|----------------------|--------------------------------|-------------|---------------------|---------------------|---------------|
+| 26f224.. | 5ds6a6d.. | canceled | 2017-11-28 17:44:07 | 2017-11-28  | 2017-11-30 18:12:23 | 2017-12-03 11:32:23 | 2017-12-18    |
+| f5d2b7.. | df89028.. | canceled | 2018-06-20 06:58:43 | 2018-06-20  | 2018-06-25 08:05:00 | 2018-06-28 08:05:00 | 2018-07-16    |
+| fc4f15.. | 51sd540.. | canceled | 2018-07-01 17:05:11 | 2018-07-01  | 2018-07-03 13:57:00 | 2018-07-14 09:37:00 | 2018-07-30    |
+| 52s717.. | dsfa40c.. | canceled | 2018-07-01 22:05:55 | 2018-07-01  | 2018-07-03 13:57:00 | 2018-07-13 11:58:00 | 2018-07-30    |
 
 -- UPDATE statement: fix `order_status` to 'delivered' when `order_delivered_customer_date` IS NOT NULL
 UPDATE silver.crm_orders
