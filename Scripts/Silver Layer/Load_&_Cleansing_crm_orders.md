@@ -150,12 +150,13 @@ FROM silver.crm_orders
 WHERE order_status = 'delivered'
   AND order_delivered_customer_date IS NULL;
 	-- 8 Anomalies detected, in this case the status is only shipped
-| Order ID     | Cust ID   | Status    | Purchase Timestamp  | Approved At         | Carrier Date        | Cust Date | Est. Delivery|
-|--------------------------|---------------------------------|---------------------|---------------------|-----------|--------------|
-| 2d1e2d5bf4.. | ec05a6d.. | delivered | 2017-11-28 17:44:07 | 2017-11-28 17:56:40 | 2017-11-30 18:12:23 | NULL      | 2017-12-18   |
-| f5dd62b788.. | 5e89028.. | delivered | 2018-06-20 06:58:43 | 2018-06-20 07:19:05 | 2018-06-25 08:05:00 | NULL      | 2018-07-16   |
-| 2ebdfc4f15.. | 29f0540.. | delivered | 2018-07-01 17:05:11 | 2018-07-01 17:15:12 | 2018-07-03 13:57:00 | NULL      | 2018-07-30   |
-| e69f75a717.. | cfda40c.. | delivered | 2018-07-01 22:05:55 | 2018-07-01 22:15:14 | 2018-07-03 13:57:00 | NULL      | 2018-07-30   |
+
+| Order ID | Cust ID   | Status    | Purchase Timestamp  | Approved At         | Carrier Date        | Cust Date | Est. Delivery|
+|----------------------|---------------------------------|---------------------|---------------------|-----------|--------------|
+| 2d1e2d.. | ec05a6d.. | delivered | 2017-11-28 17:44:07 | 2017-11-28 17:56:40 | 2017-11-30 18:12:23 | NULL      | 2017-12-18   |
+| f5d788.. | 5e89028.. | delivered | 2018-06-20 06:58:43 | 2018-06-20 07:19:05 | 2018-06-25 08:05:00 | NULL      | 2018-07-16   |
+| 2ebd15.. | 29f0540.. | delivered | 2018-07-01 17:05:11 | 2018-07-01 17:15:12 | 2018-07-03 13:57:00 | NULL      | 2018-07-30   |
+| e69f17.. | cfda40c.. | delivered | 2018-07-01 22:05:55 | 2018-07-01 22:15:14 | 2018-07-03 13:57:00 | NULL      | 2018-07-30   |
 
 -- UPDATE statement: fix `order_status` to 'shipped' when `order_delivered_customer_date` IS NULL
 UPDATE silver.crm_orders
