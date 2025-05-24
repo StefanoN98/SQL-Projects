@@ -12,7 +12,7 @@ IF OBJECT_ID('silver.erp_customers', 'U') IS NOT NULL
 GO
 
 CREATE TABLE silver.erp_customers (
-    customer_id NVARCHAR(50),
+    	customer_id NVARCHAR(50),
 	customer_unique_id NVARCHAR(50),
 	customer_zip_code_prefix NVARCHAR(10),
 	customer_city NVARCHAR(50),
