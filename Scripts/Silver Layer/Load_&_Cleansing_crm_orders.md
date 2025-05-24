@@ -149,7 +149,7 @@ SELECT *
 FROM silver.crm_orders
 WHERE order_status = 'delivered'
   AND order_delivered_customer_date IS NULL;
-	-- 8 Anomalies detected, in this case the status is only shipped
+	-- 8 Anomalies detected, in this case the status should be only shipped
 
 | Order ID | Cust ID   | Status    | Purchase Timestamp  | Approved At         | Carrier Date        | Cust Date | Est. Delivery|
 |----------------------|---------------------------------|---------------------|---------------------|-----------|--------------|
@@ -180,12 +180,12 @@ FROM silver.crm_orders
 WHERE order_status = 'canceled' AND order_delivered_customer_date IS NOT NULL
 -- we have 6 anomalies , so in this case the status should be delivered
 
-| Order ID     | Cust ID   | Status   | Purchase Timestamp  | Approved At         | Carrier Date        | Cust Date                | Est. Delivery |
-|--------------------------|--------------------------------|---------------------|---------------------|--------------------------|---------------|
-| 26f22d5bf4.. | 5ds6a6d.. | canceled | 2017-11-28 17:44:07 | 2017-11-28 17:56:40 | 2017-11-30 18:12:23 | 2017-12-03 11:32:23      | 2017-12-18    |
-| f5d2ds62b7.. | df89028.. | canceled | 2018-06-20 06:58:43 | 2018-06-20 07:19:05 | 2018-06-25 08:05:00 | 2018-06-28 08:05:00      | 2018-07-16    |
-| 6sfdfc4f15.. | 51sd540.. | canceled | 2018-07-01 17:05:11 | 2018-07-01 17:15:12 | 2018-07-03 13:57:00 | 2018-07-14 09:37:00      | 2018-07-30    |
-| 52sd55a717.. | dsfa40c.. | canceled | 2018-07-01 22:05:55 | 2018-07-01 22:15:14 | 2018-07-03 13:57:00 | 2018-07-13 11:58:00      | 2018-07-30    |
+| Order ID     | Cust ID   | Status   | Purchase Timestamp  | Approved At | Carrier Date        | Cust Date                | Est. Delivery |
+|--------------------------|--------------------------------|-------------|---------------------|--------------------------|---------------|
+| 26f22d5bf4.. | 5ds6a6d.. | canceled | 2017-11-28 17:44:07 | 2017-11-28  | 2017-11-30 18:12:23 | 2017-12-03 11:32:23      | 2017-12-18    |
+| f5d2ds62b7.. | df89028.. | canceled | 2018-06-20 06:58:43 | 2018-06-20  | 2018-06-25 08:05:00 | 2018-06-28 08:05:00      | 2018-07-16    |
+| 6sfdfc4f15.. | 51sd540.. | canceled | 2018-07-01 17:05:11 | 2018-07-01  | 2018-07-03 13:57:00 | 2018-07-14 09:37:00      | 2018-07-30    |
+| 52sd55a717.. | dsfa40c.. | canceled | 2018-07-01 22:05:55 | 2018-07-01  | 2018-07-03 13:57:00 | 2018-07-13 11:58:00      | 2018-07-30    |
 
 -- UPDATE statement: fix `order_status` to 'delivered' when `order_delivered_customer_date` IS NOT NULL
 UPDATE silver.crm_orders
@@ -195,7 +195,7 @@ WHERE order_status = 'canceled' AND order_delivered_customer_date IS NOT NULL
 ---
 
 
-## `order_purchase_timestamp`, `order_approved_at`, `order_delivered_carrier_date,`order_delivered_customer_date`,`order_estimated_delivery_date` cleaning
+## `order_purchase_timestamp`, `order_approved_at`, `order_delivered_carrier_date`,`order_delivered_customer_date`,`order_estimated_delivery_date` cleaning
 
 ### 1) Check dates range 
 ```sql
@@ -239,20 +239,28 @@ WHERE (order_approved_at < order_purchase_timestamp)
    OR (order_delivered_customer_date < order_delivered_carrier_date)
 
 ORDER BY order_id;
--- no issue with approved_before_purchase
--- 1382 rows with issue about delivered_carrier_before_approved &  delivered_customer_before_carrier
--- In these cases the CRM inverted the 2 dates, so to fix it it is necessary to replace inverting dates
+
+/*No issue with order_approved_at < order_purchase_timestamp
+
+1382 rows with issue about order_delivered_carrier_date < order_approved_at &
+order_delivered_customer_date < order_delivered_carrier_date
+
+These regards CRM issues during the data ingestion. These issues will be fixed based on Business Rules.
+The following rules work only when the CRM has this kind of issues*/
 
 
--- Fix when order_approved_at > order_delivered_carrier_date add 1 day because it will be sent the day after (BUSINESS RULE)
--- this rule works only when the crm make this kind of inversion
+/*Fix when order_approved_at > order_delivered_carrier_date adding 1 day because the order will be sent
+ the day after the approval (BUSINESS RULE)*/
+
 UPDATE silver.crm_orders
 SET order_delivered_carrier_date = DATEADD(DAY, 1, order_approved_at)
 WHERE  order_approved_at > order_delivered_carrier_date ;
 
--- Same fix when order_delivered_carrier_date > order_delivered_customer_date
+/*Fix when order_delivered_carrier_date > order_delivered_customer_date adding 3 day because the order will be delivered
+ 3 days after the carrier_date as standard carrier contract(BUSINESS RULE)*/
+
 UPDATE silver.crm_orders
-SET order_delivered_customer_date = DATEADD(DAY, 1, order_delivered_carrier_date)
+SET order_delivered_customer_date = DATEADD(DAY, 3, order_delivered_carrier_date)
 WHERE  order_delivered_carrier_date > order_delivered_customer_date ;
 ```
 
