@@ -151,12 +151,12 @@ WHERE order_status = 'delivered'
   AND order_delivered_customer_date IS NULL;
 	-- 8 Anomalies detected, in this case the status should be only shipped
 
-| Order ID | Cust ID   | Status    | Purchase Timestamp  | Approved At         | Carrier Date        | Cust Date | Est. Delivery|
-|----------------------|---------------------------------|---------------------|---------------------|-----------|--------------|
-| 2d1e2d.. | ec05a6d.. | delivered | 2017-11-28 17:44:07 | 2017-11-28 17:56:40 | 2017-11-30 18:12:23 | NULL      | 2017-12-18   |
-| f5d788.. | 5e89028.. | delivered | 2018-06-20 06:58:43 | 2018-06-20 07:19:05 | 2018-06-25 08:05:00 | NULL      | 2018-07-16   |
-| 2ebd15.. | 29f0540.. | delivered | 2018-07-01 17:05:11 | 2018-07-01 17:15:12 | 2018-07-03 13:57:00 | NULL      | 2018-07-30   |
-| e69f17.. | cfda40c.. | delivered | 2018-07-01 22:05:55 | 2018-07-01 22:15:14 | 2018-07-03 13:57:00 | NULL      | 2018-07-30   |
+| Order ID | Cust ID | Status    | Purchase Timestamp  | Approved At         | Carrier Date        | Cust Date | Est. Delivery|
+|----------|---------|-----------|---------------------|---------------------|---------------------|-----------|--------------|
+| 2d1e2d.. | eca6d.. | delivered | 2017-11-28 17:44:07 | 2017-11-28 17:56:40 | 2017-11-30 18:12:23 | NULL      | 2017-12-18   |
+| f5d788.. | 5e028.. | delivered | 2018-06-20 06:58:43 | 2018-06-20 07:19:05 | 2018-06-25 08:05:00 | NULL      | 2018-07-16   |
+| 2ebd15.. | 29f40.. | delivered | 2018-07-01 17:05:11 | 2018-07-01 17:15:12 | 2018-07-03 13:57:00 | NULL      | 2018-07-30   |
+| e69f17.. | cfd0c.. | delivered | 2018-07-01 22:05:55 | 2018-07-01 22:15:14 | 2018-07-03 13:57:00 | NULL      | 2018-07-30   |
 
 -- UPDATE statement: fix `order_status` to 'shipped' when `order_delivered_customer_date` IS NULL
 UPDATE silver.crm_orders
@@ -180,12 +180,12 @@ FROM silver.crm_orders
 WHERE order_status = 'canceled' AND order_delivered_customer_date IS NOT NULL
 -- we have 6 anomalies , so in this case the status should be delivered
 
-| Order ID     | Cust ID   | Status   | Purchase Timestamp  | Approved At | Carrier Date        | Cust Date                | Est. Delivery |
-|--------------------------|--------------------------------|-------------|---------------------|--------------------------|---------------|
-| 26f22d5bf4.. | 5ds6a6d.. | canceled | 2017-11-28 17:44:07 | 2017-11-28  | 2017-11-30 18:12:23 | 2017-12-03 11:32:23      | 2017-12-18    |
-| f5d2ds62b7.. | df89028.. | canceled | 2018-06-20 06:58:43 | 2018-06-20  | 2018-06-25 08:05:00 | 2018-06-28 08:05:00      | 2018-07-16    |
-| 6sfdfc4f15.. | 51sd540.. | canceled | 2018-07-01 17:05:11 | 2018-07-01  | 2018-07-03 13:57:00 | 2018-07-14 09:37:00      | 2018-07-30    |
-| 52sd55a717.. | dsfa40c.. | canceled | 2018-07-01 22:05:55 | 2018-07-01  | 2018-07-03 13:57:00 | 2018-07-13 11:58:00      | 2018-07-30    |
+| Order ID | Cust ID   | Status   | Purchase Timestamp  | Approved At | Carrier Date        | Cust Date                | Est. Delivery |
+|----------------------|--------------------------------|-------------|---------------------|--------------------------|---------------|
+| 26f224.. | 5ds6a6d.. | canceled | 2017-11-28 17:44:07 | 2017-11-28  | 2017-11-30 18:12:23 | 2017-12-03 11:32:23      | 2017-12-18    |
+| f5d2b7.. | df89028.. | canceled | 2018-06-20 06:58:43 | 2018-06-20  | 2018-06-25 08:05:00 | 2018-06-28 08:05:00      | 2018-07-16    |
+| fc4f15.. | 51sd540.. | canceled | 2018-07-01 17:05:11 | 2018-07-01  | 2018-07-03 13:57:00 | 2018-07-14 09:37:00      | 2018-07-30    |
+| 52s717.. | dsfa40c.. | canceled | 2018-07-01 22:05:55 | 2018-07-01  | 2018-07-03 13:57:00 | 2018-07-13 11:58:00      | 2018-07-30    |
 
 -- UPDATE statement: fix `order_status` to 'delivered' when `order_delivered_customer_date` IS NOT NULL
 UPDATE silver.crm_orders
