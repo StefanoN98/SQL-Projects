@@ -263,6 +263,12 @@ UPDATE silver.crm_orders
 SET order_delivered_customer_date = DATEADD(DAY, 3, order_delivered_carrier_date)
 WHERE  order_delivered_carrier_date > order_delivered_customer_date ;
 ```
+---
+
+✅ Data cleaned!
+
+## Final DDL script with the new changes for `crm_orders`
+No changes necessary to apply to structure, datatype and columns of this table. Initial DDL script unchanged.
 
 
 
