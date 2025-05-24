@@ -163,7 +163,7 @@ WHERE order_status = 'canceled' AND order_delivered_customer_date IS NOT NULL
 ---
 
 
-## `order_purchase_timestamp`, order_approved_at`, `order_delivered_carrier_date,`order_delivered_customer_date`,`order_estimated_delivery_date` cleaning
+## `order_purchase_timestamp`, `order_approved_at`, `order_delivered_carrier_date,`order_delivered_customer_date`,`order_estimated_delivery_date` cleaning
 
 ### 1) Check dates range 
 ```sql
