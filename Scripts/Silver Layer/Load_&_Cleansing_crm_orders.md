@@ -44,7 +44,12 @@ SELECT order_id ,
 	   order_estimated_delivery_date
 FROM bronze.crm_orders
 ```
-aggiungi tabella
+| order_id                             | customer_id                         | order_status | order_purchase_timestamp | order_approved_at        | order_delivered_carrier_date | order_delivered_customer_date | order_estimated_delivery_date |
+|-------------------------------------|-------------------------------------|--------------|---------------------------|---------------------------|-------------------------------|-------------------------------|-------------------------------|
+| 06a6627d9cc91a04e9d146bf65fee0a2    | 61449fa1b8b8998c9c3f3a7f0ae954ef    | delivered    | 2017-07-16 10:27:45.000   | 2017-07-16 10:35:14.000   | 2017-07-18 12:34:04.000       | 2017-07-21 19:59:36.000       | 2017-08-04 00:00:00.000       |
+| 15bed8e2fec7fdbadb186b57c46c92f2    | f3f0e613e0bdb9c7cee75504f0f90679    | processing   | 2017-09-03 14:22:03.000   | 2017-09-03 14:30:09.000   | NULL                          | NULL                          | 2017-10-03 00:00:00.000       |
+| 6942b8da583c2f9957e990d028607019    | 52006a9383bf149a4fb24226b173106f    | shipped      | 2018-01-10 11:33:07.000   | 2018-01-11 02:32:30.000   | 2018-01-11 19:39:23.000       | NULL                          | 2018-02-07 00:00:00.000       |
+
 aggiungi check summary
 ---
 
