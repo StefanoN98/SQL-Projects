@@ -67,6 +67,12 @@ ORDER BY LEN(geolocation_zip_code_prefix) DESC
 
 ## `geolocation_city` cleaning
 ### 1) Check if there are results with not standard characters (foreign characters)
+| geolocation_city |
+|------------------|
+| abadiânia        |
+| abaeté           |
+| açailândia       |
+| acarà            |
 ```sql
 SELECT *
 FROM silver.erp_geolocation
@@ -101,6 +107,13 @@ WHERE geolocation_city COLLATE Latin1_General_BIN LIKE '%[^a-zA-Z ]%';
 ```
 
 ### 2) Check if there are results with not standard characters (special characters)
+| geolocation_city                |
+|---------------------------------|
+| são joão do pau d%26apos%3balho |
+| sa£o paulo                      |
+| lambari d%26apos%3boeste        |
+| ...arraial do cabo              |
+| * cidade                        |
 ```sql
 SELECT DISTINCT geolocation_city
 FROM silver.erp_geolocation
