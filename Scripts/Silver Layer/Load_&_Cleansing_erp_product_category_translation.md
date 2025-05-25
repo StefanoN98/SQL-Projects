@@ -23,7 +23,7 @@ INSERT INTO silver.erp_product_category_translation(
  )
 
 SELECT product_category_name,
-	   product_category_name_english
+       product_category_name_english
 FROM bronze.erp_product_category_translation
 ```
 | product_category_name | product_category_name_english |
