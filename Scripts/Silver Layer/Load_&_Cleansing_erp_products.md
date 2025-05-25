@@ -32,15 +32,15 @@ INSERT INTO silver.erp_products(
 	product_width_cm
 	)
 
-SELECT product_id,
-	   product_category_name,
-	   product_name_length,
-	   product_description_length,
-	   product_photos_qty,
-	   product_weight_g,
-	   product_length_cm,
-	   product_height_cm,
-	   product_width_cm
+SELECT  product_id,
+        product_category_name,
+        product_name_length,
+        product_description_length,
+	product_photos_qty,
+	product_weight_g,
+	product_length_cm,
+	product_height_cm,
+	product_width_cm
 FROM bronze.erp_products
 ```
 | product_id                          | product_category_name | product_name_length | product_description_length | product_photos_qty | product_weight_g | product_length_cm | product_height_cm | product_width_cm |
@@ -124,16 +124,16 @@ ORDER BY LEN(product_id) DESC
 ## `product_name_length` , `product_description_length` , `product_photos_qty` cleaning
 ### 1) Check NULL values
 ```sql
-	SELECT product_id, 
-		   product_category_name,
-		   product_name_length ,
-		   product_description_length ,
-		   product_photos_qty
-	FROM silver.erp_products
-	WHERE product_name_length IS NULL OR
-		   product_description_length IS NULL OR
-		   product_photos_qty IS NULL 
-	-- As for product_category_name we have exactly the same 610 rows where there are no info
+SELECT product_id, 
+       product_category_name,
+       product_name_length ,
+       product_description_length ,
+       product_photos_qty
+FROM silver.erp_products
+WHERE  product_name_length IS NULL OR
+       product_description_length IS NULL OR
+       product_photos_qty IS NULL 
+-- As for product_category_name we have exactly the same 610 rows where there are no info
 	
 --UPDATE statement: in this case we set lenght to 0 because no name, description and photos are available
 UPDATE silver.erp_products
@@ -146,10 +146,10 @@ WHERE product_category_name = 'product_name_not_available'
 
 ### 2) Check max llenght for each field
 ```sql
-	SELECT MAX(product_name_length) AS max_product_name_lenght ,
-		   MAX(product_description_length) AS max_product_description_length,
-		   MAX(product_photos_qty) AS max_product_photos_qty
-	FROM silver.erp_products
+SELECT MAX(product_name_length) AS max_product_name_lenght ,
+       MAX(product_description_length) AS max_product_description_length,
+       MAX(product_photos_qty) AS max_product_photos_qty
+FROM silver.erp_products
 ```
 ---
 
@@ -157,40 +157,40 @@ WHERE product_category_name = 'product_name_not_available'
 ### 1) Check NULL values
 ```sql
 SELECT product_id,
-	   product_category_name,
-	   product_weight_g,
-	   product_length_cm,
-	   product_height_cm,
-	   product_width_cm
+       product_category_name,
+       product_weight_g,
+       product_length_cm,
+       product_height_cm,
+       product_width_cm
 FROM silver.erp_products
-WHERE product_weight_g IS NULL OR
-	   product_length_cm IS NULL OR
-	   product_height_cm IS NULL OR
-	   product_width_cm IS NULL
+WHERE  product_weight_g IS NULL OR
+       product_length_cm IS NULL OR
+       product_height_cm IS NULL OR
+       product_width_cm IS NULL
 /*2 rows detected:
  the first where product_category_name is 'product name not available',
  the second where product_category_name is 'bebes' and its product_id is 09ff539a621711667c43eba6a3bd8466*/
 
  --UPDATE statement: for the first case we set all the values to zero
  UPDATE silver.erp_products
- SET   product_weight_g = 0,
-	   product_length_cm = 0,
-	   product_height_cm = 0,
-	   product_width_cm = 0
+SET   product_weight_g = 0,
+      product_length_cm = 0,
+      product_height_cm = 0,
+      product_width_cm = 0
 WHERE product_category_name ='product_name_not_available' AND
-	  (product_weight_g IS NULL OR
-	   product_length_cm IS NULL OR
-	   product_height_cm IS NULL OR
-	   product_width_cm IS NULL )
+      (product_weight_g IS NULL OR
+       product_length_cm IS NULL OR
+       product_height_cm IS NULL OR
+       product_width_cm IS NULL )
 
 
 -- For the second case we can assign values from a random bebes product that has a similar product_id
  SELECT DISTINCT product_id,
-		product_category_name,
-	    product_weight_g,
-	    product_length_cm,
-	    product_height_cm,
-	    product_width_cm
+		 product_category_name,
+	    	 product_weight_g,
+	   	 product_length_cm,
+	   	 product_height_cm,
+	   	 product_width_cm
  FROM silver.erp_products
  WHERE product_category_name = 'bebes' AND LEFT(product_id, 2) = '09'
  -- We choose the same dimensions as for the product_id = 09dbbe2c4f26cad4d560aea043f9632c
