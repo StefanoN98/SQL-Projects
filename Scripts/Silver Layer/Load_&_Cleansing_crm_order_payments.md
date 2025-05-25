@@ -4,7 +4,7 @@
 > This script performs data quality checks and cleansing operations on the `silver.crm_order_payments`.  
 > The goal is to ensure that all records are complete, clean, and logically consistent.
 
-## Initial DDL Script to load `crm_order_payments` from broze layer (no structure changes)
+## Initial DDL Script to load `crm_order_payments` from bronze layer (no structure changes)
 ```sql
 IF OBJECT_ID('silver.crm_order_payments', 'U') IS NOT NULL
 	DROP TABLE silver.crm_order_payments;
