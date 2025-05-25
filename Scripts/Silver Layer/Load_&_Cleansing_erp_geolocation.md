@@ -106,7 +106,8 @@ SELECT DISTINCT geolocation_city
 FROM silver.erp_geolocation
 WHERE geolocation_city COLLATE Latin1_General_BIN  LIKE '%[^a-zA-Z0-9 ]%' --empty spaces are allowed
 ORDER BY geolocation_city
--- There are 106 distinct values with special characters in particular the majority use - that will be replaced with an empty space
+-- There are 106 distinct values with special characters
+-- in particular the majority use - that will be replaced with an empty space
 -- While we'll remove the following *.º%³£
 
 -- UPDATE statement:remove the following characters -->  *.º%³£
