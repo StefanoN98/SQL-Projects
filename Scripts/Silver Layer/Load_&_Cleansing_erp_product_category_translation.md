@@ -55,9 +55,9 @@ WHERE product_category_name_english IS NULL
 
 |p.product_category_name                         |pt.product_category_name_english|
 |---------------------------------------------------------------------------------|
-|pc_gamer	                                     |NULL                            |
+|pc_gamer	                                 |NULL                            |
 |portateis_cozinha_e_preparadores_de_alimentos   |NULL                            |
-|product_name_not_available	                     |NULL                            |
+|product_name_not_available	                 |NULL                            |
 
 --INSERT INTO statement: add the missingvalues and the translation
 INSERT INTO silver.erp_product_category_translation (
