@@ -175,7 +175,12 @@ SELECT MIN(shipping_limit_date) AS min_date,
        DATEDIFF(YEAR, MIN(shipping_limit_date), MAX(shipping_limit_date)) AS interval_years,
        IIF(MAX(shipping_limit_date) > GETDATE(), 'Anomaly', 'No Anomaly') AS today_check
 FROM silver.crm_order_items;
--- Shipping data from 19/09/2016 to 09/04/2020
+-- Shipping data from 2016 to 2020
+
+| min_date                | max_date                | interval_years | today_check |
+|-------------------------|-------------------------|----------------|-------------|
+| 2016-09-19 00:15:34.000 | 2020-04-09 22:35:08.000 | 4              | No Anomaly  |
+
 ```
 
 ---
@@ -206,6 +211,12 @@ SELECT *,
         ELSE 'Free Shipping'
     END AS shipping_type
 FROM silver.crm_order_items;
+
+| price  | freight_value  | shipping_type     |
+|--------|----------------|-------------------|
+| 85     | 17.03          | Standard Shipping |
+| 229    | 9.80           | Standard Shipping |
+| 99.9   | 0.00           | Free Shipping     |
 ```
 
 ---
@@ -217,6 +228,7 @@ FROM silver.crm_order_items;
 
 
 ## Final DDL script with the new changes for `crm_order_items`
+Added the derived column `shipping_type`
 
 ```sql
 IF OBJECT_ID('silver.crm_order_items', 'U') IS NOT NULL
