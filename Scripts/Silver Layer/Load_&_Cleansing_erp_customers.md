@@ -1,7 +1,7 @@
 # 🧹 Data Loading & Cleansing: `erp_customer` (Bronze ➝ Silver Layer)
 
 
-> This script performs data quality checks and cleansing operations on the `silver.crm_order_items`.  
+> This script performs data quality checks and cleansing operations on the `silver.erp_customer`.  
 > The goal is to ensure that all records are complete, clean, and logically consistent.
 
 ---
