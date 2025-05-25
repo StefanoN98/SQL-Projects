@@ -25,9 +25,9 @@ INSERT INTO silver.erp_sellers(
 	)
 
 SELECT seller_id,
-	   seller_zip_code_prefix,
-	   seller_city,
-	   seller_state
+       seller_zip_code_prefix,
+       seller_city,
+       seller_state
 FROM bronze.erp_sellers
 ```
 | seller_id                            | seller_zip_code_prefix | seller_city        | seller_state |
@@ -77,7 +77,7 @@ HAVING COUNT(*) > 1
 
 ### 3) Check lenght
 ```sql
- SELECT LEN(seller_id) AS lenght_seller_id,
+SELECT LEN(seller_id) AS lenght_seller_id,
 	   COUNT(*)
 FROM silver.erp_sellers
 GROUP BY LEN(seller_id)
@@ -89,7 +89,7 @@ ORDER BY LEN(seller_id) DESC
 ##  `seller_zip_code_prefix` cleaning
 ### 1) Verify the zip code prefix lenght is 5
 ```sql
- SELECT LEN(seller_zip_code_prefix) AS lenght_seller_zip_code_prefix,
+SELECT LEN(seller_zip_code_prefix) AS lenght_seller_zip_code_prefix,
 	   COUNT(*)
 FROM silver.erp_sellers
 GROUP BY LEN(seller_zip_code_prefix)
@@ -143,7 +143,7 @@ WHERE seller_city COLLATE Latin1_General_BIN  LIKE '%[^a-zA-Z0-9 ]%';
 ## `seller_state` cleaning
 ### 1) Check lenght
 ```sql
-  SELECT LEN(seller_state) AS lenght_seller_state,
+SELECT LEN(seller_state) AS lenght_seller_state,
 	   COUNT(*) AS Counting
 FROM silver.erp_sellers
 GROUP BY LEN(seller_state)
