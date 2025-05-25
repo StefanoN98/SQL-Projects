@@ -179,6 +179,8 @@ BEGIN
 		FROM 'C:\Users\Stefano\Desktop\SQL\PROGETTI\Brazilian E-Commerce Public Dataset by Olist\Data\erp_sellers.csv'
 		WITH(
 			FIRSTROW=2,
+			DATAFILETYPE = 'widechar',  -- per Unicode UTF-16
+			CODEPAGE = '65001',
 			FIELDTERMINATOR =',',
 			TABLOCK
 		)
