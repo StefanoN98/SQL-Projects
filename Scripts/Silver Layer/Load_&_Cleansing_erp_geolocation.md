@@ -126,4 +126,54 @@ SET geolocation_city = REPLACE(
     '³', '')
 WHERE geolocation_city COLLATE Latin1_General_BIN  LIKE '%[^a-zA-Z0-9 ]%'
 ```
+---
+
+## `geolocation_state` cleaning
+### 1) Check lenght
+```sql
+SELECT LEN(geolocation_state) AS lenght_geolocation_state,
+	   COUNT(*) AS counting
+FROM silver.erp_geolocation
+GROUP BY LEN(geolocation_state)
+ORDER BY LEN(geolocation_state) DESC
+-- Everything has 3 characters because there is an additional ; at the end
+
+--UPDATE statement: remove ; at the end
+UPDATE silver.erp_geolocation
+SET geolocation_state = TRIM(';' FROM geolocation_state)
+WHERE geolocation_state LIKE '%;%';
+```
+---
+
+## Referential check on `geolocation_zip_code_prefix`
+### Verify that geolocation table has all the `geolocation_zip_code_prefix` compared to customers and sellers tables
+In the gold layer we'll create an unique dim table with the zip, city and state information,so now we just check if there are missing values from erp_geolocation table that will represent the base table
+```sql
+-- Check on customers table
+SELECT DISTINCT
+    c.customer_zip_code_prefix,
+	c.customer_city,
+	c.customer_state
+FROM silver.erp_customers c
+LEFT JOIN silver.erp_geolocation g
+    ON c.customer_zip_code_prefix = g.geolocation_zip_code_prefix
+WHERE g.geolocation_zip_code_prefix IS NULL
+ORDER BY c.customer_zip_code_prefix;
+-- 157 zip_code to add
+
+
+-- Check on sellers table
+SELECT DISTINCT
+    s.seller_zip_code_prefix,
+	s.seller_city,
+	s.seller_state
+FROM bronze.erp_sellers s
+LEFT JOIN silver.erp_geolocation g
+    ON s.seller_zip_code_prefix = g.geolocation_zip_code_prefix
+WHERE g.geolocation_zip_code_prefix IS NULL
+ORDER BY s.seller_zip_code_prefix;
+-- 7 zip_code to add
+
+-- we'll integrate those values in an unique dim table in the gold layer
+```
 
