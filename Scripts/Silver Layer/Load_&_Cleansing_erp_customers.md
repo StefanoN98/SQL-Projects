@@ -50,7 +50,7 @@ FROM bronze.erp_customers;
 |                    | Length Check             | Validate length of `customer_id` and `customer_unique_id` = 32     |
 |                    | Length Check             | Validate `customer_zip_code_prefix` length = 5                     |
 |                    | Length Check             | Validate `customer_state` length = 2                               |
-| **DATA VALIDATION**| City Name Characters     | Ensure `customer_city` contains no numeric characters              |
+| **DATA VALIDATION**| City Name Characters     | Ensure `customer_city` contains no numeric or standard characters  |
 
 ---
 
