@@ -144,7 +144,7 @@ CREATE TABLE bronze.erp_products (
 	product_id NVARCHAR(50),
 	product_category_name NVARCHAR(100),
 	product_name_length INT,
-	product_description_length NVARCHAR(MAX),
+	product_description_length INT,
 	product_photos_qty INT,
 	product_weight_g INT,
 	product_length_cm INT,
