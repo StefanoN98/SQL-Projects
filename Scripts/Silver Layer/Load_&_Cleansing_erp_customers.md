@@ -128,13 +128,29 @@ ORDER BY LEN(customer_zip_code_prefix) DESC
 ---
 
 ## `customer_city` cleaning
-### 1) verify there are no city names with numbers
+### 1) Verify there are no city names with numbers
 ```sql
 select DISTINCT customer_city
 from silver.erp_customers
 WHERE customer_city LIKE '%[0-9]%'
 ORDER BY customer_city
 -- 1 value found : 'quilometro 14 do mutum' --> it is correct becuase it represents a brasilian district name
+```
+
+### 2) Check if there are results with not standard characters
+```sql
+SELECT *
+FROM silver.erp_customers
+WHERE customer_city COLLATE Latin1_General_BIN  LIKE '%[^a-zA-Z0-9 ]%' --empty spaces are allowed
+ORDER BY customer_city
+-- there are only city names with - and '  
+-- we'll keep the ' , but we'll replace - with a space
+
+-- UPDATE statement:replace - with a space
+UPDATE silver.erp_customers
+SET customer_city = 
+    REPLACE(customer_city, '-', ' ')
+WHERE customer_city COLLATE Latin1_General_BIN  LIKE '%[^a-zA-Z0-9 ]%'
 ```
 ---
 
