@@ -114,7 +114,7 @@ UPDATE silver.erp_sellers
 SET seller_city = LEFT(seller_city, CHARINDEX('\', seller_city + '\') - 1)
 WHERE seller_city LIKE '%\%';
 
---	âã will be replaced with a
+-- âã will be replaced with a
 UPDATE silver.erp_sellers
 SET seller_city = REPLACE(
 		  REPLACE(seller_city, 'ã','a'),
