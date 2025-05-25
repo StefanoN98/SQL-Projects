@@ -108,7 +108,18 @@ ORDER BY LEN(customer_id) DESC
 SELECT DISTINCT order_status
 FROM silver.crm_orders
 /*No anomalies values.
-  We have the following results created -approved-  processing - invoiced - shipped- delivered - unavailable - canceled*/
+  We have the following results:
+
+| order_status   |
+|----------------|
+| created        |
+| approved       |
+| processing     |
+| invoiced       |
+| shipped        |
+| delivered      |
+| unavailable    |
+| canceled       |
 ```
 
 
