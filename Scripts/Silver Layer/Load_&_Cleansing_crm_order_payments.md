@@ -80,8 +80,8 @@ FROM silver.crm_order_payments;
 SELECT * 
 FROM silver.crm_order_payments
 WHERE payment_value <= 0 OR payment_value IS NULL;
-/* There are payments equal to zero where the transaction failed, these payments belong to the "not_defined" or "voucher" type.
- They will be kept to understand and repsect the payments sequence*/
+/* There are payments equal to zero where the transaction failed,
+ these payments belong to the "not_defined" or "voucher" type.They will be kept to understand and repsect the payments sequence*/
 ```
 ---
 
