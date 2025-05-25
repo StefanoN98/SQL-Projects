@@ -140,7 +140,11 @@ ORDER BY LEN(seller_state) DESC
 
 -- UPDATE statement: keep only the last 2 characters
 UPDATE silver.erp_sellers
-SET seller_state= LEFT(seller_state,2)
+SET seller_state= RIGHT(seller_state,2)
 WHERE LEN(seller_state)> 2
 ```
+---
+✅ Data cleaned!
 
+## Final DDL script with the new changes for `erp_sellers`
+No changes necessary to apply to structure, datatype and columns of this table. Initial DDL script unchanged.
