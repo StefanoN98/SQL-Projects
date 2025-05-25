@@ -146,6 +146,13 @@ ORDER BY customer_city
 -- there are only city names with - and '  
 -- we'll keep the ' , but we'll replace - with a space
 
+|customer_city        |
+|---------------------|
+|arraial d'ajuda      |
+|bandeirantes d'oeste |
+|biritiba-mirim       |
+|cipo-guacu           |
+
 -- UPDATE statement:replace - with a space
 UPDATE silver.erp_customers
 SET customer_city = 
