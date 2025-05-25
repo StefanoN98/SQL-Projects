@@ -177,4 +177,8 @@ ORDER BY s.seller_zip_code_prefix;
 
 -- we'll integrate those values in an unique dim table in the gold layer
 ```
+---
+✅ Data cleaned!
 
+## Final DDL script with the new changes for `erp_geolocation`
+No changes necessary to apply to structure, datatype and columns of this table. Initial DDL script unchanged.
