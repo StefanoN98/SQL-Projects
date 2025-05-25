@@ -111,10 +111,31 @@ WHERE seller_city LIKE '%-%';
 
 --	âã will be replaced with a
 UPDATE silver.erp_sellers
-SET seller_city = 
-				  REPLACE(
-					REPLACE(seller_city, 'ã','a'),
-					'â', 'a')
+SET seller_city = REPLACE(
+		  REPLACE(seller_city, 'ã','a'),
+                  'â', 'a')
 WHERE seller_city COLLATE Latin1_General_BIN  LIKE '%[^a-zA-Z0-9 ]%';
+```
+---
+
+## `seller_state` cleaning
+### 1) Check lenght
+```sql
+  SELECT LEN(seller_state) AS lenght_seller_state,
+	   COUNT(*) AS Counting
+FROM silver.erp_sellers
+GROUP BY LEN(seller_state)
+ORDER BY LEN(seller_state) DESC
+-- There are 2 values with lengh 10, in these cases there is also the state name
+
+|seller_state|
+|------------|
+|brasil,RS   |
+|brasil,RJ   |
+
+-- UPDATE statement: keep only the last 2 characters
+UPDATE silver.erp_sellers
+SET seller_state= LEFT(seller_state,2)
+WHERE LEN(seller_state)> 2
 ```
 
