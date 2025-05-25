@@ -104,10 +104,15 @@ UPDATE silver.erp_sellers
 SET seller_city = LEFT(seller_city, CHARINDEX('/', seller_city + '/') - 1)
 WHERE seller_city LIKE '%/%';
 
--- - will be eliminated the text after this characters (-included)
+-- - will be eliminated the text after this characters (- included)
 UPDATE silver.erp_sellers
 SET seller_city = LEFT(seller_city, CHARINDEX('-', seller_city + '-') - 1)
 WHERE seller_city LIKE '%-%';
+
+-- \ will be eliminated the text after this characters (\ included)
+UPDATE silver.erp_sellers
+SET seller_city = LEFT(seller_city, CHARINDEX('\', seller_city + '\') - 1)
+WHERE seller_city LIKE '%\%';
 
 --	âã will be replaced with a
 UPDATE silver.erp_sellers
