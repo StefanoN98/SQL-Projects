@@ -137,14 +137,14 @@ WHERE  product_name_length IS NULL OR
 	
 --UPDATE statement: in this case we set lenght to 0 because no name, description and photos are available
 UPDATE silver.erp_products
-SET product_name_length = 0,
+SET 	product_name_length = 0,
 	product_description_length = 0,
 	product_photos_qty = 0
 WHERE product_category_name = 'product_name_not_available'
 ```
 
 
-### 2) Check max llenght for each field
+### 2) Check max lenght for each field
 ```sql
 SELECT MAX(product_name_length) AS max_product_name_lenght ,
        MAX(product_description_length) AS max_product_description_length,
