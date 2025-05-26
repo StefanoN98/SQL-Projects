@@ -77,7 +77,7 @@ HAVING COUNT(*) > 1;
 
 ---
 
-## Check NULL values
+## Check NULL values (`order_id`, `order_item_id`, `product_id`,`seller_id`,`shipping_limit_date`,`price`,`freight_value`) 
 
 ```sql
 SELECT *
@@ -94,7 +94,7 @@ WHERE order_id IS NULL OR
 
 ---
 
-## Check Empty Strings
+## Check Empty Strings (`order_id`, `product_id `, `seller_id `)
 
 ```sql
 SELECT *
@@ -105,7 +105,7 @@ WHERE order_id = '' OR product_id = '' OR seller_id = '';
 
 ---
 
-## Check Unwanted Spaces 
+## Check Unwanted Spaces  (`order_id`, `product_id `, `seller_id `)
 
 ```sql
 SELECT *
