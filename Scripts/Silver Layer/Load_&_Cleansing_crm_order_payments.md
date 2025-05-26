@@ -72,6 +72,14 @@ HAVING COUNT(*) > 1;
 SELECT DISTINCT payment_type
 FROM silver.crm_order_payments;
 -- No anomalies detected in payment types
+
+| payment_type |
+|--------------|
+| credit_card  |
+| boleto       |
+| voucher      |
+| debit_card   |
+| not_defined  |
 ```
 ---
 
