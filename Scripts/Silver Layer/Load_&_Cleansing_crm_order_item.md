@@ -185,7 +185,7 @@ FROM silver.crm_order_items;
 
 ---
 
-## Check Sequence
+## Check Sequence `order_item_id`
 
 ```sql
 WITH ranked_items AS (
@@ -197,12 +197,12 @@ SELECT *
 FROM ranked_items
 WHERE order_item_id <> rn
 ORDER BY order_id;
--- Each following item has the correcte senquence number
+-- Each following item has the correct senquence number
 ```
 
 ---
 
-## Shipping Type Derivation
+## Shipping Type Derivation `shipping_type`
 
 ```sql
 SELECT *,
