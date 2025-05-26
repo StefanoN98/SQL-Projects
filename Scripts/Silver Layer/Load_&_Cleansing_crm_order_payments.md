@@ -54,7 +54,7 @@ FROM bronze.crm_order_payments;
 
 ---
 
-## Check for Duplicates (`order_id`, `payment_sequential`)
+## Check Duplicates (`order_id`, `payment_sequential`)
 
 ```sql
 SELECT order_id + '_' + CAST(payment_sequential AS nvarchar(5)) AS composite_key,
@@ -66,7 +66,7 @@ HAVING COUNT(*) > 1;
 ```
 ---
 
-## Check Distinct Payment Types
+## Check Distinct Payment Types (`payment_type`)
 
 ```sql
 SELECT DISTINCT payment_type
@@ -75,18 +75,19 @@ FROM silver.crm_order_payments;
 ```
 ---
 
-## Check for Zero or NULL Payments
+## `payment_value` cleaning
+### 1) Check for Zero or NULL Payments
 ```sql
 SELECT * 
 FROM silver.crm_order_payments
 WHERE payment_value <= 0 OR payment_value IS NULL;
 /* There are payments equal to zero where the transaction failed,
 these payments belong to the "not_defined" or "voucher" type.
-They will be kept to understand and repsect the payments sequence*/
+They will be kept to understand and respect the payments sequence*/
 ```
 ---
 
-## Check Payment Value Range
+### 2) Check Payment Value Range
 ```sql
 SELECT 
        MIN(payment_value) AS min_payment,
