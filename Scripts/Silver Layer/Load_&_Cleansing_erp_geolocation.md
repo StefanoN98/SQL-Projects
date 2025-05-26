@@ -5,7 +5,7 @@
 > The goal is to ensure that all records are complete, clean, and logically consistent.
 
 ---
-## Initial DDL Script to load `erp_geolocation` from broze layer (no structure changes)
+## Initial DDL Script to load `erp_geolocation` from bronze layer (no structure changes)
 ```sql
 IF OBJECT_ID('silver.erp_geolocation', 'U') IS NOT NULL
 	DROP TABLE silver.erp_geolocation;
@@ -25,11 +25,11 @@ INSERT INTO silver.erp_geolocation (
 	geolocation_lng, geolocation_city, geolocation_state
     )
 
-SELECT geolocation_zip_code_prefix,
-	   geolocation_lat,
-	   geolocation_lng,
-	   geolocation_city, 
-	   geolocation_state
+SELECT  geolocation_zip_code_prefix,
+	geolocation_lat,
+	geolocation_lng,
+	geolocation_city, 
+	geolocation_state
 FROM bronze.erp_geolocation
 ```
 | geolocation_zip_code_prefix | geolocation_lat       | geolocation_lng       | geolocation_city       | geolocation_state |
@@ -67,18 +67,19 @@ ORDER BY LEN(geolocation_zip_code_prefix) DESC
 
 ## `geolocation_city` cleaning
 ### 1) Check if there are results with not standard characters (foreign characters)
-| geolocation_city |
-|------------------|
-| abadiânia        |
-| abaeté           |
-| açailândia       |
-| acarà            |
 ```sql
 SELECT *
 FROM silver.erp_geolocation
 WHERE geolocation_city COLLATE Latin1_General_BIN  LIKE '%[^a-zA-Z0-9 ]%' --empty spaces are allowed
 ORDER BY geolocation_city
 -- there are a lot of rows where the name of the city is written with foreign and special characters
+
+| geolocation_city |
+|------------------|
+| abadiânia        |
+| abaeté           |
+| açailândia       |
+| acarà            |
 
 --Let see how to standardize foreign characters with TRANSLATE
 SELECT 
@@ -107,13 +108,6 @@ WHERE geolocation_city COLLATE Latin1_General_BIN LIKE '%[^a-zA-Z ]%';
 ```
 
 ### 2) Check if there are results with not standard characters (special characters)
-| geolocation_city                |
-|---------------------------------|
-| são joão do pau d%26apos%3balho |
-| sa£o paulo                      |
-| lambari d%26apos%3boeste        |
-| ...arraial do cabo              |
-| * cidade                        |
 ```sql
 SELECT DISTINCT geolocation_city
 FROM silver.erp_geolocation
@@ -122,6 +116,14 @@ ORDER BY geolocation_city
 -- There are 106 distinct values with special characters
 -- in particular the majority use - that will be replaced with an empty space
 -- While we'll remove the following *.º%³£
+
+| geolocation_city                |
+|---------------------------------|
+| são joão do pau d%26apos%3balho |
+| sa£o paulo                      |
+| lambari d%26apos%3boeste        |
+| ...arraial do cabo              |
+| * cidade                        |
 
 -- UPDATE statement:remove the following characters -->  *.º%³£
 UPDATE silver.erp_geolocation
@@ -152,6 +154,12 @@ GROUP BY LEN(geolocation_state)
 ORDER BY LEN(geolocation_state) DESC
 -- Everything has 3 characters because there is an additional ; at the end
 
+|geolocation_state|
+|-----------------|
+| SP;             |
+| MG;             |
+| PA;             |
+
 --UPDATE statement: remove ; at the end
 UPDATE silver.erp_geolocation
 SET geolocation_state = TRIM(';' FROM geolocation_state)
@@ -165,12 +173,12 @@ In the gold layer we'll create an unique dim table with the zip, city and state 
 ```sql
 -- Check on customers table
 SELECT DISTINCT
-    c.customer_zip_code_prefix,
+    	c.customer_zip_code_prefix,
 	c.customer_city,
 	c.customer_state
 FROM silver.erp_customers c
 LEFT JOIN silver.erp_geolocation g
-    ON c.customer_zip_code_prefix = g.geolocation_zip_code_prefix
+ON c.customer_zip_code_prefix = g.geolocation_zip_code_prefix
 WHERE g.geolocation_zip_code_prefix IS NULL
 ORDER BY c.customer_zip_code_prefix;
 -- 157 zip_code to add
@@ -178,12 +186,12 @@ ORDER BY c.customer_zip_code_prefix;
 
 -- Check on sellers table
 SELECT DISTINCT
-    s.seller_zip_code_prefix,
+    	s.seller_zip_code_prefix,
 	s.seller_city,
 	s.seller_state
 FROM bronze.erp_sellers s
 LEFT JOIN silver.erp_geolocation g
-    ON s.seller_zip_code_prefix = g.geolocation_zip_code_prefix
+ON s.seller_zip_code_prefix = g.geolocation_zip_code_prefix
 WHERE g.geolocation_zip_code_prefix IS NULL
 ORDER BY s.seller_zip_code_prefix;
 -- 7 zip_code to add
