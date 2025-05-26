@@ -27,10 +27,10 @@ INSERT INTO silver.erp_customers(
 	)
 
 SELECT customer_id,
-	   customer_unique_id,
-	   customer_zip_code_prefix,
-	   customer_city,
-	   customer_state
+	customer_unique_id,
+	customer_zip_code_prefix,
+	customer_city,
+	customer_state
 FROM bronze.erp_customers;
 ```
 | customer_id                        | customer_unique_id               | customer_zip_code_prefix | customer_city        | customer_state |
