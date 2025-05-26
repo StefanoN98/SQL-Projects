@@ -14,9 +14,9 @@ IF OBJECT_ID('silver.crm_orders', 'U') IS NOT NULL
 GO
 
 CREATE TABLE silver.crm_orders (
-    order_id NVARCHAR(50),
+	order_id NVARCHAR(50),
 	customer_id NVARCHAR(50),
-    order_status NVARCHAR(50),
+    	order_status NVARCHAR(50),
 	order_purchase_timestamp DATETIME,
 	order_approved_at DATETIME,
 	order_delivered_carrier_date DATETIME,
@@ -35,13 +35,13 @@ INSERT INTO silver.crm_orders(
 	)
 
 SELECT order_id ,
-	   customer_id,
-	   order_status,
-	   order_purchase_timestamp,
-	   order_approved_at,
-	   order_delivered_carrier_date,
-	   order_delivered_customer_date,
-	   order_estimated_delivery_date
+	customer_id,
+	order_status,
+	order_purchase_timestamp,
+	order_approved_at,
+	order_delivered_carrier_date,
+	order_delivered_customer_date,
+        order_estimated_delivery_date
 FROM bronze.crm_orders
 ```
 | order_id                             | customer_id                         | order_status | order_purchase_timestamp | order_approved_at        | order_delivered_carrier_date | order_delivered_customer_date | order_estimated_delivery_date |
@@ -129,9 +129,9 @@ Verify when order is only **CREATED** `order_approved_at` , `order_delivered_car
 SELECT *
 FROM silver.crm_orders
 WHERE order_status = 'created'
-  AND (order_approved_at IS NOT NULL OR
-	   order_delivered_carrier_date IS NOT NULL OR 
-	   order_delivered_customer_date IS NOT NULL);
+  AND ( order_approved_at IS NOT NULL OR
+	order_delivered_carrier_date IS NOT NULL OR 
+	order_delivered_customer_date IS NOT NULL );
 	-- No anomalies
 ```
 
@@ -141,7 +141,7 @@ SELECT *
 FROM silver.crm_orders
 WHERE order_status IN ( 'processing','approved', 'invoiced')
   AND (order_delivered_carrier_date IS NOT NULL OR 
-	   order_delivered_customer_date IS NOT NULL);
+       order_delivered_customer_date IS NOT NULL);
 	-- No anomalies
 ```
 
