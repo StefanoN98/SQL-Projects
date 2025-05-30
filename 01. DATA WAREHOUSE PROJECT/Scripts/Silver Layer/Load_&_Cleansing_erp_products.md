@@ -1,4 +1,4 @@
-# 🧹 Data Loading & Cleansing: `erp_customer` (Bronze ➝ Silver Layer)
+# 🧹 Data Loading & Cleansing: `erp_products (Bronze ➝ Silver Layer)
 
 
 > This script performs data quality checks and cleansing operations on the `silver.erp_products`.  
