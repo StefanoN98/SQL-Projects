@@ -258,7 +258,7 @@ SELECT
 FROM order_payment op
 LEFT JOIN transact_payment tp
     ON op.order_id = tp.order_id
-WHERE ABS(op.total_order_payment - tp.total_transaction_payment) > 0.01
+WHERE ABS(op.total_order_payment - tp.total_transaction_payment) > 0.01 --to verify detect also small differences
 -- 380 rows detected
 
 | order_id                           | total_order_payment  | total_transaction_payment  |
