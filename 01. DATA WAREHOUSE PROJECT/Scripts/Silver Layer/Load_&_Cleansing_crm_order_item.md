@@ -269,7 +269,7 @@ WHERE ABS(op.total_order_payment - tp.total_transaction_payment) > 0.01
 | 10a6730b0b333e2b017dd139a0530f19   | 126,99               | 143,53                     |
 
 
-/* In these cases sometimes the custoemr paid more or less compared to the theoretical order price
+/* In these cases sometimes the customer paid more or less compared to the theoretical order price
    There are 2 situations:
    - order payment > actual transaction payment --> it means the customer used a coupon to reduce price
    - order payment < actual transaction payment --> it means the customer rpaid something more at teh customs /*
