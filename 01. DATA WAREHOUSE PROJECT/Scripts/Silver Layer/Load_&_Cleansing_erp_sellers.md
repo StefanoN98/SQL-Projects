@@ -137,6 +137,10 @@ SET seller_city = REPLACE(
 		  REPLACE(seller_city, 'ã','a'),
                   'â', 'a')
 WHERE seller_city COLLATE Latin1_General_BIN  LIKE '%[^a-zA-Z0-9 ]%';
+
+-- non/breaking space replace
+UPDATE silver.erp_sellers
+SET seller_city = REPLACE(seller_city,NCHAR(160),'')
 ```
 ---
 
