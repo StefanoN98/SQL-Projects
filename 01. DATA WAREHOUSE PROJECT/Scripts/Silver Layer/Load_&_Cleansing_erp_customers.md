@@ -143,8 +143,7 @@ SELECT *
 FROM silver.erp_customers
 WHERE customer_city COLLATE Latin1_General_BIN  LIKE '%[^a-zA-Z0-9 ]%' --empty spaces are allowed
 ORDER BY customer_city
--- there are only city names with - and '  
--- we'll keep the ' , but we'll replace - with a space
+-- All the city names are correct
 
 |customer_city        |
 |---------------------|
@@ -152,16 +151,6 @@ ORDER BY customer_city
 |bandeirantes d'oeste |
 |biritiba-mirim       |
 |cipo-guacu           |
-
--- UPDATE statement:replace - with a space
-UPDATE silver.erp_customers
-SET customer_city = 
-    REPLACE(customer_city, '-', ' ')
-WHERE customer_city COLLATE Latin1_General_BIN  LIKE '%[^a-zA-Z0-9 ]%'
-
--- non/breaking space replace
-UPDATE silver.erp_customers
-SET customer_city = REPLACE(customer_city,NCHAR(160),'')
 ```
 ---
 
