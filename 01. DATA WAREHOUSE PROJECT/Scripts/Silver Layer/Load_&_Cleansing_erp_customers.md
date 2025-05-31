@@ -158,6 +158,10 @@ UPDATE silver.erp_customers
 SET customer_city = 
     REPLACE(customer_city, '-', ' ')
 WHERE customer_city COLLATE Latin1_General_BIN  LIKE '%[^a-zA-Z0-9 ]%'
+
+-- non/breaking space replace
+UPDATE silver.erp_customers
+SET customer_city = REPLACE(customer_city,NCHAR(160),'')
 ```
 ---
 
