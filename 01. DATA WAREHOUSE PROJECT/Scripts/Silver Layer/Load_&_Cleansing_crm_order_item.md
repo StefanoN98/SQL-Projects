@@ -234,6 +234,47 @@ FROM bronze.crm_order_items
 | 199.00 | 17.87          | 216.87              |
 ```
 
+### Verify that all the total_order_payment have the same transactional payments value
+```sql
+WITH order_payment AS (
+    SELECT 
+        order_id,
+        SUM(total_order_payment) AS total_order_payment
+    FROM silver.crm_order_items
+    GROUP BY order_id
+),
+transact_payment AS (
+    SELECT 
+        order_id,
+        SUM(payment_value) AS total_transaction_payment
+    FROM silver.crm_order_payments
+    GROUP BY order_id
+)
+
+SELECT 
+    op.order_id,
+    op.total_order_payment,
+    tp.total_transaction_payment
+FROM order_payment op
+LEFT JOIN transact_payment tp
+    ON op.order_id = tp.order_id
+WHERE ABS(op.total_order_payment - tp.total_transaction_payment) > 0.01
+-- 380 rows detected
+
+| order_id                           | total_order_payment  | total_transaction_payment  |
+|------------------------------------|----------------------|----------------------------|
+| 03b218d39c422c250f389120c531b61f   | 50,24                | 58,03                      |
+| 04993613aee4046caf92ea17b316dcfb   | 524,32               | 524,28                     |
+| 09ec142bfa34576d3914bdf8c19927c2   | 70,75                | 70,76                      |
+| 10a6730b0b333e2b017dd139a0530f19   | 126,99               | 143,53                     |
+
+
+/* In these cases sometimes the custoemr paid more or less compared to the theoretical order price
+   There are 2 situations:
+   - order payment > actual transaction payment --> it means the customer used a coupon to reduce price
+   - order payment < actual transaction payment --> it means the customer rpaid something more at teh customs /*
+-- For these cases we'll replace the total_order_payment with the payment_value
+```
 ---
 
 
@@ -276,7 +317,7 @@ SELECT
     shipping_limit_date,
     price,
     freight_value,
-    price + freight_value AS total_order_payment
+    price + freight_value AS total_order_payment,
     CASE 
         WHEN freight_value > 0 THEN 'Standard Shipping'
         ELSE 'Free Shipping'
