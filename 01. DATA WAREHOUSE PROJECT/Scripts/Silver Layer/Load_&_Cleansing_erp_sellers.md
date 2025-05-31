@@ -99,7 +99,7 @@ ORDER BY LEN(seller_zip_code_prefix) DESC
 ---
 
 ##  `seller_city` cleaning
-### 1) Check if there are results with not standard characters
+### 1) Check if there are results with not standard characters or names
 ```sql
 SELECT *
 FROM silver.erp_sellers
@@ -170,6 +170,46 @@ WHERE seller_zip_code_prefix = 87025;
 UPDATE silver.erp_sellers
 SET seller_city = 'sao paulo'
 WHERE seller_zip_code_prefix IN(04557 , 03581 ,  02051 , 03363);
+
+/*Other issues detected:
+
+| seller_zip_code_prefix | seller_city                  | solution                     |
+|------------------------|------------------------------|------------------------------|
+| 09687                  | ao bernardo do campo         | sao bernardo do campo        |
+| 71906                  | brasilia df                  | brasilia                     |
+| 15014                  | s jose do rio preto          | sao jose do rio preto        |
+| 13456                  | santa barbara d oeste        | santa barbara d´oeste        |
+| 05303                  | sao  paulo                   | sao paulo (extra space)      |
+| 09861                  | sbc                          | sao bernardo do campo        |
+| 04776                  | sp                           | sao paulo                    |
+| 05141                  | sp                           | sao paulo                    |
+| 12903                  | sp                           | sao paulo                    |
+| 16021                  | sp                           | sao paulo                    |*/
+
+-- Fix name city 'ao bernardo do campo ' & 'sbc'
+UPDATE silver.erp_sellers
+SET seller_city = 'sao bernardo do campo'
+WHERE seller_zip_code_prefix IN (09687,09861)
+
+-- Fix name city 'brasilia df'
+UPDATE silver.erp_sellers
+SET seller_city = 'brasilia df'
+WHERE seller_zip_code_prefix = 71906
+
+-- Fix name city 's jose do rio preto'
+UPDATE silver.erp_sellers
+SET seller_city = 'sao jose do rio preto'
+WHERE seller_zip_code_prefix = 15014
+
+-- Fix name city 'santa barbara d oeste'
+UPDATE silver.erp_sellers
+SET seller_city = 'santa barbara d´oeste'
+WHERE seller_zip_code_prefix = 13456
+
+-- Fix replacing sao paulo
+UPDATE silver.erp_sellers
+SET seller_city = 'sao paulo'
+WHERE seller_zip_code_prefix IN (04776,05141, 12903, 16021)   
 ```
 ---
 
