@@ -105,42 +105,71 @@ SELECT *
 FROM silver.erp_sellers
 WHERE seller_city COLLATE Latin1_General_BIN  LIKE '%[^a-zA-Z0-9 ]%' --empty spaces are allowed
 ORDER BY seller_city
--- Detected the following special characters /- and this foreign character âã
+-- Detected the following anomalies
 
-| seller_city               |
-|---------------------------|
-| andira-pr                 | 
-| ribeirao preto / sao paulo|
-| lages - sc                |
-| são paulo                 |
+/*
+| seller_zip_code_prefix | seller_city                     | solution                         |
+|-----------------------|--------------------------------|------------------------------------|
+| 22790                 | 04482255                       | replace with rio de janeiro        |
+| 86385                 | andira-pr                      | take off text after -              |
+| 23943                 | angra dos reis rj              | remove last 3 characters           |
+| 15350                 | auriflama/sp                   | take off text after /              |
+| 29142                 | cariacica / es                 | take off text after /              |
+| 12306                 | jacarei / sao paulo            | take off text after /              |
+| 88501                 | lages - sc                     | take off text after -              |
+| 08717                 | mogi das cruzes / sp           | take off text after /              |
+| 20081                 | rio de janeiro / rio de janeiro| take off text after /              |
+| 22050                 | rio de janeiro \rio de janeiro | take off text after \              |
+| 04557                 | são paulo                      | replace with sao paulo             |
+| 04007                 | sao paulo - sp                 | take off text after -              |
+| 03407                 | sao paulo / sao paulo          | take off text after /              |
+| 03581                 | sao paulop                     | replace with sao paulo             |
+| 02051                 | sao pauo                       | replace with sao paulo             |
+| 13790                 | sao sebastiao da grama/sp      | take off text after /              |
+| 09726                 | sbc/sp                         | replace with sao bernardo do campo |
+| 03363                 | sp / sp                        | replace with sao paulo             |
+| 87025                 | vendas@creditparts.com.br      | replace with maringa               |
+*/
 
 
 -- UPDATE statement:
---	/ will be eliminated the text after this characters (/ included)
+--	\/- will be eliminated the text after this characters (them included)
 UPDATE silver.erp_sellers
 SET seller_city = LEFT(seller_city, CHARINDEX('/', seller_city + '/') - 1)
 WHERE seller_city LIKE '%/%';
 
--- - will be eliminated the text after this characters (- included)
 UPDATE silver.erp_sellers
 SET seller_city = LEFT(seller_city, CHARINDEX('-', seller_city + '-') - 1)
 WHERE seller_city LIKE '%-%';
 
--- \ will be eliminated the text after this characters (\ included)
 UPDATE silver.erp_sellers
 SET seller_city = LEFT(seller_city, CHARINDEX('\', seller_city + '\') - 1)
 WHERE seller_city LIKE '%\%';
 
--- âã will be replaced with a
+-- Fix name city '04482255
 UPDATE silver.erp_sellers
-SET seller_city = REPLACE(
-		  REPLACE(seller_city, 'ã','a'),
-                  'â', 'a')
-WHERE seller_city COLLATE Latin1_General_BIN  LIKE '%[^a-zA-Z0-9 ]%';
+SET seller_city = 'rio de janeiro'
+WHERE seller_zip_code_prefix = 22790;
 
--- non/breaking space replace
+-- Fix name city 'angra dos reis rj'
 UPDATE silver.erp_sellers
-SET seller_city = REPLACE(seller_city,NCHAR(160),'')
+SET seller_city = LEFT(seller_city, LEN(seller_city) - 3)
+WHERE seller_zip_code_prefix = 23943;
+
+-- Fix name city 'sbc/sp'
+UPDATE silver.erp_sellers
+SET seller_city = 'sao bernardo do campo'
+WHERE seller_zip_code_prefix = 09726;
+
+-- Fix name city 'vendas@creditparts.com.br'
+UPDATE silver.erp_sellers
+SET seller_city = 'maringa'
+WHERE seller_zip_code_prefix = 87025;
+
+--Replace with sao paulo
+UPDATE silver.erp_sellers
+SET seller_city = 'sao paulo'
+WHERE seller_zip_code_prefix IN(04557 , 03581 ,  02051 , 03363);
 ```
 ---
 
