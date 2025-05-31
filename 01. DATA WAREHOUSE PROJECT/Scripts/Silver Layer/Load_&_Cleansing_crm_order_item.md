@@ -273,7 +273,7 @@ WHERE ABS(op.total_order_payment - tp.total_transaction_payment) > 0.01 --to ver
    There are 2 situations:
    - order payment > actual transaction payment --> it means the customer used a coupon to reduce price
    - order payment < actual transaction payment --> it means the customer rpaid something more at teh customs /*
--- For these cases we'll replace the total_order_payment with the payment_value
+-- For these cases we'll replace the total_order_payment with the payment_value in the gold layer
 ```
 ---
 
