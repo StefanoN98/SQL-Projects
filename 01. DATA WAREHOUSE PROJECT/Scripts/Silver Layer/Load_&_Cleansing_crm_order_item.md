@@ -246,7 +246,7 @@ WITH order_payment AS (
 transact_payment AS (
     SELECT 
         order_id,
-        SUM(payment_value) AS total_transaction_payment
+        SUM(payment_value) AS total_payment_value
     FROM silver.crm_order_payments
     GROUP BY order_id
 )
@@ -254,14 +254,14 @@ transact_payment AS (
 SELECT 
     op.order_id,
     op.total_order_payment,
-    tp.total_transaction_payment
+    tp.total_payment_value
 FROM order_payment op
 LEFT JOIN transact_payment tp
     ON op.order_id = tp.order_id
-WHERE ABS(op.total_order_payment - tp.total_transaction_payment) > 0.01 --to verify detect also small differences
+WHERE ABS(op.total_order_payment - tp.total_payment_value) > 0.01 --to verify detect also small differences
 -- 380 rows detected
 
-| order_id                           | total_order_payment  | total_transaction_payment  |
+| order_id                           | total_order_payment  | total_payment_value |
 |------------------------------------|----------------------|----------------------------|
 | 03b218d39c422c250f389120c531b61f   | 50,24                | 58,03                      |
 | 04993613aee4046caf92ea17b316dcfb   | 524,32               | 524,28                     |
