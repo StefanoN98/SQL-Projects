@@ -221,6 +221,22 @@ FROM silver.crm_order_items;
 
 ---
 
+## Total Order Payment Derivation
+```sql
+  SELECT *,
+	price + freight_value AS total_order_payment
+FROM bronze.crm_order_items
+
+| price  | freight_value  | total_order_payment |
+|--------|----------------|---------------------|
+| 58.90  | 13.29          | 72.19               |
+| 239.90 | 19.93          | 259.83              |
+| 199.00 | 17.87          | 216.87              |
+```
+
+---
+
+
 
 ✅ Data cleaned!
 
@@ -242,13 +258,15 @@ CREATE TABLE silver.crm_order_items (
     shipping_limit_date DATETIME,
     price FLOAT,
     freight_value FLOAT,
+    total_order_payment FLOAT, --Added derived column
     shipping_type NVARCHAR(50), --Added derived column
     dwh_create_date DATETIME2 DEFAULT GETDATE()
 );
 
 INSERT INTO silver.crm_order_items (
     order_id, order_item_id, product_id, seller_id,
-    shipping_limit_date, price, freight_value, shipping_type
+    shipping_limit_date, price, freight_value,
+    total_order_payment, shipping_type
 )
 SELECT 
     order_id,
@@ -258,6 +276,7 @@ SELECT
     shipping_limit_date,
     price,
     freight_value,
+    price + freight_value AS total_order_payment
     CASE 
         WHEN freight_value > 0 THEN 'Standard Shipping'
         ELSE 'Free Shipping'
