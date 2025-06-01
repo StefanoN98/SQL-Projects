@@ -57,7 +57,7 @@ FROM bronze.crm_orders
 | **DATA INTEGRITY** | Check Lenght           | Ensure `order_id` and `customer_id` have 32 alphanumeric characters                  |
 |                    | Check Duplicates       | Check for duplicates on `order_id`                                                   |
 |                    | Distinct Values        | Validate distinct status values on `order_status`                                    |
-|**DATA CONSISTENCY**| Status-Date Consistency| Ensure date fields align with expected `order_status` behavior ((created → approved → processing → invoiced → shipped → delivered)|
+|**DATA CONSISTENCY**| Status-Date Consistency| Ensure date fields align with expected `order_status` behavior (created → approved → processing → invoiced → shipped → delivered)|
 |                    | Temporal Logic         | Validate correct sequence between status timestamps  |
 | **DATA VALIDATION**| Date Range Validation  | Check min/max ranges for all date fields                                             |
 
