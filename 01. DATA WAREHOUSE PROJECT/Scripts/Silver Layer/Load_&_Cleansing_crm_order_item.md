@@ -198,6 +198,15 @@ FROM ranked_items
 WHERE order_item_id <> rn
 ORDER BY order_id;
 -- Each following item has the correct senquence number
+
+| order_id                           | order_item_id | rn |
+|-----------------------------------|---------------|----|
+| 0019c29108428acffd089c36103c9440  | 1             | 1  |
+| 001ab0a7578dd66cd4b0a71f5b6e1e41  | 1             | 1  |
+| 001ab0a7578dd66cd4b0a71f5b6e1e41  | 2             | 2  |
+| 001ab0a7578dd66cd4b0a71f5b6e1e41  | 3             | 3  |
+| 001ac194d4a326a6fa99b581e9a3d963  | 1             | 1  |
+
 ```
 
 ---
