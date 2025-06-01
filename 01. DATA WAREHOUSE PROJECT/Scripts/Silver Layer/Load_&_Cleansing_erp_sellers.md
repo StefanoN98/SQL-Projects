@@ -296,6 +296,14 @@ JOIN zip_city_duplicates d
  AND s.seller_city = d.seller_city
 ORDER BY s.seller_zip_code_prefix, s.seller_city;
 
+| seller_zip_code_prefix | seller_city    | seller_state |
+|------------------------|----------------|---------------|
+| 21210                  | rio de janeiro | RN            |
+| 21210                  | rio de janeiro | RJ            |
+| 22783                  | rio de janeiro | RJ            |
+| 22783                  | rio de janeiro | SP            |
+
+
 --UPDATE statement: fix with the correct seller_state
 -- Fix country  RJ'
 UPDATE silver.erp_sellers
