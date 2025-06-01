@@ -48,10 +48,8 @@ FROM bronze.erp_sellers
 |                    | Length Validation    | Confirm `seller_id` has exactly 32 characters                                      |
 |                    | Length Validation    | Ensure `seller_zip_code_prefix` is 5 characters                                    |
 |                    | Length Validation    | Confirm `seller_state` is 2 characters only                                        |
-| **DATA VALIDATION**| Character Cleaning   | Remove special characters (`/`, `-`, `\`) and trim values in `seller_city`         |
-|                    | Unicode Normalization| Replace foreign characters like `âã` with standard letters in `seller_city`        |
-| **STANDARDIZATION**| Value Formatting     | Truncate extra text after `/`, `-`, or `\` in `seller_city`                        |
-|                    | Value Correction     | Convert `brasil,RS` → `RS` in `seller_state`                                       |
+|                    |Unwanted Characters   | Remove special characters (`/`, `-`, `\`) and trim values in `seller_city`         |
+|**DATA CONSISTENCY**| Unicode Normalization| Replace foreign characters like `âã` with standard letters in `seller_city`        |
 
 
 ---
