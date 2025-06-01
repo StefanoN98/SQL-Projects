@@ -150,6 +150,11 @@ SELECT MAX(product_name_length) AS max_product_name_lenght ,
        MAX(product_description_length) AS max_product_description_length,
        MAX(product_photos_qty) AS max_product_photos_qty
 FROM silver.erp_products
+
+| max_product_name_lenght | max_product_description_length | max_product_photos_qty  |
+|-------------------------|--------------------------------|-------------------------|
+| 76                      | 3992                           | 20                      |
+
 ```
 ---
 
