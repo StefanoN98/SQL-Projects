@@ -137,7 +137,7 @@ ORDER BY customer_city
 -- 1 value found : 'quilometro 14 do mutum' --> it is correct becuase it represents a brasilian district name
 ```
 
-### 2) Check if there are results with not standard characters
+### 2) Check if there are results with not standard characters or wrong names
 ```sql
 SELECT *
 FROM silver.erp_customers
@@ -151,6 +151,16 @@ ORDER BY customer_city
 |bandeirantes d'oeste |
 |biritiba-mirim       |
 |cipo-guacu           |
+
+--Replace double space
+UPDATE silver.erp_customers
+SET customer_city= REPLACE(customer_city, '  ', ' ')
+WHERE customer_city LIKE '%  %';
+
+-- Fix with correct name city
+UPDATE silver.erp_customers
+SET customer_city = 'embu das artes'
+WHERE customer_city = 'embu'
 ```
 ---
 
