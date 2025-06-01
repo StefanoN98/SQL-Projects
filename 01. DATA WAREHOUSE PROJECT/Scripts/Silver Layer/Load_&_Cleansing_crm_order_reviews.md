@@ -65,7 +65,7 @@ FROM bronze.crm_order_reviews;
 |                     | Title/Message Normalization| Replace NULLs or invalid with `'No title'`, `'No comment'`, or `'no sense'`         |
 | **FORMAT & TYPE**   | Whitespace Cleanup         | Remove double quotes and unwanted characters from text fields                       |
 |                     | Timestamp Format           | Validate and convert date strings to proper `DATETIME` (length = 19)                |
-| **LOGICAL CHECKS**  | Date Sequence Validation   | Ensure `review_creation_date` < `review_answer_timestamp`                           |
+| **DATA CONSISTENCY**| Date Sequence Validation   | Ensure `review_creation_date` < `review_answer_timestamp`                           |
 | **PERFORMANCE**     | Column Type Optimization   | Use `ALTER TABLE` to shrink column types and improve storage & indexing             |
 
 ---
