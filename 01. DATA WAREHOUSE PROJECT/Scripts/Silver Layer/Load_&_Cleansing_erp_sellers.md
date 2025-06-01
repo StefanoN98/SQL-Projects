@@ -169,7 +169,7 @@ WHERE seller_zip_code_prefix = 87025;
 --Replace with sao paulo
 UPDATE silver.erp_sellers
 SET seller_city = 'sao paulo'
-WHERE seller_zip_code_prefix IN(04557 , 03581 ,  02051 , 03363);
+WHERE seller_zip_code_prefix IN(04557 , 03581 ,  02051 , 03363, 05303);
 
 /*Other issues detected:
 
@@ -209,7 +209,37 @@ WHERE seller_zip_code_prefix = 13456
 -- Fix replacing sao paulo
 UPDATE silver.erp_sellers
 SET seller_city = 'sao paulo'
-WHERE seller_zip_code_prefix IN (04776,05141, 12903, 16021)   
+WHERE seller_zip_code_prefix IN (04776,05141, 12903, 16021,01207,08050)     
+
+-- Fix with correct name city
+UPDATE silver.erp_sellers
+SET seller_city = 'osasco'
+WHERE seller_zip_code_prefix = 06280
+
+-- Fix with correct name city
+UPDATE silver.erp_sellers
+SET seller_city = 'taboao da serra'
+WHERE seller_zip_code_prefix IN ( 06760, 06764)
+
+-- Fix with correct name city
+UPDATE silver.erp_sellers
+SET seller_city = 'guarulhos'
+WHERE seller_city = 'garulhos'
+
+-- Fix with correct name city
+UPDATE silver.erp_sellers
+SET seller_city = 'aruja'
+WHERE seller_zip_code_prefix = 07411
+
+-- Fix with correct name city
+UPDATE silver.erp_sellers
+SET seller_city = 'santo andre'
+WHERE seller_zip_code_prefix =  09190
+
+-- Fix with correct name city
+UPDATE silver.erp_sellers
+SET seller_city = 'sao bernardo do campo'
+WHERE seller_zip_code_prefix =  09721
 ```
 ---
 
