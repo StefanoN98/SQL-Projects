@@ -50,7 +50,7 @@ FROM bronze.erp_geolocation
 |                       | Unwanted Characters          | Remove diacritic/special characters on `geolocation_city`                        |
 |                       | Unwanted Characters          | Remove and replace symbols on `geolocation_city`                                 |
 |                       | Check Lenght                 | Ensure all values have 2 characters on `geolocation_state`                       |
-| **Referential Check** | `zip_code` mapping           | Verify completeness against `erp_customers` and `erp_sellers` for shared prefixes|
+| **DATA CONSISTENCY**  | Referential Check            | Verify completeness against `erp_customers` and `erp_sellers` for shared prefixes|
 
 ---
 
