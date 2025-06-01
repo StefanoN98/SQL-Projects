@@ -59,7 +59,7 @@ FROM bronze.crm_order_items;
 | **DATA VALIDATION**| Date Validity           | Ensure `shipping_date` is within reasonable date range       |
 | **BUSINESS RULES** | Check Sequence          | Ensure item numbers are sequential within each `order_id`    |
 |                    | Derived Column          | Derive `shipping_type` from `freight_value`                  |
-
+|                    | Derived Column          | Derive `total_order_payment` as `price` + `freight_value`    |
 
 ---
 
