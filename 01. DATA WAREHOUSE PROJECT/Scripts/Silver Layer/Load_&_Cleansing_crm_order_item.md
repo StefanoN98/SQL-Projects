@@ -199,7 +199,7 @@ WHERE order_item_id <> rn
 ORDER BY order_id;
 -- Each following item has the correct senquence number
 
-| order_id                           | order_item_id | rn |
+| order_id                          | order_item_id | rn |
 |-----------------------------------|---------------|----|
 | 0019c29108428acffd089c36103c9440  | 1             | 1  |
 | 001ab0a7578dd66cd4b0a71f5b6e1e41  | 1             | 1  |
@@ -270,7 +270,7 @@ LEFT JOIN transact_payment tp
 WHERE ABS(op.total_order_payment - tp.total_payment_value) > 0.01 --to verify detect also small differences
 -- 380 rows detected
 
-| order_id                           | total_order_payment  | total_payment_value |
+| order_id                           | total_order_payment  | total_payment_value        |
 |------------------------------------|----------------------|----------------------------|
 | 03b218d39c422c250f389120c531b61f   | 50,24                | 58,03                      |
 | 04993613aee4046caf92ea17b316dcfb   | 524,32               | 524,28                     |
