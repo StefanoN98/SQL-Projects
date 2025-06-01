@@ -58,7 +58,7 @@ FROM bronze.crm_orders
 |                    | Check Duplicates       | Check for duplicates on `order_id`                                                   |
 |                    | Distinct Values        | Validate distinct status values on `order_status`                                    |
 |**DATA CONSISTENCY**| Status-Date Consistency| Ensure date fields align with expected `order_status` behavior (e.g., delivered)     |
-|                    | Temporal Logic         | Validate correct sequence between status timestamps (purchase → approved → delivery) |
+|                    | Temporal Logic         | Validate correct sequence between status timestamps (purchase → approved → delivery carrier →  delivery customer ) |
 | **DATA VALIDATION**| Date Range Validation  | Check min/max ranges for all date fields                                             |
 
 ---
