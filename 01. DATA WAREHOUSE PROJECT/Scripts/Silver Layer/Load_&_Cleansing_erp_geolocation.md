@@ -45,11 +45,11 @@ FROM bronze.erp_geolocation
 ## ✅ Checks Summary
 | Type                  | Column                       | Check Description                                                                |
 |-----------------------|------------------------------|----------------------------------------------------------------------------------|
-| **Data Integrity**    | `geolocation_zip_code_prefix`| All values must have exactly 5 characters                                        |
+| **Data Integrity**    | Check Lenght                 | All `geolocation_zip_code_prefix` must have exactly 5 characters                 |
 |                       | `geolocation_zip_code_prefix`| Ensure it covers all zip codes present in customers and sellers tables           |
-| **Standardization**   | `geolocation_city`           | Remove diacritic/special characters and lowercase standardization                |
-|                       | `geolocation_city`           | Remove symbols such as `*`, `.`, `º`, `%`, `£`, `³`, and replace `-` with space  |
-| **Data Integrity**    | `geolocation_state`          | Ensure all values have 2 characters only (remove trailing semicolons)            |
+|                       | Unwanted Characters          | Remove diacritic/special characters on `geolocation_city`                        |
+|                       | Unwanted Characters          | Remove and replace symbols on `geolocation_city`                                 |
+|                       | Check Lenght                 | Ensure all values have 2 characters on `geolocation_state`                       |
 | **Referential Check** | `zip_code` mapping           | Verify completeness against `erp_customers` and `erp_sellers` for shared prefixes|
 
 ---
