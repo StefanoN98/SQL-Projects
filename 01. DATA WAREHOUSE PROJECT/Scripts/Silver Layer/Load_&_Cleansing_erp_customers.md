@@ -164,6 +164,18 @@ GROUP BY LEN(customer_state)
 ORDER BY LEN(customer_state) DESC
 -- All the customer_state have lenght 2
 ```
+### 2) Verify that a zip and city belong to the same country
+```sql
+SELECT 
+    customer_zip_code_prefix,
+    customer_city
+FROM silver.erp_customers
+GROUP BY 
+    customer_zip_code_prefix,
+    customer_city
+HAVING COUNT(DISTINCT customer_state) > 1;
+-- no zip_code_prefix + city associated to more countries
+```
 ---
 ✅ Data cleaned!
 
