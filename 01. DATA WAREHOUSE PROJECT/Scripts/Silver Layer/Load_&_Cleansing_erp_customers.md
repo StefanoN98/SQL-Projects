@@ -139,6 +139,7 @@ ORDER BY customer_city
 
 ### 2) Check if there are results with not standard characters
 ```sql
+-- Check for non standard characters
 SELECT *
 FROM silver.erp_customers
 WHERE customer_city COLLATE Latin1_General_BIN  LIKE '%[^a-zA-Z0-9 ]%' --empty spaces are allowed
@@ -152,7 +153,7 @@ ORDER BY customer_city
 |biritiba-mirim       |
 |cipo-guacu           |
 
---Replace double space
+--Replace double space with standard empty space
 UPDATE silver.erp_customers
 SET customer_city= REPLACE(customer_city, '  ', ' ')
 WHERE customer_city LIKE '%  %';
