@@ -46,20 +46,20 @@ FROM bronze.crm_order_items;
 
 ## ✅ Checks Summary
 
-| Type               | Category                | Check Description                                            |
-|--------------------|-------------------------|------------------------------------------------------------- |
-| **DATA INTEGRITY** | Duplicates Values       | Check for duplicates on (`order_id`, `order_item_id`)        |
-|                    | NULL Values             | Check for NULL values                                        |
-|                    | Empty Strings           | Detect empty string values in key fields                     |
-|                    | Unwanted Spaces         | Remove unwanted spaces from text fields                      |
-|                    | Check Length            | Validate that `order_id` has exactly 32 characters           |
-|                    | Numeric Range           | Ensure `price` and `freight_value` are non-negative          |
-|                    | Logical Consistency     | Detect `price = 0` with positive `freight_value`             |
-|                    | Value Distribution      | Check value distribution in `order_item_id`                  |
-| **DATA VALIDATION**| Date Validity           | Ensure `shipping_date` is within reasonable date range       |
-| **BUSINESS RULES** | Check Sequence          | Ensure item numbers are sequential within each `order_id`    |
-|                    | Derived Column          | Derive `shipping_type` from `freight_value`                  |
-|                    | Derived Column          | Derive `total_order_payment` as `price` + `freight_value`    |
+| Type                 | Category                | Check Description                                            |
+|----------------------|-------------------------|------------------------------------------------------------- |
+| **DATA INTEGRITY**   | Duplicates Values       | Check for duplicates on (`order_id`, `order_item_id`)        |
+|                      | NULL Values             | Check for NULL values                                        |
+|                      | Empty Strings           | Detect empty string values in key fields                     |
+|                      | Unwanted Spaces         | Remove unwanted spaces from text fields                      |
+|                      | Check Length            | Validate that `order_id` has exactly 32 characters           |
+|                      | Numeric Range           | Ensure `price` and `freight_value` are non-negative          |
+|                      | Logical Consistency     | Detect `price = 0` with positive `freight_value`             |
+|                      | Value Distribution      | Check value distribution in `order_item_id`                  |
+| **DATA VALIDATION**  | Date Validity           | Ensure `shipping_date` is within reasonable date range       |
+| **DATA CONSISTENCY** | Check Sequence          | Ensure item numbers are sequential within each `order_id`    |
+| **BUSINESS RULES**   | Derived Column          | Derive `shipping_type` from `freight_value`                  |
+|                      | Derived Column          | Derive `total_order_payment` as `price` + `freight_value`    |
 
 ---
 
