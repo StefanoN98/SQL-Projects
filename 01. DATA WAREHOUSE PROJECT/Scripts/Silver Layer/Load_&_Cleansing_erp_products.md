@@ -53,18 +53,18 @@ FROM bronze.erp_products
 
 ## ✅ Checks Summary
 
-| Type               | Category                  | Check Description                                                                 |
-|--------------------|---------------------------|------------------------------------------------------------------------------------|
-| **DATA INTEGRITY** | NULL Values               | Ensure `product_id` is not NULL                                                    |
-|                    | Duplicates                | Check for duplicate `product_id`                                                   |
-|                    | Length Validation         | Ensure `product_id` has 32 characters                                              |
-|                    | NULL Values               | Identify and handle NULLs in `product_category_name`                               |
-|                    | NULL Values               | Set `product_name_length`, `product_description_length`, `product_photos_qty` to 0 if NULL |
-|                    | NULL Values               | Set weight/dimension columns to 0 if product info is not available                |
-|                    | NULL Values               | Manually impute missing values for a specific product with similar data            |
-| **DATA VALIDATION**| Category Completeness     | Replace NULL `product_category_name` with 'product_name_not_available'            |
-|                    | Value Completeness        | Check maximum values of `product_name_length`, `product_description_length`, `product_photos_qty` |
-| **BUSINESS RULES** | Imputation Strategy       | For missing dimensions, reuse known values from similar products                   |
+| Type                | Category              | Check Description                                                                		  |
+|------------------- -|-----------------------|---------------------------------------------------------------------------------------------------|
+| **DATA INTEGRITY**  | NULL Values           | Ensure `product_id` is not NULL                                                   	 	  |
+|                     | Duplicates            | Check for duplicate `product_id`                                                 		  |
+|                     | Length Validation     | Ensure `product_id` has 32 characters                                            		  |
+|                     | NULL Values           | Identify and handle NULLs in `product_category_name`                           		   	  |
+|                     | NULL Values           | Set `product_name_length`, `product_description_length`, `product_photos_qty` to 0 if NULL 	  |
+|                     | NULL Values           | Set weight/dimension columns to 0 if product info is not available                                |
+|                     | NULL Values           | Manually impute missing values for a specific product with similar data         		  |
+|                     | Value Range           | Check maximum values of `product_name_length`, `product_description_length`, `product_photos_qty` |
+| **DATA CONSISTENCY**| Category Completeness | Replace NULL `product_category_name` with 'product_name_not_available'          		  |
+| **BUSINESS RULES** | Imputation Strategy    | For missing dimensions, reuse known values from similar products                 		  |
 
 ---
 
