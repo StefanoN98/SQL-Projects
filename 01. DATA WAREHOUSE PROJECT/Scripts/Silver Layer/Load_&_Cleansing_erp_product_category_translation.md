@@ -44,7 +44,7 @@ FROM bronze.erp_product_category_translation
 | Type                  | Category                  | Check Description                                                                   |
 |-----------------------|---------------------------|-------------------------------------------------------------------------------------|
 | **DATA INTEGRITY**    | NULL / Missing Values     | Check for missing `product_category_name_english` in translation table              |
-| **REFERENTIAL**       | Cross-table Consistency   | Ensure all `product_category_name` in `erp_products` have corresponding translation |
+| **DATA CONSISTENCY**  | Cross-table Consistency   | Ensure all `product_category_name` in `erp_products` have corresponding translation |
 | **DATA COMPLETENESS** | Manual Enrichment         | Add missing translations for uncovered categories (`pc_gamer`, etc.)                |
 
 
