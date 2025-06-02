@@ -1,4 +1,5 @@
 This function based on how zip code in Brazil works associate to each zip_code the related state, checking on the first 3 character
+This rule will guarantee that the state for each zip_code is consistent and correct
 
 ```sql
 CREATE FUNCTION dbo.GetStatoFromZipPrefix (@prefixStr VARCHAR(3))
