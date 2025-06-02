@@ -242,7 +242,14 @@ SET seller_state= RIGHT(seller_state,2)
 WHERE LEN(seller_state)> 2
 ```
 
-### 2) Verify that a zip and city belong to the same country
+### 2) Associate correct state using GetStatoFromZipPrefix Function
+```sql
+UPDATE silver.erp_sellers
+SET seller_state = dbo.GetStatoFromZipPrefix(LEFT(seller_zip_code_prefix, 3));
+-- All seller_state are correctly settled based on the seller_zip_code_prefix
+```
+
+### 3) Verify that a zip and city belong to the same country
 ```sql
 SELECT 
     seller_zip_code_prefix,
@@ -252,66 +259,7 @@ GROUP BY
     seller_zip_code_prefix,
     seller_city
 HAVING COUNT(DISTINCT seller_state) > 1;
--- 15 rows found
-
--- Display the result
-WITH zip_city_duplicates AS (
-    SELECT 
-        seller_zip_code_prefix,
-        seller_city
-    FROM silver.erp_sellers
-    GROUP BY 
-        seller_zip_code_prefix,
-        seller_city
-    HAVING COUNT(DISTINCT seller_state) > 1
-)
-SELECT s.seller_zip_code_prefix,
-	   s.seller_city,
-	   s.seller_state
-FROM silver.erp_sellers s
-JOIN zip_city_duplicates d
-  ON s.seller_zip_code_prefix = d.seller_zip_code_prefix
- AND s.seller_city = d.seller_city
-ORDER BY s.seller_zip_code_prefix, s.seller_city;
-
-| seller_zip_code_prefix | seller_city    | seller_state |
-|------------------------|----------------|---------------|
-| 21210                  | rio de janeiro | RN            |
-| 21210                  | rio de janeiro | RJ            |
-| 22783                  | rio de janeiro | RJ            |
-| 22783                  | rio de janeiro | SP            |
-
-
---UPDATE statement: fix with the correct seller_state
--- Fix country  RJ'
-UPDATE silver.erp_sellers
-SET seller_state = 'RJ'
-WHERE seller_zip_code_prefix IN ('21210' , '22783')
-
--- Fix country  'MG'
-UPDATE silver.erp_sellers
-SET seller_state = 'MG'
-WHERE seller_zip_code_prefix  IN ('31160' , '36010' , '37795','83321','85960')
-
--- Fix country 'BA'
-UPDATE silver.erp_sellers
-SET seller_state = 'BA'
-WHERE seller_zip_code_prefix  = '44600'
-
--- Fix country 'PR'
-UPDATE silver.erp_sellers
-SET seller_state = 'PR'
-WHERE seller_zip_code_prefix  IN ('80240' , '81020','81560','83020')
-
--- Fix country 'SC'
-UPDATE silver.erp_sellers
-SET seller_state = 'SC'
-WHERE seller_zip_code_prefix  IN ('88301', '89052')
-
--- Fix country 'RS'
-UPDATE silver.erp_sellers
-SET seller_state = 'RS'
-WHERE seller_zip_code_prefix  = '95076'
+-- No issue detected
 ```
 ---
 ✅ Data cleaned!
