@@ -1,4 +1,4 @@
-per mappare prefissi e città useremo questo legame
+BUSINESS RULE:per mappare prefissi e città useremo questo legame
 in particolare dalle prime 3 cifre del prefisso è possibile associare subito lo stato
 
 
