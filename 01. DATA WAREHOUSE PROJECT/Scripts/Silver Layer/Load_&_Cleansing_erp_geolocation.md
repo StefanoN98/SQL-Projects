@@ -165,6 +165,12 @@ UPDATE silver.erp_geolocation
 SET geolocation_state = TRIM(';' FROM geolocation_state)
 WHERE geolocation_state LIKE '%;%';
 ```
+
+--2) Associate correct state using GetStatoFromZipPrefix Function
+```sql
+UPDATE silver.erp_geolocation
+SET geolocation_state = dbo.GetStatoFromZipPrefix(LEFT(geolocation_zip_code_prefix, 3));
+```
 ---
 
 ## Referential check on `geolocation_zip_code_prefix`
