@@ -170,7 +170,15 @@ GROUP BY LEN(customer_state)
 ORDER BY LEN(customer_state) DESC
 -- All the customer_state have lenght 2
 ```
-### 2) Verify that a zip and city belong to the same country
+
+### 2) Associate correct state using GetStatoFromZipPrefix Function
+```sql
+UPDATE silver.erp_customers
+SET customer_state = dbo.GetStatoFromZipPrefix(LEFT(customer_zip_code_prefix, 3));
+-- All customer_state are correctly settled based on the customer_zip_code_prefix
+```
+
+### 3) Verify that a zip and city belong to the same country
 ```sql
 SELECT 
     customer_zip_code_prefix,
