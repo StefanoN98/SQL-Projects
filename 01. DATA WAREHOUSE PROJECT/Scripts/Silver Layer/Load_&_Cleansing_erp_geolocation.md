@@ -170,6 +170,7 @@ WHERE geolocation_state LIKE '%;%';
 ```sql
 UPDATE silver.erp_geolocation
 SET geolocation_state = dbo.GetStatoFromZipPrefix(LEFT(geolocation_zip_code_prefix, 3));
+-- All geolocation_state are correctly settled based on the geolocation_zip_code_prefix
 ```
 ---
 
