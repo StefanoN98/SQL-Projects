@@ -50,6 +50,12 @@ This input parameter represents the **first three characters** of the Brazilian 
 The function expects this to be a **string containing digits only** (e.g., `'010'`, `'290'`, `'700'`).
 
 ---
+### 🎯 Purpose
+
+The function was created to **ensure consistency** in our datasets, as we often encountered zip codes associated with multiple states or incorrect states.  
+By standardizing state assignment based on official zip code prefixes, we **guarantee consistency and correctness** whenever we add or integrate new data.
+
+---
 
 ### 🧠 Function Logic
 
