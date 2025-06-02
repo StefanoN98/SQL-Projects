@@ -1,5 +1,8 @@
+per mappare prefissi e città useremo questo legame
+in particolare dalle prime 3 cifre del prefisso è possibile associare subito lo stato
 
-| Prefix CEP (Xxxxx) | Stato | Countyr Name             |
+
+| Prefix CEP (Xxxxx) | Stato | Country Name             |
 |----------------------|-------|------------------------|
 | 0xxxx                | SP    | São Paulo              |
 | 1xxxx                | SP    | São Paulo (resto stato)|
