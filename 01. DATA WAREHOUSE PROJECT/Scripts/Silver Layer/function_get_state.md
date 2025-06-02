@@ -1,4 +1,5 @@
-BUSINESS RULE:per mappare prefissi e città useremo questo legame
+# Mapping Brazilian Zip Code Prefixes to States
+To associate Brazilian states with zip codes (CEP), we use a standard mapping based on the prefix of the zip code.The mapping links the first digit (or first few digits) of the CEP to the corresponding state, as shown in the table below: 
 
 | Prefix CEP (Xxxxx) | Stato | Country Name             |
 |----------------------|-------|------------------------|
@@ -31,9 +32,30 @@ BUSINESS RULE:per mappare prefissi e città useremo questo legame
 |                      | SC    | Santa Catarina         |
 | 9xxxx                | RS    | Rio Grande do Sul      |
 
-In particular we'll use a function that checks the first 3 characters of the zip code and give back the related brazilian state.
-This function based on how zip code in Brazil works associate to each zip_code the related state, checking on the first 3 character
-This rule will guarantee that the state for each zip_code is consistent and correct
+## Implementation Detail
+We implement a function that extracts the first three digits of a Brazilian zip code (CEP) and returns the associated state based on this prefix. This method guarantees that the assigned state is consistent and accurate according to the official postal code structure.
+
+### Parameters
+@prefixStr (VARCHAR(3)): This input parameter represents the first three characters of the Brazilian zip code (CEP). The function expects this to be a string containing digits only (e.g., '010', '290', '700').
+
+### Function Logic
+**1. Input Validation**:
+The function first checks if the input string @prefixStr is numeric using the ISNUMERIC() function. If the input is not numeric, the function returns NULL indicating an invalid or unrecognized prefix.
+
+**2. Conversion**:
+If the input is numeric, the function casts the string to an integer @prefix to facilitate numerical comparison.
+
+**3. Prefix Range Mapping**:
+The function compares the numeric prefix against predefined numeric ranges that correspond to different Brazilian states. Each range represents the first three digits of the zip code prefixes allocated to a particular state. For example:
+Prefixes between 1 and 199 correspond to São Paulo (SP).
+Prefixes between 200 and 289 correspond to Rio de Janeiro (RJ).
+And so on, for all states.
+
+**4. Return Value**:
+When the prefix falls within a specific range, the function returns the two-letter abbreviation of the corresponding state (e.g., 'SP', 'RJ', 'MG').
+
+**5. Fallback:**
+If the prefix does not match any known range, the function returns NULL, indicating no valid state was found for that prefix.
 
 ```sql
 CREATE FUNCTION dbo.GetStatoFromZipPrefix (@prefixStr VARCHAR(3))
