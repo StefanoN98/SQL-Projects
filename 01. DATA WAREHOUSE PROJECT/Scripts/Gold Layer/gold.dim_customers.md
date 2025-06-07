@@ -91,4 +91,6 @@ WHERE g.city IS NULL OR g.country IS NULL
 ```
 ---
 
-✅ View temporarily validated. Awaiting full **Gold Layer** integration for final version.
+---
+
+📌 **Ready to be used as a customers dimension in the Gold Layer and for BI analysis**!
