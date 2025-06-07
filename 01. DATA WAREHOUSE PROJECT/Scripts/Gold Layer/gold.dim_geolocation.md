@@ -1,34 +1,153 @@
-BUSINESS RULE:per mappare prefissi e città useremo questo legame
-in particolare dalle prime 3 cifre del prefisso è possibile associare subito lo stato
+# 🏗️ Dimension View Creation & Validation: `dim_geolocation` (Silver ➝ Gold Layer)
+
+> This script creates and validates the `gold.dim_geolocation` dimension view.  
+> The goal is to unify and deduplicate geolocation data coming from `erp_geolocation`, `erp_customers`, and `erp_sellers`.
+
+---
+
+## Gold Layer View Creation for `dim_geolocation`
+
+```sql
+IF OBJECT_ID('gold.dim_geolocation', 'V') IS NOT NULL
+    DROP VIEW gold.dim_geolocation;
+GO
+
+CREATE VIEW gold.dim_geolocation AS
+WITH append_table AS (
+    SELECT DISTINCT 
+        geolocation_zip_code_prefix AS zip_code,
+        TRIM(geolocation_city) AS city,
+        geolocation_state AS country,
+        CONCAT(geolocation_zip_code_prefix, '_', TRIM(geolocation_city), '_', geolocation_state) AS location_key
+    FROM silver.erp_geolocation
+
+    UNION ALL
+
+    SELECT DISTINCT
+        c.customer_zip_code_prefix AS zip_code,
+        TRIM(c.customer_city) AS city,
+        c.customer_state AS country,
+        CONCAT(c.customer_zip_code_prefix, '_', TRIM(c.customer_city), '_', c.customer_state) AS location_key
+    FROM silver.erp_customers c
+
+    UNION ALL
+
+    SELECT DISTINCT
+        s.seller_zip_code_prefix AS zip_code,
+        TRIM(s.seller_city) AS city,
+        s.seller_state AS country,
+        CONCAT(s.seller_zip_code_prefix, '_', TRIM(s.seller_city), '_', s.seller_state) AS location_key
+    FROM silver.erp_sellers s
+),
+
+-- Step 1: most frequent city for each zip_code
+city_rank AS (
+    SELECT 
+        zip_code,
+        TRIM(city) AS city,
+        COUNT(*) AS city_freq,
+        ROW_NUMBER() OVER (PARTITION BY zip_code ORDER BY COUNT(*) DESC) AS rn_city
+    FROM append_table
+    GROUP BY zip_code, city
+)
+
+SELECT DISTINCT
+       a.zip_code,
+       TRIM(c.city) AS city,
+       a.country
+FROM append_table a
+LEFT JOIN city_rank c
+ON a.zip_code = c.zip_code
+WHERE c.rn_city = 1;
+```
+
+---
+
+## ✅ Checks Summary
+
+| Type               | Category                | Check Description                                                                 |
+|--------------------|-------------------------|------------------------------------------------------------------------------------|
+| **DATA INTEGRITY** | View Creation           | Created with UNION from `geolocation`, `customers`, and `sellers` tables           |
+| **DEDUPLICATION**  | Zip Code Aggregation    | Ensures one city per `zip_code`, based on most frequent occurrence                 |
+| **REFERENTIAL**    | Customers Zip Coverage  | Verifies all `customer_zip_code_prefix` exist in `dim_geolocation`                |
+| **REFERENTIAL**    | Sellers Zip Coverage    | Verifies all `seller_zip_code_prefix` exist in `dim_geolocation`                  |
+| **DATA VALIDITY**  | City-Country Consistency| Checks that cities belong to a single state/country; exceptions are documented     |
+
+---
+
+## Sample Output
+
+```sql
+SELECT *
+FROM gold.dim_geolocation
+ORDER BY zip_code;
+-- 19,177 unique locations
+
+| zip_code | city                | country |
+|----------|---------------------|---------|
+| 04224    | sao paulo           | SP      |
+| 04567    | sao paulo           | SP      |
+| 05276    | sao paulo           | SP      |
+| 67143    | ananindeua          | PA      |
+| 31680    | belo horizonte      | MG      |
+| 83506    | almirante tamandare | PR      |
+| 03266    | sao paulo           | SP      |
+```
+
+---
+
+## Referential Checks
+
+```sql
+-- Check if all customer ZIP codes are covered
+SELECT customer_zip_code_prefix
+FROM silver.erp_customers
+WHERE customer_zip_code_prefix NOT IN (
+    SELECT zip_code FROM gold.dim_geolocation
+);
+-- ✅ All customer locations are covered
+
+-- Check if all seller ZIP codes are covered
+SELECT seller_zip_code_prefix
+FROM silver.erp_sellers
+WHERE seller_zip_code_prefix NOT IN (
+    SELECT zip_code FROM gold.dim_geolocation
+);
+-- ✅ All seller locations are covered
+```
+
+---
+
+## Multiple States with Same City Name
+
+```sql
+SELECT 
+    zip_code, city, country, COUNT(*) AS frequency
+FROM gold.dim_geolocation
+WHERE city IN (
+    SELECT city
+    FROM gold.dim_geolocation
+    GROUP BY city
+    HAVING COUNT(DISTINCT country) > 1
+)
+GROUP BY zip_code, city, country
+ORDER BY city, frequency DESC;
+```
 
 
-| Prefix CEP (Xxxxx) | Stato | Country Name             |
-|----------------------|-------|------------------------|
-| 0xxxx                | SP    | São Paulo              |
-| 1xxxx                | SP    | São Paulo (resto stato)|
-| 2xxxx                | RJ    | Rio de Janeiro         |
-|                      | ES    | Espírito Santo         |
-| 3xxxx                | MG    | Minas Gerais           |
-| 4xxxx                | BA    | Bahia                  |
-|                      | SE    | Sergipe                |
-| 5xxxx                | PE    | Pernambuco             |
-|                      | AL    | Alagoas                |
-|                      | PB    | Paraíba                |
-|                      | RN    | Rio Grande do Norte    |
-| 6xxxx                | CE    | Ceará                  |
-|                      | PI    | Piauí                  |
-|                      | MA    | Maranhão               |
-|                      | PA    | Pará                   |
-|                      | AP    | Amapá                  |
-|                      | AM    | Amazonas               |
-|                      | RR    | Roraima                |
-|                      | AC    | Acre                   |
-| 7xxxx                | DF    | Distrito Federal       |
-|                      | GO    | Goiás                  |
-|                      | TO    | Tocantins              |
-|                      | RO    | Rondônia               |
-|                      | MT    | Mato Grosso            |
-|                      | MS    | Mato Grosso do Sul     |
-| 8xxxx                | PR    | Paraná                 |
-|                      | SC    | Santa Catarina         |
-| 9xxxx                | RS    | Rio Grande do Sul      |
+| zip_code | city        | country | frequency |
+|----------|-------------|---------|-----------|
+| 39790    | agua boa    | MG      | 1         |
+| 78635    | agua boa    | MT      | 1         |
+| 57490    | agua branca | AL      | 1         |
+| 58748    | agua branca | PB      | 1         |
+| 64460    | agua branca | PI      | 1         |
+| 63360    | aurora      | CE      | 1         |
+| 89186    | aurora      | SC      | 1         |
+
+✅ These duplicates are **expected** due to common city names across different Brazilian states.
+
+---
+
+📌 **Ready to be used as a gelocationc dimension in the Gold Layer and for BI analysis**!
+
