@@ -95,13 +95,33 @@ WHERE customer_unique_id IS NULL
 
 ### 2) Check duplicates
 ```sql
-SELECT customer_id,
-	   customer_unique_id,
-	   COUNT(*) AS counting
+SELECT customer_unique_id,
+	   COUNT(customer_unique_id) AS counting_orders
 FROM silver.erp_customers
-GROUP BY customer_id,customer_unique_id
-HAVING COUNT(*) > 1
--- No duplicates detected
+GROUP BY customer_unique_id
+HAVING COUNT(customer_unique_id) > 1
+-- We have duplicates because the same customer can make more orders
+
+| customer_unique_id                     | counting_orders |
+|----------------------------------------|-----------------|
+| 8d50f5eadf50201ccdcedfb9e2ac8455       | 17              |
+| 3e43e6105506432c953e165fb2acf44c       | 9               |
+| 6469f99c1f9dfae7733b25662e7f1782       | 7               |
+| ca77025e7201e3b30c44b472ff346268       | 7               |
+| 1b6c7548a2a1f9037c1fd3ddfed95f33       | 7               |
+
+-- For Example for customer ca77025e7201e3b30c44b472ff346268 we have the following result:
+
+| customer_id                         | customer_unique_id              | customer_zip_code_prefix | customer_city  | customer_state |
+|------------------------------------|----------------------------------|--------------------------|----------------|----------------|
+| dc7dc47999d1b3c4c2f6a085a1a76eef   | ca77025e7201e3b30c44b472ff346268 | 51021                    | recife         | PE             |
+| 6ccedfba5919d72fcc8c51bfa982de62   | ca77025e7201e3b30c44b472ff346268 | 51021                    | recife         | PE             |
+| c59e684f832f832056ceee2c310cfc7f   | ca77025e7201e3b30c44b472ff346268 | 51021                    | recife         | PE             |
+| 852e5ea6e9d74416ddf88bdbdb3189b9   | ca77025e7201e3b30c44b472ff346268 | 51021                    | recife         | PE             |
+| 71f39c371308d132d7633895477dd307   | ca77025e7201e3b30c44b472ff346268 | 51021                    | recife         | PE             |
+| b145bff18e79ac4dfb3fb91e61906f38   | ca77025e7201e3b30c44b472ff346268 | 51021                    | recife         | PE             |
+| fc709ab645b71acd6046aeb03b590aa5   | ca77025e7201e3b30c44b472ff346268 | 51021                    | recife         | PE             |
+
 ```
 
 ### 3) Check customer_unique_id lenght
