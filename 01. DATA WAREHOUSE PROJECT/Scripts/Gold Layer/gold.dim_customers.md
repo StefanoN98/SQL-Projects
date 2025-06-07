@@ -1,5 +1,5 @@
 
-# 🟨 Data Loading & Temporary Checks: `dim_customers` (Silver ➝ Gold View)
+# 🏗️ Dimension View Creation & Validation: `dim_customers` (Silver ➝ Gold Layer)
 
 > ⚠️ **Note**: This view is currently based on the **Silver Layer** tables.
 > Once the final **Gold Layer** dimension and fact tables are complete, the logic and validations should be reviewed and refactored accordingly.
