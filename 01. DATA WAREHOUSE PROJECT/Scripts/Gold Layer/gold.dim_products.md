@@ -81,7 +81,7 @@ LEFT JOIN silver.crm_order_items oi
 ON p.product_id=oi.product_id
 GROUP BY p.product_id
 HAVING COUNT(oi.order_id)<1
--- All the product_id have at least one order related
+-- ✅ All the product_id have at least one order related
 ```
 ---
 
