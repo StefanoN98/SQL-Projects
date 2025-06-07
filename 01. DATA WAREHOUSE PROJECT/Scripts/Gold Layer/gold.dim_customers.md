@@ -42,8 +42,8 @@ FROM gold.dim_customers;
 -- Let's see unique customers and the related orders
 
 | total_customers | total_customer_orders |
-|------------------|----------------------|
-| 96096            | 99441                |
+|-----------------|-----------------------|
+| 96096           | 99441                 |
 
 ```
 
