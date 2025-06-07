@@ -87,7 +87,7 @@ FROM gold.dim_customers c
 LEFT JOIN  gold.dim_geolocation g
 ON c.customer_zip_code=g.zip_code
 WHERE g.city IS NULL OR g.country IS NULL
--- All the information are available for each customer
+-- ✅ All the information are available for each customer
 ```
 
 ---
