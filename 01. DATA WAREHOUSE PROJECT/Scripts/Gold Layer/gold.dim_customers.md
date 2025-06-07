@@ -44,7 +44,7 @@ FROM silver.erp_customers;
 
 ---
 
-## 🔍 Exploratory Analysis
+## 🔍 Data Validation & Exploratory Analysis
 
 ### 1. Count total unique customers and customer orders
 ```sql
