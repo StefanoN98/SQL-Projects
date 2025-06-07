@@ -87,5 +87,18 @@ HAVING COUNT(o.order_id) > 1;
 ```
 
 ---
+### 4. Verify all customer_zip_code have related city and state in dim_geolocation
+```sql
+SELECT c.customer_unique_id,
+	   c.customer_zip_code,
+	   g.city,
+	   g.country
+FROM gold.dim_customers c
+LEFT JOIN  gold.dim_geolocation g
+ON c.customer_zip_code=g.zip_code
+WHERE g.city IS NULL OR g.country IS NULL
+-- All the information are available for each customer
+```
+---
 
 ✅ View temporarily validated. Awaiting full **Gold Layer** integration for final version.
