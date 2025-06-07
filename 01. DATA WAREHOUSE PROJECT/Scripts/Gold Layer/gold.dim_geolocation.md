@@ -88,8 +88,8 @@ WHERE c.rn_city = 1;
 ### 1. Overview Data
 ```sql
 SELECT COUNT(DISTINCT zip_code) AS zip_code_counting,
-	   COUNT(DISTINCT city) AS city_counting,
-	   COUNT(DISTINCT country) AS country_counting
+       COUNT(DISTINCT city) AS city_counting,
+       COUNT(DISTINCT country) AS country_counting
 FROM GOLD.dim_geolocation
 -- Let's see unique zip_code, city and country
 
