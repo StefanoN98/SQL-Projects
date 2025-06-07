@@ -83,3 +83,6 @@ GROUP BY p.product_id
 HAVING COUNT(oi.order_id)<1
 -- All the product_id have at least one order related
 ```
+---
+
+📌 **Ready to be used as a products dimension in the Gold Layer and for BI analysis**!
