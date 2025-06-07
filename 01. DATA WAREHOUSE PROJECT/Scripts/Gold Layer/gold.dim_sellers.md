@@ -1,11 +1,11 @@
-# 🧱 Gold Layer – `dim_sellers`
+# 🏗️ Dimension View Creation & Validation: `dim_sellers` (Silver ➝ Gold Layer)
 
 > This script defines and validates the creation of the `gold.dim_sellers` dimension view from the Silver Layer.  
 > The purpose is to establish a cleaned and standardized reference table for sellers.
 
 ---
 
-## 🏗️ View Definition
+## Gold Layer View Creation for `dim_sellers`
 
 ```sql
 IF OBJECT_ID('gold.dim_sellers', 'V') IS NOT NULL
@@ -21,7 +21,7 @@ FROM silver.erp_sellers;
 
 ---
 
-## 📊 Record Summary
+## Sample Output
 
 ```sql
 SELECT *
@@ -31,7 +31,7 @@ FROM gold.dim_sellers;
 
 ---
 
-## 🔍 Data Validations
+## 🔍 Data Validations & Exploratory Analysis
 
 ### 1. Check that each `seller_id` has at least one associated `order_id`  
 ⚠️ _This will need to be repeated once the final Gold Layer fact tables are built._
@@ -67,7 +67,3 @@ WHERE g.city IS NULL OR g.country IS NULL;
 > ⚠️ **Note**  
 > This view is currently based on **Silver Layer** tables.  
 > Once the **Gold Layer** fact tables are finalized, all logic and validations should be **reviewed and refactored** accordingly.
-
----
-
-_Last updated: 2025-06-07_
