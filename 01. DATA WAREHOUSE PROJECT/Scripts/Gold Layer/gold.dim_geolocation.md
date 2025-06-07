@@ -104,7 +104,9 @@ ORDER BY zip_code;
 
 ---
 
-## Referential Checks --> QUESTA DA FAR CONFRONTARE CON LE RELATIVE TABELLE GOLD NON SILVER
+## 🔍 Data Validation & Exploratory Analysis
+
+### 1. Referential Checks --> QUESTA DA FAR CONFRONTARE CON LE RELATIVE TABELLE GOLD NON SILVER
 
 ```sql
 -- Check if all customer ZIP codes are covered
@@ -126,7 +128,7 @@ WHERE seller_zip_code_prefix NOT IN (
 
 ---
 
-## Multiple States with Same City Name
+### 2. Multiple States with Same City Name
 
 ```sql
 SELECT 
