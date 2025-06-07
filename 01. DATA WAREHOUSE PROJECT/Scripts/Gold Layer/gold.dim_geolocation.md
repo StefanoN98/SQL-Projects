@@ -109,9 +109,10 @@ WHERE seller_zip_code_prefix NOT IN (
 
 ---
 
-### 3. Multiple States with Same City Name
+### 3. Data Correcteness
 
 ```sql
+-- verify if there are multiple states with same city name
 SELECT 
     zip_code, city, country, COUNT(*) AS frequency
 FROM gold.dim_geolocation
