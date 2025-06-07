@@ -29,30 +29,22 @@ FROM silver.erp_customers;
 | 1336c066de955f70e1508ce21670b72e | 482100e419953116ee03dca7416277e0 | 19940             |
 | ae447e76e331a2d1fb37473deb2ccae0 | 4412ff92330051eb18b7aa95d9d172e7 | 08790             |
 
-
----
-
-## ✅ Temporary Data Checks Summary
-
-| Type               | Category                    | Check Description                                                               |
-|--------------------|-----------------------------|---------------------------------------------------------------------------------|
-| **Completeness**   | Unique Customers            | Count distinct `customer_unique_id`                                             |
-| **Completeness**   | Total Customer Orders       | Count `customer_id` associated with orders                                      |
-| **Integrity**      | Orders Consistency (TEMP)   | Ensure each `customer_id` has at least one `order_id` in `silver.crm_orders`    |
-| **Integrity**      | One-to-One Relationship     | Ensure each `customer_id` is not duplicated across multiple orders              |
-| **Refactoring**    | Gold Join Pending           | All joins must be updated using final Gold Layer tables (orders, etc.)          |
-
 ---
 
 ## 🔍 Data Validation & Exploratory Analysis
 
-### 1. Count total unique customers and customer orders
+### 1. Overview Data
 ```sql
 SELECT 
     COUNT(DISTINCT customer_unique_id) AS total_customers,
-    COUNT(customer_id) AS total_customer_orders
+    COUNT(DISTINCT customer_id) AS total_customer_orders
 FROM gold.dim_customers;
--- 96096 unique customers and 99441 associated orders
+-- Let's see unique customers and the related orders
+
+| total_customers | total_customer_orders |
+|------------------|----------------------|
+| 96096            | 99441                |
+
 ```
 
 ---
