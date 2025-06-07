@@ -145,6 +145,77 @@ GROUP BY LEN(customer_zip_code_prefix)
 ORDER BY LEN(customer_zip_code_prefix) DESC
 -- All the prefix have lenght 5
 ```
+### 2) Verify each customer_unique_id has only 1 zip_code associated
+```sql
+SELECT 
+    customer_unique_id,
+    COUNT(DISTINCT customer_zip_code_prefix) AS zip_code_count
+FROM silver.erp_customers
+GROUP BY customer_unique_id
+HAVING COUNT(DISTINCT customer_zip_code_prefix) > 1;
+-- There are 250 customers with anomalies, let explore 1 of them:
+
+SELECT c.*, o.order_purchase_timestamp, o.order_delivered_customer_date
+FROM silver.erp_customers c
+JOIN silver.crm_orders o
+ON c.customer_id=o.customer_id
+where customer_unique_id='13abc50b97af7425b5066e405d7cd760'
+
+| customer_id                         | customer_unique_id              | customer_zip_code_prefix | customer_city         | customer_state | order_purchase_timestamp | order_delivered_customer_date |
+|------------------------------------|----------------------------------|--------------------------|-----------------------|----------------|--------------------------|-------------------------------|
+| 43798f254097cd1ae79c084d3c697ee3   | 13abc50b97af7425b5066e405d7cd760 | 06533                    | santana de parnaiba   | SP             | 2017-05-01 10:30:43.000  | 2017-05-08 07:42:07.000       |
+| 1bd05d9a0031e8461d15550893d9b85a   | 13abc50b97af7425b5066e405d7cd760 | 07793                    | cajamar               | SP             | 2017-05-07 20:47:31.000  | 2017-05-29 06:04:02.000       |
+
+-- In this case there was a bug in the system who accidentally associate in the second order te wrong information about zip_code, city and state
+-- To fix that we'll consider as correct location the one indicated in the first order
+
+--UPDATE statement: assign zip_code related to first order for the anomalies
+-- Step 1: associate customer, zip_code and purchase order date
+WITH FirstZipByOrder AS (
+    SELECT
+        c.customer_unique_id,
+        c.customer_zip_code_prefix,
+        c.customer_city,
+        c.customer_state,
+        o.order_purchase_timestamp,
+        ROW_NUMBER() OVER (
+            PARTITION BY c.customer_unique_id
+            ORDER BY o.order_purchase_timestamp
+        ) AS rn
+    FROM silver.erp_customers c
+    JOIN silver.crm_orders o
+        ON c.customer_id = o.customer_id
+),
+-- Step 2: select only the first zip_code (based on first date)
+FixedZip AS (
+    SELECT
+        customer_unique_id,
+        customer_zip_code_prefix AS fixed_zip,
+        customer_city AS fixed_city,
+        customer_state AS fixed_state
+    FROM FirstZipByOrder
+    WHERE rn = 1
+),
+-- Step 3: find only the customer with more zip_codes associated
+MultipleZips AS (
+    SELECT customer_unique_id
+    FROM silver.erp_customers
+    GROUP BY customer_unique_id
+    HAVING COUNT(DISTINCT customer_zip_code_prefix) > 1
+)
+
+-- Step 4: update only the customer with more zip_code using the zip_code of the first order and related city and state
+UPDATE c
+SET c.customer_zip_code_prefix = f.fixed_zip,
+    c.customer_city = f.fixed_city,
+    c.customer_state = f.fixed_state
+FROM silver.erp_customers c
+JOIN FixedZip f
+    ON c.customer_unique_id = f.customer_unique_id
+JOIN MultipleZips m
+    ON c.customer_unique_id = m.customer_unique_id;
+-- Now all customer have an unique zip_code, city and state based on the data filled during the first order
+```
 ---
 
 ## `customer_city` cleaning
