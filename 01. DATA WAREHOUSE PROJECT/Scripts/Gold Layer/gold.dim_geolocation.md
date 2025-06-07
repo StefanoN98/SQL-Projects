@@ -104,7 +104,7 @@ ORDER BY zip_code;
 
 ---
 
-## Referential Checks
+## Referential Checks --> QUESTA DA FAR CONFRONTARE CON LE RELATIVE TABELLE GOLD NON SILVER
 
 ```sql
 -- Check if all customer ZIP codes are covered
