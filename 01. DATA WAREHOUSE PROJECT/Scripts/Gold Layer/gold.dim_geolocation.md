@@ -61,6 +61,14 @@ ON a.zip_code = c.zip_code
 WHERE c.rn_city = 1;
 ```
 
+| zip_code | city                   | country |
+|----------|------------------------|---------|
+| 40327    | salvador               | BA      |
+| 95125    | fazenda souza          | RS      |
+| 95400    | sao francisco de paula | RS      |
+| 20541    | rio de janeiro         | RJ      |
+| 23082    | rio de janeiro         | RJ      |
+| 26276    | nova iguacu            | RJ      |
 ---
 
 ## ✅ Checks Summary
