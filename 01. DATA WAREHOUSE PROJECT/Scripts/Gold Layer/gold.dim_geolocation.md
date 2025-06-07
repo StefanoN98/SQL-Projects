@@ -69,17 +69,6 @@ WHERE c.rn_city = 1;
 | 20541    | rio de janeiro         | RJ      |
 | 23082    | rio de janeiro         | RJ      |
 | 26276    | nova iguacu            | RJ      |
----
-
-## ✅ Checks Summary
-
-| Type               | Category                | Check Description                                                                 |
-|--------------------|-------------------------|------------------------------------------------------------------------------------|
-| **DATA INTEGRITY** | View Creation           | Created with UNION from `geolocation`, `customers`, and `sellers` tables           |
-| **DEDUPLICATION**  | Zip Code Aggregation    | Ensures one city per `zip_code`, based on most frequent occurrence                 |
-| **REFERENTIAL**    | Customers Zip Coverage  | Verifies all `customer_zip_code_prefix` exist in `dim_geolocation`                |
-|                    | Sellers Zip Coverage    | Verifies all `seller_zip_code_prefix` exist in `dim_geolocation`                  |
-| **DATA VALIDITY**  | City-Country Consistency| Checks that cities belong to a single state/country; exceptions are documented     |
 
 ---
 
