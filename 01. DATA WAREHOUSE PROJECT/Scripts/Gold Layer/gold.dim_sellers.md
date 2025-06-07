@@ -19,6 +19,13 @@ SELECT
 FROM silver.erp_sellers;
 ```
 
+| seller_id                             | seller_zip_code |
+|---------------------------------------|-----------------|
+| d1b65fc7debc3361ea86b5f14c68d2e2      | 13844           |
+| ce3ad9de960102d0677a81f5d0bb7b2d      | 20031           |
+| c0f3eea2e14555b6faeea3dd58c1b1c3      | 04195           |
+| 51a04a8a6bdcb23deccc82b0b80742cf      | 12914           |
+
 ---
 
 ## 🔍 Data Validation & Exploratory Analysis
