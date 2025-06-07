@@ -66,9 +66,7 @@ ON s.seller_zip_code = g.zip_code
 WHERE g.city IS NULL OR g.country IS NULL;
 -- ✅ All seller locations are correctly mapped
 ```
-
 ---
 
-> ⚠️ **Note**  
-> This view is currently based on **Silver Layer** tables.  
-> Once the **Gold Layer** fact tables are finalized, all logic and validations should be **reviewed and refactored** accordingly.
+
+📌 **Ready to be used as a sellers dimension in the Gold Layer and for BI analysis**!.
