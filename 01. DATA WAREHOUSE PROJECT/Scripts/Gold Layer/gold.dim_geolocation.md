@@ -141,5 +141,5 @@ ORDER BY city, frequency DESC;
 
 ---
 
-📌 **Ready to be used as a gelocationc dimension in the Gold Layer and for BI analysis**!
+📌 **Ready to be used as a gelocation dimension in the Gold Layer and for BI analysis**!
 
