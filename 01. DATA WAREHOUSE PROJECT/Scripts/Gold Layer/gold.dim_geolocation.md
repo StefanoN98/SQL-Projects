@@ -83,30 +83,22 @@ WHERE c.rn_city = 1;
 
 ---
 
-## Sample Output
-
-```sql
-SELECT *
-FROM gold.dim_geolocation
-ORDER BY zip_code;
--- 19,177 unique locations
-
-| zip_code | city                | country |
-|----------|---------------------|---------|
-| 04224    | sao paulo           | SP      |
-| 04567    | sao paulo           | SP      |
-| 05276    | sao paulo           | SP      |
-| 67143    | ananindeua          | PA      |
-| 31680    | belo horizonte      | MG      |
-| 83506    | almirante tamandare | PR      |
-| 03266    | sao paulo           | SP      |
-```
-
----
-
 ## 🔍 Data Validation & Exploratory Analysis
 
-### 1. Referential Checks --> QUESTA DA FAR CONFRONTARE CON LE RELATIVE TABELLE GOLD NON SILVER
+### 1. Overview Data
+```sql
+SELECT COUNT(DISTINCT zip_code) AS zip_code_counting,
+	   COUNT(DISTINCT city) AS city_counting,
+	   COUNT(DISTINCT country) AS country_counting
+FROM GOLD.dim_geolocation
+-- Let's see unique zip_code, city and country
+
+| zip_code_counting | city_counting | country_counting |
+|-------------------|---------------|------------------|
+| 19177             | 5813          | 27               |
+```
+
+### 2. Referential Checks --> QUESTA DA FAR CONFRONTARE CON LE RELATIVE TABELLE GOLD NON SILVER
 
 ```sql
 -- Check if all customer ZIP codes are covered
@@ -128,7 +120,7 @@ WHERE seller_zip_code_prefix NOT IN (
 
 ---
 
-### 2. Multiple States with Same City Name
+### 3. Multiple States with Same City Name
 
 ```sql
 SELECT 
