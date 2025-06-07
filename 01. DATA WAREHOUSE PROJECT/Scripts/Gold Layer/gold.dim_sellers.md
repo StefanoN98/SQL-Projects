@@ -21,22 +21,25 @@ FROM silver.erp_sellers;
 
 ---
 
-## Sample Output
+## 🔍 Data Validation & Exploratory Analysis
 
+### 1. Overview Data
 ```sql
-SELECT *
-FROM gold.dim_sellers;
--- 3095 unique sellers
+SELECT COUNT(DISTINCT seller_id) AS seller_counting,
+	   COUNT(DISTINCT seller_zip_code) AS seller_zip_counting
+FROM gold.dim_sellers
+
+| seller_counting | seller_zip_counting |
+|-----------------|---------------------|
+| 3095            | 2246                |
+
 ```
 
----
-
-## 🔍 Data Validations & Exploratory Analysis
-
-### 1. Check that each `seller_id` has at least one associated `order_id`  
+### 2. Referential Check
 ⚠️ _This will need to be repeated once the final Gold Layer fact tables are built._
 
 ```sql
+-- Verify that each `seller_id` has at least one associated `order_id`  
 SELECT s.seller_id,
        oi.order_id
 FROM gold.dim_sellers s
@@ -44,13 +47,8 @@ LEFT JOIN silver.crm_order_items oi
 ON s.seller_id = oi.seller_id
 WHERE oi.order_id IS NULL;
 -- ✅ All `seller_id`s have an associated `order_id`
-```
 
----
-
-### 2. Check that `seller_zip_code` exists in `dim_geolocation`
-
-```sql
+-- Verifythat `seller_zip_code` exists in `dim_geolocation`
 SELECT s.seller_id,
        s.seller_zip_code,
        g.city,
