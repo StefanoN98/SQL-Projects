@@ -1,8 +1,8 @@
 
 # 🏗️ Dimension View Creation & Validation: `dim_customers` (Silver ➝ Gold Layer)
 
-> ⚠️ **Note**: This view is currently based on the **Silver Layer** tables.
-> Once the final **Gold Layer** dimension and fact tables are complete, the logic and validations should be reviewed and refactored accordingly.
+> This script defines and validates the creation of the `gold.dim_customers` dimension view from the Silver Layer.  
+> The purpose is to establish a cleaned and standardized reference table for customers.
 
 ---
 
