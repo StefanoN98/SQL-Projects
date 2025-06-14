@@ -1,7 +1,7 @@
 # 🏗️ Dimension View Creation & Validation: `fact_payments` (Silver ➝ Gold Layer)
 
 > This script defines and validates the creation of the `gold.fact_payments` fact view from the Silver Layer.  
-> The purpose is to establish a cleaned and standardized reference table for payments.
+> The purpose is to establish a cleaned and standardized reference table for payments pivoting the payment types.
 
 ---
 
