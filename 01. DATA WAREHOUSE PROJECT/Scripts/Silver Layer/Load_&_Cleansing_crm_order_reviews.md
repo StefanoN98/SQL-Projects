@@ -383,6 +383,25 @@ WHERE review_creation_date > review_answer_timestamp;
 --No anomalies detected
 ```
 ---
+
+## Referential Check with `silver.crm_orders`
+``` sql
+SELECT ore.review_id,
+	   ore.order_id,
+	   o.order_id
+FROM silver.crm_order_reviews ore
+LEFT JOIN silver.crm_orders o
+ON ore.order_id=o.order_id
+WHERE o.order_id IS NULL
+-- There is one order_id not present in the silver.crm_crm_orders table
+-- The rows for this order_id will be eliminated (also in silver.crm_orders and silver.crm_order_items)
+
+--DELETE statement: remove rows for the order_id not present in payments table
+DELETE FROM silver.crm_order_reviews
+WHERE order_id ='bfbd0f9bdef84302105ad712db648a6c'
+```
+
+---
 ✅ Data cleaned!
 ## Final DDL script with the new changes for `crm_order_reviews`
 Alter the initial DDL script with the new changes to optimize memory & performance
