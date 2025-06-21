@@ -84,7 +84,7 @@ SELECT 'sellers_counting' AS '_metric', COUNT(DISTINCT seller_id) AS '_value' FR
 
 | _metric          | _value |
 |------------------|--------|
-| orders_counting  | 98666  |
+| orders_counting  | 98665  |
 | products_counting| 32951  |
 | sellers_counting | 3095   |
 
