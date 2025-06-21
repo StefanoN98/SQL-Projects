@@ -87,21 +87,21 @@ FROM GOLD.dim_geolocation
 | 19177             | 5813          | 27               |
 ```
 
-### 2. Referential Checks --> QUESTA DA FAR CONFRONTARE CON LE RELATIVE TABELLE GOLD NON SILVER
+### 2. Referential Checks
 
 ```sql
 -- Check if all customer ZIP codes are covered
-SELECT customer_zip_code_prefix
-FROM silver.erp_customers
-WHERE customer_zip_code_prefix NOT IN (
+SELECT customer_zip_code
+FROM gold.dim_customers
+WHERE customer_zip_code NOT IN (
     SELECT zip_code FROM gold.dim_geolocation
 );
 -- ✅ All customer locations are covered
 
 -- Check if all seller ZIP codes are covered
-SELECT seller_zip_code_prefix
-FROM silver.erp_sellers
-WHERE seller_zip_code_prefix NOT IN (
+SELECT seller_zip_code
+FROM gold.dim_sellers
+WHERE seller_zip_code NOT IN (
     SELECT zip_code FROM gold.dim_geolocation
 );
 -- ✅ All seller locations are covered
