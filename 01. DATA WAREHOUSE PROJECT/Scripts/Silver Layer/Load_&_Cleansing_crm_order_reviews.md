@@ -208,6 +208,40 @@ WHERE review_id IN (SELECT review_id FROM duplicates WHERE occurences > 1);
 	SET order_id= REPLACE(order_id,'"','')
 	-- Now all the order_id lenght is 32
 ```
+
+### 2 ) Check if there are order_id with more review_id
+```sql
+WITH multiple_reviews AS (
+    SELECT order_id
+    FROM silver.crm_order_reviews
+    GROUP BY order_id
+    HAVING COUNT(DISTINCT review_id) > 1
+)
+    SELECT se.*,
+           ROW_NUMBER() OVER (PARTITION BY se.order_id ORDER BY se.review_creation_date DESC) AS rn
+    FROM silver.crm_order_reviews se
+    JOIN multiple_reviews mr ON se.order_id = mr.order_id
+	ORDER BY se.order_id
+-- yes there are 526 rows involved
+
+--DELETE statement: keep only the last row when there are more reviews
+WITH ranked_reviews AS (
+    SELECT
+        review_id,
+        ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY review_creation_date DESC) AS rn
+    FROM silver.crm_order_reviews
+    WHERE order_id IN (
+        SELECT order_id
+        FROM silver.crm_order_reviews
+        GROUP BY order_id
+        HAVING COUNT(DISTINCT review_id) > 1)
+)
+DELETE se
+FROM silver.crm_order_reviews se
+JOIN ranked_reviews cte
+ON se.review_id = cte.review_id
+WHERE cte.rn > 1;
+```
 ---
 
 ## `review_score` cleaning
