@@ -71,7 +71,7 @@ the order_status in this case in unavailable or canceled*/
 ---
 
 
-📌 **Ready to be used as a customers dimension in the Gold Layer and for BI analysis**!
+📌 **Ready to be used as a orders fact in the Gold Layer and for BI analysis**!
 
 
 
