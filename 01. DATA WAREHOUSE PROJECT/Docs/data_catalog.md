@@ -86,11 +86,11 @@ The Gold Layer is the business-level data representation, structured to support 
 ---
 
 ## 👤 `gold.dim_customers`
-| Column               | Data Type      | Description                                               |
-|----------------------|----------------|-----------------------------------------------------------|
-| customer_id          | NVARCHAR(50)   | Unique ID for the customer in the order                   |
-| customer_unique_id   | NVARCHAR(50)   | Permanent customer ID (same person, multiple orders)      |
-| customer_zip_code    | NVARCHAR(10)   | First 5 digits of the customer’s ZIP code                 |
+| Column               | Data Type      | Description                                                      |
+|----------------------|----------------|------------------------------------------------------------------|
+| customer_id          | NVARCHAR(50)   | Key to the orders dataset. Each order has a unique customer_id.  |
+| customer_unique_id   | NVARCHAR(50)   | Permanent customer ID (same person, multiple orders)             |
+| customer_zip_code    | NVARCHAR(10)   | First 5 digits of the customer’s ZIP code                        |
 
 ---
 
