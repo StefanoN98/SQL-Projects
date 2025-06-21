@@ -282,6 +282,33 @@ HAVING COUNT(DISTINCT customer_state) > 1;
 -- no zip_code_prefix + city associated to more countries
 ```
 ---
+
+## Referential check with `silver.crm_orders`
+```sql
+-- Verify all `customer_id` exist in the orders table
+SELECT c.customer_id,
+       o.order_id
+FROM silver.erp_customers c
+LEFT JOIN silver.crm_orders o
+ON c.customer_id = o.customer_id
+WHERE o.order_id IS NULL;
+/*
+|customer_id	                    |order_id |
+|-----------------------------------|---------|
+|86dc2ffce2dfff336de2f386a786e574   |NULL     |
+
+There is only 1 customer_id with no order_id because it is the order 'bfbd0f9bdef84302105ad712db648a6c'
+that has been canceled from silver.crm_orders and silver.crm_order_items because it didn't have payments information
+from the table silver.crm_order_payments.
+So for this reason also this related customer_id we'll be canceled because in the database there are missing data about
+this order_id*/
+
+-- DELETE statement:
+DELETE FROM silver.erp_customers
+WHERE customer_id= '86dc2ffce2dfff336de2f386a786e574'
+```
+
+---
 ✅ Data cleaned!
 
 ## Final DDL script with the new changes for `erp_customers`
