@@ -71,7 +71,7 @@ SELECT 'Width','max_width', MAX(product_width) FROM gold.dim_products;
 
 ```
 
-### 2. Referential Check (da rifare con tabella gold)
+### 2. Referential Check
 ```sql
 -- Verify all product_id have at least 1 order_id
 SELECT p.product_id,
