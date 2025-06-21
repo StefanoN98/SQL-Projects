@@ -130,4 +130,4 @@ HAVING COUNT(*) > 1;
 
 ---
 
-📌 **Ready to be used as a products dimension in the Gold Layer and for BI analysis**!
+📌 **Ready to be used as a payments fact in the Gold Layer and for BI analysis**!
