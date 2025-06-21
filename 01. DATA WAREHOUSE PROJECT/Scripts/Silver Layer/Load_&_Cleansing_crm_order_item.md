@@ -294,7 +294,7 @@ LEFT JOIN silver.crm_order_payments op
 ON fo.order_id= op.order_id
 WHERE op.order_id IS NULL 
 -- There is one order_id not present in the silver.crm_order_payments table
--- The rows for this order_id will be eliminated
+-- The rows for this order_id will be eliminated (also in silver.crm_orders and silver.crm_order_reviews)
 
 --DELETE statement: remove rows for the order_id not present in payments table
 DELETE FROM silver.crm_order_items
