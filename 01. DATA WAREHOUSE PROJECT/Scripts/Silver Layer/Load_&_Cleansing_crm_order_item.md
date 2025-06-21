@@ -284,8 +284,23 @@ WHERE ABS(op.total_order_payment - tp.total_payment_value) > 0.01 --to verify de
    - order payment < actual transaction payment --> it means the customer paid something more at the customs /*
 -- For these cases we'll add in the gold layer 2 new columns: one that expalain in which situation we are and the difference amount
 ```
----
 
+### Referential Check with silver.crm_order_payments
+```sql
+SELECT DISTINCT(fo.order_id) AS order_id_orders_table,
+	   op.order_id AS order_id_payments_table
+FROM silver.crm_order_items fo
+LEFT JOIN silver.crm_order_payments op
+ON fo.order_id= op.order_id
+WHERE op.order_id IS NULL 
+-- There is one order_id not present in the silver.crm_order_payments table
+-- The rows for this order_id will be eliminated
+
+--DELETE statement: remove rows for the order_id not present in payments table
+DELETE FROM silver.crm_order_items
+WHERE order_id ='bfbd0f9bdef84302105ad712db648a6c'
+```
+---
 
 
 ✅ Data cleaned!
