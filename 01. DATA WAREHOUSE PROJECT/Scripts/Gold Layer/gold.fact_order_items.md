@@ -94,7 +94,7 @@ SELECT 'sellers_counting' AS '_metric', COUNT(DISTINCT seller_id) AS '_value' FR
 
 ### 2. Referential Check
 ```sql
--- verify all order_id has an order_status in fact_orders (DA RIFARE CON TABELLA GOLD)
+-- verify all order_id has an order_status in fact_orders
 SELECT DISTINCT oi.order_id,
 	   o.order_status
 FROM gold.fact_order_items oi
