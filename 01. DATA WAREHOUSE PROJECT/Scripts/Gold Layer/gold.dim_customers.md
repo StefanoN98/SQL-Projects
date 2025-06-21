@@ -51,11 +51,12 @@ FROM gold.dim_customers;
 
 ### 2. Referential Check
 ```sql
--- Verify all `customer_id` exist in the orders table (⚠️ Silver for now)
+-- Verify all `customer_id` exist in the orders table 
 SELECT f.customer_id,
+f.customer_unique_id,
        o.order_id
 FROM gold.dim_customers f
-LEFT JOIN silver.crm_orders o
+LEFT JOIN gold.fact_orders o
 ON f.customer_id = o.customer_id
 WHERE o.order_id IS NULL;
 -- ✅ Every customer_id has an associated order_id
