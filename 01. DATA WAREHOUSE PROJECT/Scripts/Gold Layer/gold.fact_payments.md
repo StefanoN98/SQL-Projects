@@ -87,24 +87,24 @@ SELECT 'max_payment' AS _metric, CAST(MAX(total) AS varchar)+' €' AS _value FR
 ```sql
 -- Verify every order_id has associated an order_status with the fact_orders table
 SELECT fp.order_id,
-	     co.order_status
+	     fo.order_status
 FROM gold.fact_payments fp
-LEFT JOIN silver.crm_orders co --da rifare con tabella gold
-ON fp.order_id=co.order_id
-WHERE co.order_status IS NULL
+LEFT JOIN gold.fact_orders fo 
+ON fp.order_id=fo.order_id
+WHERE fo.order_status IS NULL
 -- ✅ All the payments are associated to an order status
 
 
 -- Verify all order_id with a payment are present in order_items fact table
 SELECT fp.order_id,
 	   fp.total,
-	   co.order_status
+	   fo.order_status
 FROM gold.fact_payments fp
-LEFT JOIN silver.crm_orders co -- da rifare con tabella gold
-ON fp.order_id=co.order_id
+LEFT JOIN gold.fact_orders fo 
+ON fp.order_id=fo.order_id
 WHERE fp.order_id NOT IN (
 		SELECT order_id
-		FROM silver.crm_order_items -- da rifare con tabella gold
+		FROM gold.fact_order_items 
 		)
 -- There are 775 orders with no order_items associated, because the order_status was unavailable or canceled
 
