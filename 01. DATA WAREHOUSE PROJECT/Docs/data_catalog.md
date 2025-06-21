@@ -35,20 +35,75 @@ The Gold Layer is the business-level data representation, structured to support 
 
 ---
 
-## 📦 `order_items`
-| Column                 | Description                                                                                                                         |
-|------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
-| order_id               | ID of the order                                                                                                                     |
-| order_item_id          | Sequential number identifying number of items included in the same order                                                            |
-| product_id             | ID of the product                                                                                                                   |
-| seller_id              | ID of the seller for that product                                                                                                   |
-| shipping_limit_date    | Deadline for the seller to ship the product                                                                                         |
-| price                  | Price paid for the product                                                                                                          |
-| freight_value          | Shipping cost charged                                                                                                               |
-| total_order_payment    | Sum of the transaction values                                                                                                       |
-| shipping_type          | Reference to shipping type (standard, free)                                                                                         |
-| delta                  | Indicates if the customer use a discount code (Discount Code) , paid more duty taxes (Additional customs fees) or nothing (no delta)|  
-| delta amount           | Difference between sum of the transaction values and freigh_value + price                                                           |
+## 📦 `gold.fact_order_items`
+| Column               | Data Type      | Description                                                                                                                         |
+|----------------------|----------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| order_id             | NVARCHAR(50)   | ID of the order                                                                                                                     |
+| order_item_id        | INT            | Sequential number identifying number of items included in the same order                                                            |
+| product_id           | NVARCHAR(50)   | ID of the product                                                                                                                   |
+| seller_id            | NVARCHAR(50)   | ID of the seller for that product                                                                                                   |
+| shipping_limit_date  | DATETIME       | Deadline for the seller to ship the product                                                                                         |
+| price                | FLOAT          | Price paid for the product                                                                                                          |
+| freight_value        | FLOAT          | Shipping cost charged                                                                                                               |
+| total_order_payment  | FLOAT          | Sum of the transaction values                                                                                                       |
+| shipping_type        | NVARCHAR(50)   | Reference to shipping type (standard, free)                                                                                         |
+| delta                | VARCHAR(23)    | Indicates if the customer use a discount code (Discount Code), paid more duty taxes (Additional customs fees) or nothing (no delta) |
+| delta amount         | FLOAT          | Difference between sum of the transaction values and freigh_value + price                                                           |
+
+---
+
+## ⭐ `gold.fact_reviews`
+| Column                 | Data Type      | Description                                                      |
+|------------------------|----------------|------------------------------------------------------------------|
+| review_id              | NVARCHAR(50)   | Unique ID for the review                                         |
+| order_id               | NVARCHAR(50)   | Associated order ID                                              |
+| review_score           | INT            | Score from 1 to 5                                                |
+| review_comment_title   | NVARCHAR(80)   | Title of the review (optional)                                   |
+| review_comment_message | NVARCHAR(500)  | Message of the review (optional)                                 |
+| review_creation_date   | DATETIME       | Date the review was created by the customer                      |
+| review_answer_timestamp| DATETIME       | Timestamp when the customer service answered the review          |
+
+---
+
+## 🧩 `gold.dim_products`
+| Column                 | Data Type      | Description                                       |
+|------------------------|----------------|---------------------------------------------------|
+| product_id             | NVARCHAR(50)   | Unique ID of the product                          |
+| product_category_name  | NVARCHAR(100)  | Name of the product category (in english)         |
+| product_weight_g       | INT            | Weight of the product in grams                    |
+| product_length_cm      | INT            | Length of the product in cm                       |
+| product_height_cm      | INT            | Height of the product in cm                       |
+| product_width_cm       | INT            | Width of the product in cm                        |
+
+---
+
+## 🧑‍💼 `gold.dim_sellers`
+| Column           | Data Type      | Description                             |
+|------------------|----------------|-----------------------------------------|
+| seller_id        | NVARCHAR(50)   | Unique ID of the seller                 |
+| seller_zip_code  | NVARCHAR(10)   | First 5 digits of the seller's ZIP code |
+
+---
+
+## 👤 `gold.dim_customers`
+| Column               | Data Type      | Description                                               |
+|----------------------|----------------|-----------------------------------------------------------|
+| customer_id          | NVARCHAR(50)   | Unique ID for the customer in the order                   |
+| customer_unique_id   | NVARCHAR(50)   | Permanent customer ID (same person, multiple orders)      |
+| customer_zip_code    | NVARCHAR(10)   | First 5 digits of the customer’s ZIP code                 |
+
+---
+
+## 📍 `gold.dim_geolocation`
+| Column    | Data Type      | Description                       |
+|-----------|----------------|---------------------------------|
+| zip_code  | NVARCHAR(10)   | ZIP code prefix (first 5 digits)|
+| city      | NVARCHAR(50)   | City of the ZIP code            |
+| country   | NVARCHAR(10)   | State of the ZIP code           |
+
+--
+
+
 
 
 
