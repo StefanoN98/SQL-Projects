@@ -1,5 +1,7 @@
 # 📚 SQL Server Data Warehouse Naming Convention
 
+> This document defines the **naming standards** used in this project, aligned with the **Medallion Architecture** (Bronze → Silver → Gold). It ensures consistency, clarity, and maintainability across all layers and ETL processes.
+
 ## **Table of Contents**
 
 1. [General Principles](#general-principles)
@@ -11,12 +13,6 @@
 7. [View Naming Convention](#view-naming-convention)
 8. [Index Naming Convention](#index-naming-convention)
 9. [Summary](#summary)
-
----
-
-# 📚 SQL Server Data Warehouse Naming Convention
-
-> This document defines the **naming standards** used in this project, aligned with the **Medallion Architecture** (Bronze → Silver → Gold). It ensures consistency, clarity, and maintainability across all layers and ETL processes.
 
 ---
 
