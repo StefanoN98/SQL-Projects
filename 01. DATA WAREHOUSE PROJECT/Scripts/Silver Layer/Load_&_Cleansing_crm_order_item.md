@@ -285,7 +285,7 @@ WHERE ABS(op.total_order_payment - tp.total_payment_value) > 0.01 --to verify de
 -- For these cases we'll add in the gold layer 2 new columns: one that expalain in which situation we are and the difference amount
 ```
 
-### Referential Check with silver.crm_order_payments
+### Referential Check with `silver.crm_order_payments`
 ```sql
 SELECT DISTINCT(fo.order_id) AS order_id_orders_table,
 	   op.order_id AS order_id_payments_table
