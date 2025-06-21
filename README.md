@@ -23,7 +23,9 @@ This repository presents a complete **SQL-based Data Analytics Pipeline**, progr
 - ⚙ **ETL Pipelines:** Batch processing strategies for data ingestion and transformation.
 - 📊 **Final Output:** Clean, structured data stored in the **Gold Layer** for analytics.
 
-🔗 **Reference:** [Data Warehouse Project](https://github.com/StefanoN98/SQL-Project-E-Commerce-Case/blob/548a55a82cd205e14adf492da91b974e4889bf5f/01.%20DATA%20WAREHOUSE%20PROJECT/01.%20DWH%20README.md)
+🔗 **Go to DWH Project Readme:** [Data Warehouse Project](https://github.com/StefanoN98/SQL-Project-E-Commerce-Case/blob/548a55a82cd205e14adf492da91b974e4889bf5f/01.%20DATA%20WAREHOUSE%20PROJECT/01.%20DWH%20README.md)
+
+🔗 **Go to main DWH Projecte:** [Data Warehouse Project](https://github.com/StefanoN98/SQL-Project-E-Commerce-Case/tree/bd9bb231a220b417fb088afec177e58012c02b1a/01.%20DATA%20WAREHOUSE%20PROJECT)
 
 ---
 
