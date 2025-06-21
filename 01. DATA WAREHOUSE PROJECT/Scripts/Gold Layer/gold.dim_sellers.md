@@ -43,14 +43,13 @@ FROM gold.dim_sellers
 ```
 
 ### 2. Referential Check
-⚠️ _This will need to be repeated once the final Gold Layer fact tables are built._
 
 ```sql
 -- Verify that each `seller_id` has at least one associated `order_id`  
 SELECT s.seller_id,
        oi.order_id
 FROM gold.dim_sellers s
-LEFT JOIN silver.crm_order_items oi
+LEFT JOIN gold.fact_order_items oi
 ON s.seller_id = oi.seller_id
 WHERE oi.order_id IS NULL;
 -- ✅ All `seller_id`s have an associated `order_id`
