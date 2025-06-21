@@ -98,7 +98,7 @@ SELECT 'sellers_counting' AS '_metric', COUNT(DISTINCT seller_id) AS '_value' FR
 SELECT DISTINCT oi.order_id,
 	   o.order_status
 FROM gold.fact_order_items oi
-LEFT JOIN silver.crm_orders o
+LEFT JOIN gold.fact_orders o
 ON oi.order_id=o.order_id
 WHERE order_status IS NULL
 -- ✅ All the order_id have a related order_status
