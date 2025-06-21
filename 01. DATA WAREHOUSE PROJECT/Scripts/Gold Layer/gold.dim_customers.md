@@ -72,7 +72,7 @@ perchè ad ogni order_id è associato un customer_id
 SELECT f.customer_id,
        COUNT(o.order_id)
 FROM gold.dim_customers f
-LEFT JOIN silver.crm_orders o
+LEFT JOIN gold.fact_orders o
 ON f.customer_id = o.customer_id
 GROUP BY f.customer_id
 HAVING COUNT(o.order_id) > 1;
