@@ -77,7 +77,7 @@ SELECT 'Width','max_width', MAX(product_width) FROM gold.dim_products;
 SELECT p.product_id,
 	   COUNT(oi.order_id) AS orders_counting
 FROM gold.dim_products p
-LEFT JOIN silver.crm_order_items oi
+LEFT JOIN gold.fact_order_items oi
 ON p.product_id=oi.product_id
 GROUP BY p.product_id
 HAVING COUNT(oi.order_id)<1
