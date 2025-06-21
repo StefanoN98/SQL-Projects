@@ -101,8 +101,6 @@ The Gold Layer is the business-level data representation, structured to support 
 | city      | NVARCHAR(50)   | City of the ZIP code            |
 | country   | NVARCHAR(10)   | State of the ZIP code           |
 
---
-
 
 
 
