@@ -68,7 +68,7 @@ WHERE o.order_id IS NULL;
 Verify all customer_id have not more than 1 order_id associated (sarà da fare con quella gold) 
 perchè ad ogni order_id è associato un customer_id 
 ```sql
--- Check that `customer_id` is not duplicated across multiple orders (⚠️ Silver for now)
+-- Check that `customer_id` is not duplicated across multiple orders
 SELECT f.customer_id,
        COUNT(o.order_id)
 FROM gold.dim_customers f
