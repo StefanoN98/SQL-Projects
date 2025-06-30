@@ -7,6 +7,7 @@ This repository presents a complete **SQL-based Data Analytics Pipeline**, progr
 ![SQL Server](https://img.shields.io/badge/Microsoft_SQL_Server-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white)
 ![Draw.io](https://img.shields.io/badge/Draw.io-FF9900?style=for-the-badge&logo=diagramsdotnet&logoColor=white)
 ![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
+![PowerPoint](https://img.shields.io/badge/PowerPoint-B7472A?style=for-the-badge&logo=microsoftpowerpoint&logoColor=white)
 
 ---
 
@@ -19,9 +20,9 @@ This repository presents a complete **SQL-based Data Analytics Pipeline**, progr
 **🛠 Approach:** Leverages the **Medallion Architecture** (**Bronze, Silver, and Gold layers**) to store and transform raw data into business-ready insights.
 
 #### 📌 **Key Steps:**
-- 🏛 **Data Architecture:** Designed using **Star Schema** with fact and dimension tables.
+- 🏛 **Data Architecture:** Bronze Layer for raw data ingestion and storage, Silver Layer for cleaned, validated, and standardized data. Gold Layer for business-ready, aggregated data optimized for analytics
 - ⚙ **ETL Pipelines:** Batch processing strategies for data ingestion and transformation.
-- 📊 **Final Output:** Clean, structured data stored in the **Gold Layer** for analytics.
+- 📊 **Final Output:** Clean, structured data stored in the **Gold Layer** using **Star Schema** with fact and dimension tables ready for analytics.
 
 🔗 **Go to DWH Project Readme:** [DWH Project README](https://github.com/StefanoN98/SQL-Project-E-Commerce-Case/blob/548a55a82cd205e14adf492da91b974e4889bf5f/01.%20DATA%20WAREHOUSE%20PROJECT/01.%20DWH%20README.md)
 
@@ -65,7 +66,7 @@ This repository presents a complete **SQL-based Data Analytics Pipeline**, progr
 - 🗄 **SQL Server**: Data processing & querying.
 - 📂 **CSV Datasets**: Source files for ETL processes.
 - 📊 **SSMS**: SQL Server Management Studio for database interaction.
-- 🖼 **DrawIO**: Data architecture visualization.
+- 🖼 **DrawIO & Power Point**: Data architecture visualization.
 - 🐙 **Git & GitHub**: Version control & collaboration.
 
 ---
