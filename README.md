@@ -34,32 +34,12 @@ This repository presents a complete **SQL-based Data Analytics Pipeline**, progr
 
 ### 2️⃣ **Exploratory Data Analysis (EDA)** 🔍
 
-**🟢 Objective:** Uncover insights, trends, and anomalies in the dataset using SQL queries.
-
-**🛠 Approach:** Uses the **Gold Layer** from the DWH to perform dimension and measure analysis.
-
-#### 📌 **Key Steps:**
-- 🏷 **Dimension Analysis:** Understanding segmentation (e.g., customer demographics, product categories).
-- 📊 **Measure Exploration:** Computing key metrics (e.g., revenue, total sales, average price).
-- 📈 **Ranking & Trend Analysis:** Identifying top/bottom-performing entities using SQL functions.
-
-🔗 **Reference:** [EDA Project](https://github.com/StefanoN98/SQL-Projects/tree/main/02.%20EDA%20PROJECT)
-
+### 🚧 WORK IN PROGRESS
 ---
 
 ### 3️⃣ **Advanced Analytics** 📈
 
-**🟢 Objective:** Perform complex analytical operations to extract deeper business insights.
-
-**🛠 Approach:** Uses advanced SQL techniques, including **trend analysis, cumulative metrics, segmentation, and performance evaluation**.
-
-#### 📌 **Key Steps:**
-- ⏳ **Time-Series Analysis:** Identifying changes over time using `GROUP BY`, `DATETRUNC`, and `LAG`.
-- 📊 **Cumulative Metrics:** Running totals, moving averages, and YoY comparisons.
-- 🏆 **Performance Analysis:** Ranking, category contribution analysis, and part-to-whole evaluations.
-- 🔍 **Segmentation & Reporting:** Customer segmentation with `CASE WHEN`, product performance evaluation.
-
-🔗 **Reference:** [Advanced Analytics Project](https://github.com/StefanoN98/SQL-Projects/tree/main/03.%20ADVANCED%20ANALYTICS%20PROJECT)
+### 🚧 WORK IN PROGRESS
 
 ---
 
