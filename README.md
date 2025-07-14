@@ -13,7 +13,7 @@ This repository presents a complete **SQL-based Data Analytics Pipeline**, progr
 
 ---
 
-## 🔄 **Project Workflow**
+## **Project Workflow**
 
 ### 1️⃣ **Data Warehouse (DWH) & ETL** 📂
 
