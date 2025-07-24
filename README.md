@@ -17,14 +17,14 @@ This repository presents a complete **SQL-based Data Analytics Pipeline**, progr
 
 ### 1️⃣ **Data Warehouse (DWH) & ETL** 📂
 
-**🟢 Objective:** Build a **Data Warehouse** using **SQL Server**, implementing **ETL (Extract, Transform, Load) processes**.
+**🟢 Objective:** Build a **Data Warehouse** using **SQL Server**, implementing **ETL processes**.
 
 **🛠 Approach:** Leverages the **Medallion Architecture** (**Bronze, Silver, and Gold layers**) to store and transform raw data into business-ready insights.
 
 #### 📌 **Key Steps:**
 - 🏛 **Data Architecture:** Bronze Layer for raw data ingestion and storage, Silver Layer for cleaned, validated, and standardized data. Gold Layer for business-ready, aggregated data optimized for analytics
 - ⚙ **ETL Pipelines:** Batch processing strategies for data ingestion and transformation.
-- 📊 **Final Output:** Clean, structured data stored in the **Gold Layer** using **Star Schema** with fact and dimension tables ready for analytics.
+- 📊 **Final Output:** Clean, structured data stored in the **Gold Layer** using **Star Schema** with fact and dimension views ready for analytics.
 
 🔗 **Go to DWH Project Readme:** [DWH Project README](https://github.com/StefanoN98/SQL-Project-E-Commerce-Case/blob/4fb93e1780054334722550f02d82ac9078c9ae16/01.%20DATA%20WAREHOUSE%20PROJECT/01.%20DWH%20README.md)
 
@@ -39,7 +39,7 @@ This repository presents a complete **SQL-based Data Analytics Pipeline**, progr
 
 ### 3️⃣ **Advanced Analytics** 📈
 
-### 🚧 WORK IN PROGRESS
+### 🔜 Next Step
 
 ---
 
