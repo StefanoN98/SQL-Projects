@@ -49,7 +49,7 @@ This repository presents a complete **SQL-based Data Analytics Pipeline**, progr
 - 📂 **CSV Datasets**: Source files for ETL processes.
 - 📊 **SSMS**: SQL Server Management Studio for database interaction.
 - 🖼 **DrawIO & Power Point**: Data architecture visualization.
-- 🐙 **Git & GitHub**: Version control & collaboration.
+- 🐙 **GitHub**: Version control & collaboration.
 
 ---
 
