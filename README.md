@@ -1,4 +1,4 @@
-# 📊 SQL-Project-E-Commerce-Case (Data Analytics Pipeline)
+# 📊 SQL-Project-E-Commerce-Case
 
 ## 📝 **Overview**
 
