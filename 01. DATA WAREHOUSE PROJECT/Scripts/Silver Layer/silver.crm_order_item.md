@@ -223,9 +223,9 @@ FROM silver.crm_order_items;
 
 | price  | freight_value  | shipping_type     |
 |--------|----------------|-------------------|
-| 85     | 17.03          | Standard Shipping |
-| 229    | 9.80           | Standard Shipping |
-| 99.9   | 0.00           | Free Shipping     |
+| 85     | 17,03          | Standard Shipping |
+| 229    | 9,80           | Standard Shipping |
+| 99,9   | 0,00           | Free Shipping     |
 ```
 
 ---
@@ -238,9 +238,9 @@ FROM bronze.crm_order_items
 
 | price  | freight_value  | total_order_payment |
 |--------|----------------|---------------------|
-| 58.90  | 13.29          | 72.19               |
-| 239.90 | 19.93          | 259.83              |
-| 199.00 | 17.87          | 216.87              |
+| 58,90  | 13,29          | 72,19               |
+| 239,90 | 19,93          | 259,83              |
+| 199,00 | 17,87          | 216,87              |
 ```
 
 ### Verify that all the total_order_payment have the same transactional payments value
@@ -351,9 +351,9 @@ FROM bronze.crm_order_items;
 
 | order_id                           | order_item_id | product_id                          | seller_id                           | shipping_limit_date    | price  | freight_value | total_order_payment | shipping_type     | dwh_create_date               |
 |------------------------------------|----------------|--------------------------------------|--------------------------------------|--------------------------|--------|----------------|---------------------|--------------------|-------------------------------|
-| 00010242fe8c5a6d1ba2dd792cb16214   | 1              | 4244733e06e7ecb4970a6e2683c13e61     | 48436dade18ac8b2bce089ec2a041202     | 2017-09-19 09:45:35.000 | 58.90  | 13.29          | 72.19               | Standard Shipping  | 2025-05-31 12:02:21.0600000   |
-| 00018f77f2f0320c557190d7a144bdd3   | 1              | e5f2d52b802189ee658865ca93d83a8f     | dd7ddc04e1b6c2c614352b383efe2d36     | 2017-05-03 11:05:13.000 | 239.90 | 19.93          | 259.83              | Standard Shipping  | 2025-05-31 12:02:21.0600000   |
-| 000229ec398224ef6ca0657da4fc703e   | 1              | c777355d18b72b67abbeef9df44fd0fd     | 5b51032eddd242adc84c38acab88f23d     | 2018-01-18 14:48:30.000 | 199.00 | 17.87          | 216.87              | Standard Shipping  | 2025-05-31 12:02:21.0600000   |
+| 00010242fe8c5a6d1ba2dd792cb16214   | 1              | 4244733e06e7ecb4970a6e2683c13e61     | 48436dade18ac8b2bce089ec2a041202     | 2017-09-19 09:45:35.000 | 58,90  | 13,29          | 72,19               | Standard Shipping  | 2025-05-31 12:02:21.0600000   |
+| 00018f77f2f0320c557190d7a144bdd3   | 1              | e5f2d52b802189ee658865ca93d83a8f     | dd7ddc04e1b6c2c614352b383efe2d36     | 2017-05-03 11:05:13.000 | 239,90 | 19,93          | 259,83              | Standard Shipping  | 2025-05-31 12:02:21.0600000   |
+| 000229ec398224ef6ca0657da4fc703e   | 1              | c777355d18b72b67abbeef9df44fd0fd     | 5b51032eddd242adc84c38acab88f23d     | 2018-01-18 14:48:30.000 | 199,00 | 17,87          | 216,87              | Standard Shipping  | 2025-05-31 12:02:21.0600000   |
 
 
 ---
