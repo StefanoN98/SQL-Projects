@@ -77,10 +77,10 @@ SELECT 'max_payment' AS _metric, CAST(MAX(total) AS varchar)+' €' AS _value FR
 
 | _metric         | _value              |
 |-----------------|---------------------|
-| orders_counting | 99,440 total orders |
+| orders_counting | 99440 total orders |
 | min_payment     | 0 €                 |
-| avg_payment     | 160.99 €            |
-| max_payment     | 13,664.10 €         |
+| avg_payment     | 160,99 €            |
+| max_payment     | 13664,10 €         |
 ```
 
 ### 2. Referential Check
