@@ -34,18 +34,21 @@ This repository presents a complete **SQL-based Data Analytics Pipeline**, progr
 
 ### 2️⃣ **Exploratory Data Analysis (EDA)** 🔍
 
-**🟢 Objective: ***
+**🟢 Objective**: Investigate the dataset to discover patterns, spot anomalies, make statistic analysis and **extract meaningful insights**
 
-**🛠 Approach: ***
+**🛠 Approach**: explore and analyze the data focusing on 5 macro area
 
-#### 📌 **Key Steps:**
-- **
-- ***
-- ***
+#### 📌 **Key Objects:**
+- **Database Profiling:** Understanding data structure, quality, and storage patterns
+- **Temporal Analysis:** Uncovering time-based trends, seasonality, and customer lifecycles
+- **Statistical Profiling:** Identifying distributions, outliers, and segmentation opportunities
+- **Performance Measurement:** Quantifying business entity performance across multiple metrics
+- **Ranking & Benchmarking:** Establishing performance hierarchies and best-practice identification
 
-🔗 **Go to DWH Project Readme:** [DWH Project README](https://github.com/StefanoN98/SQL-Project-E-Commerce-Case/blob/4fb93e1780054334722550f02d82ac9078c9ae16/01.%20DATA%20WAREHOUSE%20PROJECT/01.%20DWH%20README.md)
+🔗 **Go to DWH Project Readme:** [EDA Project README](https://github.com/StefanoN98/SQL-Projects/blob/532dc661bb708da804ff62f454bfccadcaab8e6b/02.%20EDA%20PROJECT/%2002.%20EDA%20README.md)
 
-🔗 **Go to main DWH Project:**   [DWH Project main folder](https://github.com/StefanoN98/SQL-Project-E-Commerce-Case/tree/bd9bb231a220b417fb088afec177e58012c02b1a/01.%20DATA%20WAREHOUSE%20PROJECT)
+🔗 **Go to main DWH Project:**   [EDA Project main folder](https://github.com/StefanoN98/SQL-Projects/tree/532dc661bb708da804ff62f454bfccadcaab8e6b/02.%20EDA%20PROJECT)
+
 ---
 
 ### 3️⃣ **Advanced Analytics** 📈
