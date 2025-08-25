@@ -27,7 +27,7 @@ This repository presents a complete **SQL-based Data Analytics Pipeline**, progr
 - 📊 **Final Output:** Clean, structured data stored in the **Gold Layer** using **Star Schema** with fact and dimension views ready for analytics.
 
 #### **💼 Business Value:**
-- A data warehouse serves as the **single source**  that consolidates disparate data sources into a unified, consistent format. This enables businesses to perform cross-functional analysis, identify trends that span multiple departments, and generate insights.
+- A Data Warehouse serves as the **single source**  that consolidates disparate data sources into a unified, consistent format. This enables businesses to perform cross-functional analysis, identify trends that span multiple departments, and generate insights.
 - The structured approach demonstrated in this project - with bronze, silver, and gold layers - reflects how enterprises manage data quality and accessibility at scale and shows the technical infrastructure required.
 
 🔗 **Go to DWH Project Readme:** [DWH Project README](https://github.com/StefanoN98/SQL-Project-E-Commerce-Case/blob/4fb93e1780054334722550f02d82ac9078c9ae16/01.%20DATA%20WAREHOUSE%20PROJECT/01.%20DWH%20README.md)
