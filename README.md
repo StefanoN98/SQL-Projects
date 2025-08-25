@@ -34,7 +34,18 @@ This repository presents a complete **SQL-based Data Analytics Pipeline**, progr
 
 ### 2️⃣ **Exploratory Data Analysis (EDA)** 🔍
 
-### 🚧 WORK IN PROGRESS
+**🟢 Objective: ***
+
+**🛠 Approach: ***
+
+#### 📌 **Key Steps:**
+- **
+- ***
+- ***
+
+🔗 **Go to DWH Project Readme:** [DWH Project README](https://github.com/StefanoN98/SQL-Project-E-Commerce-Case/blob/4fb93e1780054334722550f02d82ac9078c9ae16/01.%20DATA%20WAREHOUSE%20PROJECT/01.%20DWH%20README.md)
+
+🔗 **Go to main DWH Project:**   [DWH Project main folder](https://github.com/StefanoN98/SQL-Project-E-Commerce-Case/tree/bd9bb231a220b417fb088afec177e58012c02b1a/01.%20DATA%20WAREHOUSE%20PROJECT)
 ---
 
 ### 3️⃣ **Advanced Analytics** 📈
