@@ -39,11 +39,11 @@ This repository presents a complete **SQL-based Data Analytics Pipeline**, progr
 **🛠 Approach**: explore and analyze the data across **5 strategic analytical dimensions**.
 
 #### 📌 **Key Objects:**
-- **🗄️ Database Profiling:** Understanding data structure, quality, and storage patterns
-- **📆 Temporal Analysis:** Uncovering time-based trends, seasonality, and customer lifecycles
-- **🔢 Key metrics Exploration:** Identifying distributions, outliers, and segmentation opportunities
-- **⚖️ Magnitude Analysis:** Quantifying business entity performance across multiple metrics
-- **🏆 Rank Analysis:** Establishing performance hierarchies and best-practice identification
+- **🗄️ Database Profiling:** Understanding data structure, quality, and storage patterns.
+- **📆 Temporal Analysis:** Uncovering time-based trends, seasonality, and customer lifecycles.
+- **🔢 Key metrics Exploration:** Identifying distributions, outliers and segmentation. 
+- **⚖️ Magnitude Analysis:** Quantifying business entity performance across multiple metrics.
+- **🏆 Rank Analysis:** Systematic ranking of business entities to identify top performers and establish competitive benchmarks.
 
 🔗 **Go to DWH Project Readme:** [EDA Project README](https://github.com/StefanoN98/SQL-Projects/blob/532dc661bb708da804ff62f454bfccadcaab8e6b/02.%20EDA%20PROJECT/%2002.%20EDA%20README.md)
 
