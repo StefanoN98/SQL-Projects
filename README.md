@@ -22,7 +22,7 @@ This repository presents a complete **SQL-based Data Analytics Pipeline**, progr
 **🛠 Approach:** Leverages the **Medallion Architecture** (**Bronze, Silver, and Gold layers**) to store and transform raw data into business-ready insights.
 
 #### 📌 **Key Steps:**
-- 🏛 **Data Architecture:** Bronze Layer for raw data ingestion and storage, Silver Layer for cleaned, validated, and standardized data. Gold Layer for business-ready, aggregated data optimized for analytics
+- 🏛 **Data Architecture:** Bronze Layer for raw data ingestion and storage, Silver Layer for cleaned, validated, and standardized data. Gold Layer for business-ready, aggregated data optimized for analytics.
 - ⚙ **ETL Pipelines:** Batch processing strategies for data ingestion and transformation.
 - 📊 **Final Output:** Clean, structured data stored in the **Gold Layer** using **Star Schema** with fact and dimension views ready for analytics.
 
@@ -43,11 +43,11 @@ This repository presents a complete **SQL-based Data Analytics Pipeline**, progr
 **🛠 Approach**: explore and analyze the data across **5 strategic analytical dimensions**.
 
 #### 📌 **Key Objects:**
-- **🗄️ Database Profiling:** Understanding data structure, quality, and storage patterns.
-- **📆 Temporal Analysis:** Uncovering time-based trends, seasonality, and customer lifecycles.
-- **🔢 Key metrics Exploration:** Identifying distributions, outliers and segmentation. 
-- **⚖️ Magnitude Analysis:** Quantifying business entity performance across multiple metrics.
-- **🏆 Rank Analysis:** Systematic ranking of business entities to identify top performers and establish competitive benchmarks.
+- **🗄️ Database Profiling:** Understanding data structure, quality, and storage patterns.<br>
+- **📆 Temporal Analysis:** Uncovering time-based trends, seasonality, and customer lifecycles.<br>
+- **🔢 Key metrics Exploration:** Identifying distributions, outliers and segmentation.<br>
+- **⚖️ Magnitude Analysis:** Quantifying business entity performance across multiple metrics.<br>
+- **🏆 Rank Analysis:** Systematic ranking of business entities to identify top performers and establish competitive benchmarks.<br>
 
   #### **💼 Business Value:**
 - Exploratory Data Analysis serves as the analytical bridge between data infrastructure and business intelligence. Through systematic investigation across those multiple dimensions organizations can identify hidden opportunities, detect emerging risks, and understand the underlying drivers of their business performance.
