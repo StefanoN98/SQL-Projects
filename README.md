@@ -30,9 +30,7 @@ This repository presents a complete **SQL-based Data Analytics Pipeline**, progr
 - A Data Warehouse serves as the **single source**  that consolidates disparate data sources into a unified, consistent format. This enables businesses to perform cross-functional analysis, identify trends that span multiple departments, and generate insights.
 - The structured approach demonstrated in this project - with bronze, silver, and gold layers - reflects how enterprises manage data quality and accessibility at scale and shows the technical infrastructure required.
 
-🔗 **Go to DWH Project Readme:** [DWH Project README](https://github.com/StefanoN98/SQL-Project-E-Commerce-Case/blob/4fb93e1780054334722550f02d82ac9078c9ae16/01.%20DATA%20WAREHOUSE%20PROJECT/01.%20DWH%20README.md)
-
-🔗 **Go to main DWH Project:**   [DWH Project main folder](https://github.com/StefanoN98/SQL-Project-E-Commerce-Case/tree/bd9bb231a220b417fb088afec177e58012c02b1a/01.%20DATA%20WAREHOUSE%20PROJECT)
+🔗 **Reference:**   [DWH Project](https://github.com/StefanoN98/SQL-Project-E-Commerce-Case/tree/bd9bb231a220b417fb088afec177e58012c02b1a/01.%20DATA%20WAREHOUSE%20PROJECT)
 
 ---
 
@@ -53,9 +51,7 @@ This repository presents a complete **SQL-based Data Analytics Pipeline**, progr
 - Exploratory Data Analysis serves as the analytical **bridge** between data infrastructure and business intelligence. Through systematic investigation across those multiple dimensions organizations can identify hidden opportunities, detect emerging risks, and understand the underlying drivers of their business performance.
 - This project shows how it is possible to systematically explore business datasets by **focusing on distinct analytical areas** rather than conducting random exploratory queries
 
-🔗 **Go to DWH Project Readme:** [EDA Project README](https://github.com/StefanoN98/SQL-Projects/blob/532dc661bb708da804ff62f454bfccadcaab8e6b/02.%20EDA%20PROJECT/%2002.%20EDA%20README.md)
-
-🔗 **Go to main DWH Project:**   [EDA Project main folder](https://github.com/StefanoN98/SQL-Projects/tree/532dc661bb708da804ff62f454bfccadcaab8e6b/02.%20EDA%20PROJECT)
+🔗 **Reference:** [EDA Project](https://github.com/StefanoN98/SQL-Projects/tree/532dc661bb708da804ff62f454bfccadcaab8e6b/02.%20EDA%20PROJECT)
 
 ---
 
