@@ -51,7 +51,7 @@ This repository presents a complete **SQL-based Data Analytics Pipeline**, progr
 - Exploratory Data Analysis serves as the analytical **bridge** between data infrastructure and business intelligence. Through systematic investigation across those multiple dimensions organizations can identify hidden opportunities, detect emerging risks, and understand the underlying drivers of their business performance.
 - This project shows how it is possible to systematically explore business datasets by **focusing on distinct analytical areas** rather than conducting random exploratory queries
 
-🔗 **Reference:** [EDA Project](https://github.com/StefanoN98/SQL-Projects/tree/532dc661bb708da804ff62f454bfccadcaab8e6b/02.%20EDA%20PROJECT)
+🔗 **Reference:** [EDA Project](https://github.com/StefanoN98/SQL-Projects/tree/aeb630b85d62458d96b5fb171dea25894c6885e5/02.%20EDA%20PROJECT)
 
 ---
 
