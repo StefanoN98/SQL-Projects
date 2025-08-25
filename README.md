@@ -43,11 +43,11 @@ This repository presents a complete **SQL-based Data Analytics Pipeline**, progr
 **🛠 Approach**: explore and analyze the data across **5 strategic analytical dimensions**.
 
 #### 📌 **Key Objects:**
-- **🗄️ Database Profiling:** Understanding data structure, quality, and storage patterns.
-- **📆 Temporal Analysis:** Uncovering time-based trends, seasonality, and customer lifecycles.
-- **🔢 Key metrics Exploration:** Identifying distributions, outliers and segmentation.
-- **⚖️ Magnitude Analysis:** Quantifying business entity performance across multiple metrics.
-- **🏆 Rank Analysis:** Systematic ranking of business entities to identify top performers and establish competitive benchmarks.
+- 🗄️**Database Profiling:** Understanding data structure, quality, and storage patterns.
+- 📆**Temporal Analysis:** Uncovering time-based trends, seasonality, and customer lifecycles.
+- 🔢**Key metrics Exploration:** Identifying distributions, outliers and segmentation.
+- ⚖️**Magnitude Analysis:** Quantifying business entity performance across multiple metrics.
+- 🏆**Rank Analysis:** Systematic ranking of business entities to identify top performers and establish competitive benchmarks.
 
 #### **💼 Business Value:**
 - Exploratory Data Analysis serves as the analytical bridge between data infrastructure and business intelligence. Through systematic investigation across those multiple dimensions organizations can identify hidden opportunities, detect emerging risks, and understand the underlying drivers of their business performance.
