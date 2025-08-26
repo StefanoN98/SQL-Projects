@@ -42,7 +42,7 @@ This repository presents a complete **SQL-based Data Analytics Pipeline**, progr
 
 #### 📌 **Key Objects:**
 - 🗄️**Database Profiling:** Understanding data structure, quality, and storage patterns.
-- 📆**Temporal Analysis:** Uncovering time-based trends, seasonality, and customer lifecycles.
+- 📆**Temporal Analysis:** Uncovering time-based trends and seasonality.
 - 🔢**Key metrics Exploration:** Identifying distributions, outliers and segmentation.
 - ⚖️**Magnitude Analysis:** Quantifying business entity performance across multiple metrics.
 - 🏆**Rank Analysis:** Identify top/bottom-performing entities and establish competitive benchmarks.
