@@ -11,7 +11,7 @@
 1. [Assumptions](#-assumptions)
 2. [Table Mapping](#-table-mapping)
 3. [Output](#-output)
-4. [The Query (step-by-step)](#-the-query-step-by-step)
+4. [The Query](#-the-query)
 5. [Key Metrics Explained](#-key-metrics-explained)
 6. [Why This Is Useful for the Business](#-why-this-is-useful-for-the-business)
 7. [How the End User Can Leverage The Output](#-how-the-end-user-can-leverage-the-output)
@@ -73,7 +73,7 @@
 
 ---
 
-## 💻 The Query (step-by-step, commented)
+## 💻 The Query
 
 ```sql
 WITH order_totals AS (
