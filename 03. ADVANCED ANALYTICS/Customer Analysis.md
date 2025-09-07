@@ -24,13 +24,10 @@
 ---
 
 ## 📌 Assumptions
-
-- **Reference data**: entire dataset available in `gold` (no date filter is applied by default). If you need a specific time window, add `WHERE order_purchase_timestamp BETWEEN @from AND @to` in `order_totals`.
 - **Excluded orders**: orders with `order_status` in (`'canceled','unavailable'`) are excluded.
 - **Customer identity**: all aggregations use `customer_unique_id` (logical customer identifier) to avoid counting multiple internal `customer_id` values as separate customers.
 - **Multiple payments per order**: the query sums `fact_payments.total` per `order_id` to normalize multi-payment orders.
-- **Simplified CLV / Avg monthly value**: computed as `total_spent / active_months` (proxy). If you prefer true CLV, integrate churn/retention modeling and margins.
-
+- **Simplified CLV / Avg monthly value**: computed as `total_spent / active_months` (proxy). 
 ---
 
 ## 🗂️ Table Mapping
