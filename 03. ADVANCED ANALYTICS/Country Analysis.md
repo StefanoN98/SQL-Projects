@@ -291,8 +291,6 @@ The output of this query provides a **rich foundation of country-level metrics**
    - Integrate this dataset with silver/gold layer analytics (e.g., detailed order items, payment types) to drill down from country-level insights to product- or customer-level actions.  
    - Monitor KPIs over time and feed into automated reporting pipelines for operational decision-making.
 
-💡 **Tip:** Always consider linking this output with external data sources and BI tools to maximize actionable insights. The metrics are a starting point — the real value comes from combining, visualizing, and exploring trends in context.
-
 ---
 
 ## ⚙️ Technical Details and Interesting SQL Techniques
@@ -306,7 +304,7 @@ The output of this query provides a **rich foundation of country-level metrics**
   This avoids errors and database limitations.
 
 - **`COUNT(DISTINCT ...)` usage**: applied frequently to reduce the risk of double-counting caused by joins with transactional tables (`order_items`, `payments`).  
-  ⚠️ Note: this operation is expensive on large datasets.
+  ⚠️ Note: this operation is expensive on large datasets, so to consider alternative solutions on larger dataset.
 
 - **Divide-by-zero handling**: use `NULLIF(..., 0)` or `CASE WHEN ... > 0 THEN ... ELSE 0 END` to prevent runtime errors or `INF` values.
 
@@ -314,6 +312,6 @@ The output of this query provides a **rich foundation of country-level metrics**
   👉 Best practice: perform calculations numerically and handle formatting at the visualization layer (BI tool).
 
 - **`LEFT JOIN` vs `INNER JOIN`**: in `customer_seller_product_stats`, `LEFT JOIN`s ensure countries with no customers or sellers are still included in the output.  
-  Use `INNER JOIN` if you want to restrict the dataset to countries with complete information.
+  👉 Use `INNER JOIN` to restrict the dataset to countries with complete information.
 
 - **Robustness**: the use of `ISNULL/NULLIF` and `LEFT JOIN`s in the final select makes the query more tolerant of missing data.
