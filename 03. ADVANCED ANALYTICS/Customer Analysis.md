@@ -188,7 +188,7 @@ ORDER BY total_orders DESC;
 
 ## 🔑 Key Metrics Explained
 
-| Metric | Calculation / Notes | Purpose |
+| Metric | Calculation / Notes | Description |
 |---|---|---|
 | **First / Last Order** | `MIN` / `MAX` of `order_purchase_timestamp` per customer | Establishes the customer's lifecycle window
 | **Recency (days)** | Days between customer's last_order and dataset last order | Proxy for engagement; used in recency quartile
