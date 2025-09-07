@@ -204,11 +204,11 @@ ORDER BY total_orders DESC;
 
 ## 💡 Why This Is Useful for the Business
 
-- **Prioritize retention efforts**: identify "Top Champions" and "Loyal High Value" customers for VIP programs.  
-- **Targeted reactivation**: focus "At Risk" customers with win-back campaigns.  
-- **Promotions & offers**: tune promotions by segment (e.g., cross-sell to "Mid Value Regulars").  
-- **Product & category insights**: correlate segments with SKU preferences to optimize assortment and merchandising.  
-- **Operational planning**: forecast recurring revenue from avg_monthly_value and model impact of retention improvements.
+1. **Prioritize retention efforts**: identify "Top Champions" and "Loyal High Value" customers for VIP programs.  
+2. **Targeted reactivation**: focus "At Risk" customers with win-back campaigns.  
+3. **Promotions & offers**: tune promotions by segment (e.g., cross-sell to "Mid Value Regulars").  
+4. **Product & category insights**: correlate segments with SKU preferences to optimize assortment and merchandising.  
+5. **Operational planning**: forecast recurring revenue from avg_monthly_value and model impact of retention improvements.
 
 ---
 
@@ -231,15 +231,3 @@ ORDER BY total_orders DESC;
 - **Null-safe division**: `NULLIF(...,0)` used to avoid division-by-zero when computing avg_monthly_value.  
 - **Edge-case handling**: `avg_days_between_orders` checks `total_orders = 1` and same-day repeat orders.
 
----
-
-## ⚠️ Performance & Productionization Notes
-
-- `NTILE(4)` and `STDEV` on very large customer bases can be expensive. Consider:
-  - Pre-aggregating `order_totals` in a materialized view / nightly batch.  
-  - Using approximate quantiles (if supported) for very large datasets.  
-- Index suggestions: `fact_orders(order_id, customer_id, order_purchase_timestamp)`, `fact_payments(order_id)`, `dim_customers(customer_id, customer_unique_id)`.  
-- If `fact_payments` contains multiple rows per order (split payments), the `SUM(fp.total)` per `order_id` step avoids double-counting.  
-- If you plan incremental runs, persist intermediate `order_totals` and `customer_stats` into a `mart` table with a timestamp partition.
-
----
