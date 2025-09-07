@@ -239,6 +239,17 @@ ORDER BY total_revenue DESC;
 ```
 
 ---
+## Main Key Metrics Explained
+| Metric                                          | Thresholds / Calculation                                                                                                                     | Description                                                                                                                                         |
+| ----------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Market Segment**                              | **Large**: orders > 10000 & revenue > 1000000 <br> **Medium**: orders 1000–10000 & revenue 200000–1000000 <br> **Small**: all others | Classifies country markets by size |
+| **Revenue per Order Profile**                   | **High**: ≥198 <br> **Medium**: 180–197 <br> **Low**: <198                                                                                   | Categorizes countries by average order value                                     |
+| **Max Orders by Single Customer**               | `MAX(COUNT(DISTINCT order_id)) OVER (PARTITION BY country)`                                                                                  | Identifies outliers or very active customers                              |
+| **Average Spent per Customer**                  | `total_revenue / total_customers`                                                                                                            | Shows how much a typical customer spends in each country                                       |
+| **Percent of Customers Above Average Spending** | `(customers_above_avg_spending / total_customers) * 100`                                                                                     | Indicates the share of high-value customers                                                        |
+| **Domestic vs. Foreign Orders**                 | Domestic: orders where customer\_country = seller\_country <br> Foreign: orders where customer\_country ≠ seller\_country                    | Measures cross-border activity                                                 |
+
+---
 
 ## 💡 Why This Query Is Useful for the Business
 
