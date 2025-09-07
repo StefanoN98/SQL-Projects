@@ -10,7 +10,7 @@
 
 1. [Assumptions](#-assumptions)
 2. [Table Mapping](#-table-mapping)
-3. [Complete Output (example rows)](#-complete-output-example-rows)
+3. [Output](#-output)
 4. [The Query (step-by-step)](#-the-query-step-by-step)
 5. [Key Metrics Explained](#-key-metrics-explained)
 6. [Why This Is Useful for the Business](#-why-this-is-useful-for-the-business)
@@ -39,7 +39,7 @@
 
 ---
 
-## 📝 Complete Output (example rows)
+## 📝 Output
 
 | customer_unique_id | first_order | last_order | recency_days | total_orders | active_months | avg_days_between_orders | total_spent | avg_order_value | order_value_stddev | avg_monthly_value | customer_segment_base | customer_segment_RFM |
 |--------------------|-------------|------------|--------------:|-------------:|--------------:|-----------------------:|------------:|---------------:|-------------------:|------------------:|----------------------|---------------------:|
