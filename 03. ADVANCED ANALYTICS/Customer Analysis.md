@@ -76,8 +76,8 @@
 ## 💻 The Query (step-by-step, commented)
 
 ```sql
--- Calculate total payment per order
 WITH order_totals AS (
+    -- Calculate total payment per order
     SELECT
         fo.order_id,
         fo.customer_id,
@@ -90,8 +90,8 @@ WITH order_totals AS (
     GROUP BY fo.order_id, fo.customer_id, fo.order_purchase_timestamp
 ),
 
--- Calculate customer statistics
 customer_stats AS (
+    -- Calculate customer statistics
     SELECT
         dc.customer_unique_id,
         MIN(ot.order_purchase_timestamp) AS first_order_date,  -- first purchase date
@@ -109,14 +109,14 @@ customer_stats AS (
     GROUP BY dc.customer_unique_id
 ),
 
--- Single-row table with the dataset's last global order date (used for recency calculation),to understand if customers have come back
 max_date AS (
+    -- Single-row table with the dataset's last global order date (used for recency calculation),to understand if customers have come back
     SELECT MAX(order_purchase_timestamp) AS global_last_order_date
     FROM order_totals
 ),
 
--- Calculate quartiles (NTILE divides customers into 4 groups based on total_spent)
 spending_quartiles AS (
+    -- Calculate quartiles (NTILE divides customers into 4 groups based on total_spent)
     SELECT
         cs.*,
         NTILE(4) OVER (ORDER BY cs.total_spent) AS spending_quartile
@@ -124,8 +124,8 @@ spending_quartiles AS (
     FROM customer_stats cs
 ),
 
--- Calculate RFM quartiles. We reuse spending_quartile as monetary_quartile.
 rfm_quartiles AS (
+    -- Calculate RFM quartiles. We reuse spending_quartile as monetary_quartile.
     SELECT
         sq.*,
         sq.spending_quartile AS monetary_quartile,
@@ -135,8 +135,9 @@ rfm_quartiles AS (
     CROSS JOIN max_date md
 ),
 
--- Build segmentation based on spending and RFM
+
 final_segments AS (
+    -- Build segmentation based on spending and RFM
     SELECT *,
         -- Base segmentation
         CASE spending_quartile
