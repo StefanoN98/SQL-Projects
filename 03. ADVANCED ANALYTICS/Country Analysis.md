@@ -66,7 +66,7 @@ The goal is to provide **key metrics** — customers, sellers, products, orders,
 
 ---
 
-## Query completa (commentata riga-per-riga)
+## The Query
 
 ```sql
 WITH customer_seller_product_stats AS (
