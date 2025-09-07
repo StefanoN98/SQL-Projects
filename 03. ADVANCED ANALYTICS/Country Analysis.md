@@ -61,7 +61,6 @@ cte1 AS (
         ON dg.zip_code = dc.customer_zip_code
     LEFT JOIN gold.dim_sellers ds
         ON dg.zip_code = ds.seller_zip_code
-    -- join verso order_items per mappare prodotti ai seller (può aumentare cardinalità prima del DISTINCT)
     LEFT JOIN gold.fact_order_items foi
         ON foi.seller_id = ds.seller_id
     LEFT JOIN gold.dim_products dp
@@ -76,7 +75,6 @@ cte2 AS (
         -- numero ordini validi (DISTINCT per evitare duplicazioni dovute a più righe per order in altri join)
         COUNT(DISTINCT fo.order_id) AS total_orders,
         -- somma totale dei pagamenti associati agli ordini (attenzione: se un ordine ha più pagamenti, fp.total verrà sommato più volte)
-        -- se il modello prevede multi-payment per order, valutare SUM(DISTINCT fp.total) o normalizzare a livello di order_id
         SUM(fp.total) AS total_revenue
     FROM gold.fact_orders fo
     LEFT JOIN gold.fact_payments fp
@@ -89,7 +87,7 @@ cte2 AS (
     GROUP BY dg.country
 ),
 
--- CTE3: massimo numero di ordini effettuati da un singolo cliente per country
+-- CTE3: massimo numero di ordini effettuati da un singolo cliente per country, cioè il numero massimo di ordini che è stato fatto da un cliente per paese
 -- Pattern: prima calcolo num_orders per customer (aggregate), poi prendo il MAX per country
 cte3_customer_orders AS (
     SELECT
@@ -112,6 +110,17 @@ cte3 AS (
     FROM cte3_customer_orders
     GROUP BY country
 ),
+
+/* della cte3 c'era anche questa variante più snella:
+    SELECT DISTINCT
+        dg.country,
+        MAX(COUNT(DISTINCT fo.order_id)) OVER (PARTITION BY dg.country) AS max_orders_by_single_customer
+    FROM gold.fact_orders fo
+    LEFT JOIN gold.dim_customers dc ON fo.customer_id = dc.customer_id
+    LEFT JOIN gold.dim_geolocation dg ON dg.zip_code = dc.customer_zip_code
+    WHERE fo.order_status NOT IN ('canceled', 'unavailable')
+    GROUP BY dg.country, dc.customer_unique_id
+*/
 
 -- CTE4: spesa per singolo customer e media di spesa per country
 -- Step 1: calcolo spesa per customer
@@ -150,6 +159,7 @@ cte4b AS (
 ),
 
 -- CTE5: ordini domestici vs esteri (considerando country del customer vs country del seller)
+-- -- qui calcoliamo in base alla country del customer, Quanti ordini sono stati fatti verso seller della stessa country e quanti ordini sono stati fatti verso seller di altre country.
 cte5a AS (
     SELECT
         gc.country AS customer_country,
@@ -197,7 +207,7 @@ SELECT
         ELSE 'Small Market'
     END AS market_segment,
 
-    -- profilo basato su revenue media per ordine (soglie come esempio)
+    -- profilo basato su revenue media per ordine (198 come riferimento di revenue media è la media compelssiva di avg_revenue_per_order)
     CASE
         WHEN CASE WHEN cte2.total_orders > 0 THEN ROUND(cte2.total_revenue * 1.0 / cte2.total_orders, 2) ELSE 0 END >= 198 THEN 'High Value'
         WHEN CASE WHEN cte2.total_orders > 0 THEN ROUND(cte2.total_revenue * 1.0 / cte2.total_orders, 2) ELSE 0 END BETWEEN 180 AND 197 THEN 'Medium Value'
@@ -227,6 +237,14 @@ LEFT JOIN cte4b ON cte1.country = cte4b.country
 LEFT JOIN cte5b ON cte1.country = cte5b.country
 ORDER BY cte2.total_revenue DESC;
 ```
+## Assunzioni:
+-periodo di riferimento completo da 2016 a 2018
+-tolti dal conteggio gli ordjni cancellati e non disponibili (motivo per cui potrebbe differire il nuemro dalle analisi del silver/gold layer in dwh)
+-total_customer = 96095
+-total_sellers = 3095
+-total_products = 32951, ma nella query ne ho 33597 poichè un prodotto può avere più seller, e quindi essere presente in più regioni
+-total_orders = 98212 (esclusi i cancellati e unavailable)
+-total_revenue = 15739885,59 (esclusi i cancellati e unavailable)
 
 ---
 
