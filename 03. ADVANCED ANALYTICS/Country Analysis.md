@@ -256,7 +256,7 @@ ORDER BY total_revenue DESC;
 ```
 
 ---
-## Main Key Metrics Explained
+## 🔑 Main Key Metrics Explained
 | Metric                                          | Thresholds / Calculation                                                                                                                     | Description                                                                                                                                         |
 | ----------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Market Segment**                              | **Large**: orders > 10000 & revenue > 1000000 <br> **Medium**: orders 1000–10000 & revenue 200000–1000000 <br> **Small**: all others | Classifies country markets by size |
