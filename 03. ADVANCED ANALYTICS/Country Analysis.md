@@ -240,14 +240,14 @@ ORDER BY total_revenue DESC;
 
 ---
 
-## Perché questa query è utile al business
+## 💡 Why This Query Is Useful for the Business
 
-1. **Segmentazione mercato**: permette di classificare i mercati (Large / Medium / Small) utilizzando soglie semplici basate su ordini e revenue; utile per prioritizzare investimenti commerciali e operativi (market expansion, campagne marketing, onboarding seller).
-2. **Valore medio degli ordini**: identifica paesi con "order value" alto/basso — input fondamentale per pricing, promozioni e politiche di sconto.
-3. **Analisi domestico vs cross-border**: capisci la porzione di domanda locale vs estera; impatta logistica, dogane, tasse e politiche di spedizione.
-4. **Distribuzione della spesa tra clienti**: sapere quanti clienti spendono sopra la media aiuta a definire target per retention e up-sell (es. loyalty program, campagne mirate).
-5. **Identificazione outlier**: trovare clienti con molti ordini (max orders by single customer) è utile per account management o per investigare casi di frode / B2B nascosto.
-6. **Dimensionamento inventario e assortimento**: conoscendo numero di prodotti attivi per paese e numero di seller, si può ottimizzare assortimento e gestire investimenti in SKU.
+1. **Market segmentation**: allows classification of markets (Large / Medium / Small) using simple thresholds based on orders and revenue; useful to prioritize commercial and operational investments (market expansion, marketing campaigns, seller onboarding).  
+2. **Average order value**: identifies countries with high/low "order value" — a fundamental input for pricing, promotions, and discount policies.  
+3. **Domestic vs. cross-border analysis**: helps understand the share of local vs. foreign demand; impacts logistics, customs, taxation, and shipping policies.  
+4. **Customer spending distribution**: knowing how many customers spend above the average helps define retention and up-sell targets (e.g., loyalty programs, targeted campaigns).  
+5. **Outlier identification**: detecting customers with unusually high order counts (max orders by single customer) is useful for account management or to investigate potential fraud / hidden B2B activity.  
+6. **Inventory and assortment sizing**: by knowing the number of active products per country and the number of sellers, companies can optimize assortment and manage SKU investment.  
 
 ---
 
