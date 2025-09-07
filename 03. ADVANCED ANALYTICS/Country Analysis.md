@@ -251,17 +251,25 @@ ORDER BY total_revenue DESC;
 
 ---
 
-## Dettagli tecnici e tecniche SQL interessanti utilizzate
+## ⚙️ Technical Details and Interesting SQL Techniques
 
-- **CTE (Common Table Expressions)**: struttura la logica in blocchi leggibili e riutilizzabili; facilita debug e testing (puoi eseguire singoli CTE isolati).
-- **Pattern aggregate → derived → window**: quando si vuole applicare una funzione window (es. AVG/ MAX) su risultati già aggregati (es. spesa per customer), è necessario: aggregare per customer in un primo step, poi usare una window function nel passo successivo. Questo evita errori/limitazioni del DB.
-- **COUNT(DISTINCT ...)**: usato spesso per ridurre il rischio di double counting causato da join a tabelle di atto (order_items, payments). Nota: è costoso su dataset grandi.
-- **Gestione divide-by-zero**: uso di `NULLIF(..., 0)` oppure `CASE WHEN ... > 0 THEN ... ELSE 0 END` per evitare errori o valori `INF`.
-- **FORMAT / formattazione**: `FORMAT(..., 'N2')` è comoda per visualizzazione ma può essere lenta in aggregazioni massicce; preferire calcoli numerici e formattare a livello di layer di visualizzazione (BI) quando possibile.
-- **LEFT JOIN vs INNER JOIN**: i LEFT JOIN nella fase di conteggio (cte1) consentono di mostrare paesi anche privi di clienti/seller in alcuni casi. Usare INNER JOIN se si vuole restringere il dataset solo a paesi con dati completi.
-- **Performance considerations**:
-  - `COUNT(DISTINCT ...)` e `SUM(fp.total)` con join su payments possono essere molto costosi: valutare materialized view / pre-aggregazioni nel silver layer.
-  - index raccomandati: `fact_orders(order_id, customer_id, order_status, order_purchase_timestamp)`, `fact_payments(order_id)`, `fact_order_items(order_id, seller_id, product_id)`, `dim_geolocation(zip_code)`.
-  - considerare `approx_count_distinct()` (o equivalent) se si lavora su engine big-data per migliorare prestazioni.
-  - in presenza di più pagamenti per ordine, normalizzare total per `order_id` (es. calcolare `revenue_per_order` in un CTE che prende SUM(fp.total) per order_id) per evitare sovrastime.
-- **Robustezza**: l'uso di `ISNULL/NULLIF` e LEFT JOIN nel final select rende la query più tollerante a dati mancanti.
+- **CTEs (Common Table Expressions)**: the query is structured into logical, reusable blocks.  
+  This makes the logic easier to read, debug, and test (each CTE can be run in isolation).
+
+- **Aggregate → Derived → Window pattern**: when applying a window function (e.g., `AVG`, `MAX`) on top of already aggregated results (e.g., spending per customer), you need a two-step approach:  
+  1. Aggregate at the customer level.  
+  2. Apply the window function on the derived set.  
+  This avoids errors and database limitations.
+
+- **`COUNT(DISTINCT ...)` usage**: applied frequently to reduce the risk of double-counting caused by joins with transactional tables (`order_items`, `payments`).  
+  ⚠️ Note: this operation is expensive on large datasets.
+
+- **Divide-by-zero handling**: use `NULLIF(..., 0)` or `CASE WHEN ... > 0 THEN ... ELSE 0 END` to prevent runtime errors or `INF` values.
+
+- **`FORMAT(...)` for readability**: functions like `FORMAT(..., 'N2')` are handy for displaying results, but they can be slow in large-scale aggregations.  
+  👉 Best practice: perform calculations numerically and handle formatting at the visualization layer (BI tool).
+
+- **`LEFT JOIN` vs `INNER JOIN`**: in `customer_seller_product_stats`, `LEFT JOIN`s ensure countries with no customers or sellers are still included in the output.  
+  Use `INNER JOIN` if you want to restrict the dataset to countries with complete information.
+
+- **Robustness**: the use of `ISNULL/NULLIF` and `LEFT JOIN`s in the final select makes the query more tolerant of missing data.
