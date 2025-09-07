@@ -5,8 +5,15 @@
 This document contains the SQL query that produces a **market summary by country** from the `gold` layer of the data warehouse.  
 The goal is to provide **key metrics** — customers, sellers, products, orders, revenue, market profile, and cross-border indicators — useful for **business and operational decision-making**.
 
-**📅 Reference period**: full timeframe from 2016 to 2018 (assumed in the query).  
-**⚠️ Note**: the query excludes orders with `order_status` in (`'canceled','unavailable'`).
+## 📌 Assumptions
+
+- **Reference period**: full timeframe from 2016 to 2018  
+- **Excluded orders**: canceled and unavailable orders are not counted (this may cause differences compared to the silver/gold layer analyses in the DWH)  
+- **Total customers** = 96,095  
+- **Total sellers** = 3,095  
+- **Total products** = 32,951, but in the query result there are 33,597 because a product can have multiple sellers and thus appear in multiple regions  
+- **Total orders** = 98,212 (the query excludes orders with `order_status` in (`'canceled','unavailable'`)  
+- **Total revenue** = 15,739,885.59 (the query excludes orders with `order_status` in (`'canceled','unavailable'`)
 
 ---
 
