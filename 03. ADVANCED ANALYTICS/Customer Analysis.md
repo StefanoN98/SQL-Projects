@@ -11,8 +11,8 @@
 1. [Assumptions](#-assumptions)
 2. [Table Mapping](#-table-mapping)
 3. [Output](#-output)
-   - [Columns 1-6](#columns-1-6)  
-   - [Columns 7-13](#columns-7-13)  
+   - [Columns 1-7](#columns-1-7)  
+   - [Columns 8-13](#columns-8-13)  
 5. [The Query](#-the-query)
 6. [Key Metrics Explained](#-key-metrics-explained)
 7. [Why This Is Useful for the Business](#-why-this-is-useful-for-the-business)
@@ -52,26 +52,27 @@
 | ca77025e7201e3b30c44b472ff346268 | 2017-10 | 2018-06 | 94  | 7  | 6  | 39 | 1122.72 | 160.39 | 77.07 | 143.33 | High Value | Low Value |
 | 47c1a3033b8b77b3ab6e109eb4d5fdf3 | 2017-08 | 2018-01 | 222 | 6  | 4  | 34 | 944.21  | 157.37 | 134.56| 166.63 | High Value | Low Value |
 
-### Columns 1-6
+### Columns 1-7
 
-| customer_unique_id           | first_order | last_order | recency_days | total_orders | active_months | ... |
-|------------------------------|-------------|------------|--------------|--------------|---------------|-------------------------|
-| 8d50f5eadf50201ccdcedfb9e2ac8455 | 2017-05    | 2018-08    | 14           | 16           | 10            | …                       |
-| 3e43e6105506432c953e165fb2acf44c | 2017-09    | 2018-02    | 188          | 9            | 4             | …                       |
-| 1b6c7548a2a1f9037c1fd3ddfed95f33 | 2017-11    | 2018-02    | 201          | 7            | 4             | …                       |
-| 6469f99c1f9dfae7733b25662e7f1782 | 2017-09    | 2018-06    | 67           | 7            | 6             | …                       |
-| ca77025e7201e3b30c44b472ff346268 | 2017-10    | 2018-06    | 94           | 7            | 6             | …                       |
-| 47c1a3033b8b77b3ab6e109eb4d5fdf3 | 2017-08    | 2018-01    | 222          | 6            | 4             | …                       |
+| customer_unique_id               |  first_order | last_order | recency_days | total_orders | active_months | avg_days_<br>between_orders | ... |
+|----------------------------------|--------------|------------|-------------:|-------------:|--------------:|------------------------:|----:|
+| 8d50f5eadf50201ccdcedfb9e2ac8455 | 2017-05      | 2018-08    | 14           |  16          | 10            | 30                      | ... |
+| 3e43e6105506432c953e165fb2acf44c | 2017-09      | 2018-02    | 188          | 9            | 4             | 20                      | ... |
+| 1b6c7548a2a1f9037c1fd3ddfed95f33 | 2017-11      | 2018-02    | 201          | 7            | 4             | 15                      | ... | 
+| 6469f99c1f9dfae7733b25662e7f1782 | 2017-09      | 2018-06    | 67           | 7            | 6             | 47                      | ... | 
+| ca77025e7201e3b30c44b472ff346268 | 2017-10      | 2018-06    | 94           | 7            | 6             | 39                      | ... |
+| 47c1a3033b8b77b3ab6e109eb4d5fdf3 | 2017-08      | 2018-01    | 222          | 6            | 4             | 34                      | ... |
 
-### Columns 7-13
-| customer_unique_id               | ... |avg_days_<br>between_orders | total_<br>spent | avg_order<br>_value | order_value_<br>stddev | avg_monthly_<br>value | customer_<br>segment_base | customer_<br>segment_RFM |
-|----------------------------------|----|-------------------------|-------------|----------------:|-------------------:|------------------:|----------------------:|---------------------:|
-| 8d50f5eadf50201ccdcedfb9e2ac8455 | ...|  30                     | 902.04      | 56.38           | 39.76              | 58.57             | High Value            | Low Value            |
-| 3e43e6105506432c953e165fb2acf44c | ...|20                     | 1172.66     | 130.30          | 91.72              | 217.16            | High Value            | Low Value            |
-| 1b6c7548a2a1f9037c1fd3ddfed95f33 | ...|15                     | 959.01      | 137.00          | 80.70              | 309.36            | High Value            | Low Value            |
-| 6469f99c1f9dfae7733b25662e7f1782 | ...| 47                     | 758.83      | 108.40          | 77.63              | 80.73             | High Value            | Low Value            |
-| ca77025e7201e3b30c44b472ff346268 | ...| 39                     | 1122.72     | 160.39          | 77.07              | 143.33            | High Value            | Low Value            |
-| 47c1a3033b8b77b3ab6e109eb4d5fdf3 | ...| 34                     | 944.21      | 157.37          | 134.56             | 166.63            | High Value            | Low Value            |
+
+### Columns 8-13
+| customer_unique_id               | ... | total_<br>spent | avg_order<br>_value | order_value_<br>stddev | avg_monthly_<br>value | customer_<br>segment_base | customer_<br>segment_RFM |
+|----------------------------------|-----|----------------:|---------------------:|-----------------------:|----------------------:|--------------------------:|-------------------------:|
+| 8d50f5eadf50201ccdcedfb9e2ac8455 | ... | 902.04          | 56.38                | 39.76                  | 58.57                 | High Value                | Low Value                |
+| 3e43e6105506432c953e165fb2acf44c | ... | 1172.66         | 130.30               | 91.72                  | 217.16                | High Value                | Low Value                |
+| 1b6c7548a2a1f9037c1fd3ddfed95f33 | ... | 959.01          | 137.00               | 80.70                  | 309.36                | High Value                | Low Value                |
+| 6469f99c1f9dfae7733b25662e7f1782 | ... | 758.83          | 108.40               | 77.63                  | 80.73                 | High Value                | Low Value                |
+| ca77025e7201e3b30c44b472ff346268 | ... | 1122.72         | 160.39               | 77.07                  | 143.33                | High Value                | Low Value                |
+| 47c1a3033b8b77b3ab6e109eb4d5fdf3 | ... | 944.21          | 157.37               | 134.56                 | 166.63                | High Value                | Low Value                |
 
 ---
 
