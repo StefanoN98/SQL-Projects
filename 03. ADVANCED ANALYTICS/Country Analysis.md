@@ -62,16 +62,6 @@ The goal is to provide **key metrics** — customers, sellers, products, orders,
 ## Query completa (commentata riga-per-riga)
 
 ```sql
-/*
-  Query: Country Market Summary
-  Dialetto: SQL Server (FORMAT, CONCAT con '+', CAST ... come nell'esempio originale).
-  Note generali:
-  - Uso di CTE per modularità e per evitare ripetizioni.
-  - Alcune aggregazioni vengono calcolate in step intermedi per abilitare l'uso di window function
-    su risultati già aggregati (pattern: aggregate -> derived -> window).
-  - Attenzione a eventuali duplicazioni dovute ai join (per questo si usano COUNT(DISTINCT ...)).
-*/
-
 WITH
 
 -- CTE1: conteggi di base per country (clienti unici, seller unici, prodotti distinti)
