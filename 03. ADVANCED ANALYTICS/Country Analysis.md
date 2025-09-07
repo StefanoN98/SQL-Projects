@@ -17,7 +17,7 @@ The goal is to provide **key metrics** — customers, sellers, products, orders,
 
 ---
 
-## 🗂️ Table Mapping (short overview)
+## 🗂️ Table Mapping
 
 - `gold.dim_geolocation` — geographic/postal information (zip_code → country) 
 - `gold.dim_customers` — customer master data (customer_id, customer_unique_id, customer_zip_code)   
