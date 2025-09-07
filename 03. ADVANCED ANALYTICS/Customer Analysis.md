@@ -11,13 +11,15 @@
 1. [Assumptions](#-assumptions)
 2. [Table Mapping](#-table-mapping)
 3. [Output](#-output)
-4. [The Query](#-the-query)
-5. [Key Metrics Explained](#-key-metrics-explained)
-6. [Why This Is Useful for the Business](#-why-this-is-useful-for-the-business)
-7. [How the End User Can Leverage The Output](#-how-the-end-user-can-leverage-the-output)
-8. [Technical Details & SQL Techniques](#-technical-details--sql-techniques)
-9. [Performance & Productionization Notes](#-performance--productionization-notes)
-10. [Next Steps / Reproducibility](#-next-steps--reproducibility)
+   - [Columns 1-6](#columns-1-6)  
+   - [Columns 7-13](#columns-7-13)  
+5. [The Query](#-the-query)
+6. [Key Metrics Explained](#-key-metrics-explained)
+7. [Why This Is Useful for the Business](#-why-this-is-useful-for-the-business)
+8. [How the End User Can Leverage The Output](#-how-the-end-user-can-leverage-the-output)
+9. [Technical Details & SQL Techniques](#-technical-details--sql-techniques)
+10. [Performance & Productionization Notes](#-performance--productionization-notes)
+11. [Next Steps / Reproducibility](#-next-steps--reproducibility)
 
 ---
 
