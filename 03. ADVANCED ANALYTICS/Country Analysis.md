@@ -11,7 +11,7 @@ The goal is to provide **key metrics** — customers, sellers, products, orders,
 
 1. [Assumptions](#-assumptions)  
 2. [Table Mapping](#-table-mapping)  
-3. [Complete Output](#-complete-output)  
+3. [Output](#-output)  
    - [Columns 1-8](#columns-1-8)  
    - [Columns 9-14](#columns-9-14)  
 4. [The Query](#-the-query)  
@@ -46,7 +46,7 @@ The goal is to provide **key metrics** — customers, sellers, products, orders,
 
 ---
 
-## 📝 Complete Output:
+## 📝 Output:
 
 | country | total_sellers | total_customer | total_products | total_orders | total_revenue | avg_revenue_per_order | market_segment | revenue_order_profile | max_orders_by_single_customer | average_spent_by_customer | percent_customer_above_average | domestic_orders_with_percent | foreign_orders_with_percent |
 |---------|---------------|----------------|----------------|--------------|---------------|-----------------------|----------------|-----------------------|------------------------------|---------------------------|--------------------------------|------------------------------|-----------------------------|
