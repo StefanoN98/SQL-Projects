@@ -2,7 +2,7 @@
 
 ## 🎯 Purpose
 
-> This document contains a **customer-level segmentation** SQL workflow built on the `gold` layer of the data warehouse. The pipeline computes order totals, per-customer statistics (recency, frequency, monetary), spending quartiles, RFM quartiles and final segments that are actionable for marketing, retention and product teams.
+> This document contains a **customer-level segmentation** built on the `gold` layer of the data warehouse. The pipeline computes order totals, per-customer statistics (recency, frequency, monetary), spending quartiles, RFM quartiles and final segments that are actionable for marketing, retention and product teams.
 
 ---
 
