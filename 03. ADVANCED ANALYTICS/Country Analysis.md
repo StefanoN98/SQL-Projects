@@ -2,8 +2,25 @@
 
 ## 🎯 Purpose
 
-This document contains the SQL query that produces a **market summary by country** from the `gold` layer of the data warehouse.  
+> This document contains the SQL query that produces a **market summary by country** from the `gold` layer of the data warehouse.  
 The goal is to provide **key metrics** — customers, sellers, products, orders, revenue, market profile, and cross-border indicators — useful for **business and operational decision-making**.
+
+---
+
+## 📑 Table of Contents
+
+1. [Assumptions](#-assumptions)  
+2. [Table Mapping](#-table-mapping)  
+3. [Complete Output](#-complete-output)  
+   - [Columns 1-8](#columns-1-8)  
+   - [Columns 9-14](#columns-9-14)  
+4. [The Query](#-the-query)  
+5. [Main Key Metrics Explained](#-main-key-metrics-explained)  
+6. [Why This Query Is Useful for the Business](#-why-this-query-is-useful-for-the-business)  
+7. [How to Leverage This Output for Further Analysis](#-how-to-leverage-this-output-for-further-analysis)  
+8. [Technical Details and Interesting SQL Techniques](#-technical-details-and-interesting-sql-techniques)
+
+---
 
 ## 📌 Assumptions
 
