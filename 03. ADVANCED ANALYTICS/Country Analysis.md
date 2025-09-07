@@ -22,9 +22,6 @@ The goal is to provide **key metrics** — customers, sellers, products, orders,
 
 ---
 
-
----
-
 ## Output:
 
 | country | total_sellers | total_customer | total_products | total_orders | total_revenue | avg_revenue_per_order | market_segment | revenue_order_profile | max_orders_by_single_customer | average_spent_by_customer | percent_customer_above_average | domestic_orders_with_percent | foreign_orders_with_percent |
