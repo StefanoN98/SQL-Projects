@@ -263,14 +263,6 @@ LEFT JOIN cte4b ON cte1.country = cte4b.country
 LEFT JOIN cte5b ON cte1.country = cte5b.country
 ORDER BY cte2.total_revenue DESC;
 ```
-## Assunzioni:
--periodo di riferimento completo da 2016 a 2018
--tolti dal conteggio gli ordjni cancellati e non disponibili (motivo per cui potrebbe differire il nuemro dalle analisi del silver/gold layer in dwh)
--total_customer = 96095
--total_sellers = 3095
--total_products = 32951, ma nella query ne ho 33597 poichè un prodotto può avere più seller, e quindi essere presente in più regioni
--total_orders = 98212 (esclusi i cancellati e unavailable)
--total_revenue = 15739885,59 (esclusi i cancellati e unavailable)
 
 ---
 
