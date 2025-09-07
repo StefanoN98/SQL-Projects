@@ -32,19 +32,19 @@ Questo documento contiene la query SQL (commentata riga-per-riga) che produce un
 | PR      | 360           | 4881           | 3042           | 4985         | 795036        | 159,49                | Medium Market  | Low Value             | 6                            | 162.88€                   | 28,15 %                        | 739 &#124; 14,82%           | 4.246 &#124; 85,18%         |
 | SC      | 197           | 3529           | 1491           | 3598         | 607518        | 168,85                | Medium Market  | Low Value             | 4                            | 172.15€                   | 28,56 %                        | 274 &#124; 7,62%            | 3.324 &#124; 92,38%         |
 
-### Tabella 1 (prime 8 colonne)
+### Columns 1-8
 
-| country | total_sellers | total_customer | total_products | total_orders | total_revenue | avg_revenue_<br>per_order | market_segment |
-|---------|---------------|----------------|----------------|--------------|---------------|-----------------------|----------------|
-| SP      | 1816          | 40290          | 22750          | 41123        | 5879410       | 142,97                | Large Market   |
-| RJ      | 176           | 12379          | 1555           | 12699        | 2115884       | 166,62                | Large Market   |
-| MG      | 250           | 11256          | 2824           | 11501        | 1843982       | 160,33                | Large Market   |
-| RS      | 132           | 5276           | 789            | 5417         | 877825        | 162,05                | Medium Market  |
-| PR      | 360           | 4881           | 3042           | 4985         | 795036        | 159,49                | Medium Market  |
-| SC      | 197           | 3529           | 1491           | 3598         | 607518        | 168,85                | Medium Market  |
+| country | total_sellers | total_customer | total_products | total_orders | total_revenue | avg_revenue_<br>per_order | market_segment | ... |
+|---------|---------------|----------------|----------------|--------------|---------------|-----------------------|----------------|---------|
+| SP      | 1816          | 40290          | 22750          | 41123        | 5879410       | 142,97                | Large Market   | ... |
+| RJ      | 176           | 12379          | 1555           | 12699        | 2115884       | 166,62                | Large Market   | ... |
+| MG      | 250           | 11256          | 2824           | 11501        | 1843982       | 160,33                | Large Market   | ... |
+| RS      | 132           | 5276           | 789            | 5417         | 877825        | 162,05                | Medium Market  | ... |
+| PR      | 360           | 4881           | 3042           | 4985         | 795036        | 159,49                | Medium Market  | ... |
+| SC      | 197           | 3529           | 1491           | 3598         | 607518        | 168,85                | Medium Market  | ... |
 
 
-### Tabella 2 (colonne rimanenti)
+### Columns 9-14
 
 | country | ... | revenue_order_<br>profile | max_orders_by_<br>single_customer | average_spent_<br>by_customer | percent_customer_<br>above_average | domestic_orders_<br>with_percent | foreign_orders_<br>with_percent |
 |---------|-----|-----------------------|------------------------------|---------------------------|--------------------------------|------------------------------|-----------------------------|
