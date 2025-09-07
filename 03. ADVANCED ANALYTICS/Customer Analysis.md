@@ -76,7 +76,7 @@
 ## 💻 The Query (step-by-step, commented)
 
 ```sql
--- STEP 1: Normalize order-level revenue (sum payments per order)
+-- Calculate total payment per order
 WITH order_totals AS (
     SELECT
         fo.order_id,
@@ -90,14 +90,14 @@ WITH order_totals AS (
     GROUP BY fo.order_id, fo.customer_id, fo.order_purchase_timestamp
 ),
 
--- STEP 2: Compute per-customer aggregates (lifecycle and spend stats)
+-- Calculate customer statistics
 customer_stats AS (
     SELECT
         dc.customer_unique_id,
         MIN(ot.order_purchase_timestamp) AS first_order_date,  -- first purchase date
         MAX(ot.order_purchase_timestamp) AS last_order_date,   -- most recent purchase date
         COUNT(DISTINCT ot.order_id) AS total_orders,
-        COUNT(DISTINCT FORMAT(ot.order_purchase_timestamp, 'yyyyMM')) AS active_months, -- months with activity
+        COUNT(DISTINCT FORMAT(ot.order_purchase_timestamp, 'yyyyMM')) AS active_months, -- Number of months in which the customer made purchases (proxy engagement)
         SUM(ot.order_total) AS total_spent,
         AVG(ot.order_total) AS avg_order_value,
         STDEV(ot.order_total) AS order_value_stddev,
@@ -109,34 +109,36 @@ customer_stats AS (
     GROUP BY dc.customer_unique_id
 ),
 
--- STEP 3: Single-row table with the dataset's last order date (used for recency calculation)
+-- Single-row table with the dataset's last global order date (used for recency calculation),to understand if customers have come back
 max_date AS (
     SELECT MAX(order_purchase_timestamp) AS global_last_order_date
     FROM order_totals
 ),
 
--- STEP 4: Spending quartiles (NTILE divides customers into 4 groups based on total_spent)
+-- Calculate quartiles (NTILE divides customers into 4 groups based on total_spent)
 spending_quartiles AS (
     SELECT
         cs.*,
         NTILE(4) OVER (ORDER BY cs.total_spent) AS spending_quartile
+        -- 1 = low, 2 = medium-low 3 = medium-high 4 = high
     FROM customer_stats cs
 ),
 
--- STEP 5: RFM quartiles. We reuse spending_quartile as monetary_quartile.
+-- Calculate RFM quartiles. We reuse spending_quartile as monetary_quartile.
 rfm_quartiles AS (
     SELECT
         sq.*,
         sq.spending_quartile AS monetary_quartile,
-        NTILE(4) OVER (ORDER BY total_orders DESC) AS frequency_quartile,  -- higher orders -> higher quartile
-        NTILE(4) OVER (ORDER BY DATEDIFF(DAY, last_order_date, md.global_last_order_date)) AS recency_quartile -- smaller days -> more recent
+        NTILE(4) OVER (ORDER BY total_orders DESC) AS frequency_quartile,  -- Purchase frequence: higher orders -> higher quartile
+        NTILE(4) OVER (ORDER BY DATEDIFF(DAY, last_order_date, md.global_last_order_date)) AS recency_quartile -- Days form last purchase: smaller days -> more recent
     FROM spending_quartiles sq
     CROSS JOIN max_date md
 ),
 
--- STEP 6: Build human-friendly segments (base & RFM composite)
+-- Build segmentation based on spending and RFM
 final_segments AS (
     SELECT *,
+        -- Base segmentation
         CASE spending_quartile
             WHEN 4 THEN 'High Value'
             WHEN 3 THEN 'Upper Mid Value'
@@ -144,6 +146,7 @@ final_segments AS (
             WHEN 1 THEN 'Low Value'
         END AS customer_segment_base,
 
+        -- RFM segemntation combining  teh 3 parameters
         CASE
             WHEN monetary_quartile = 4 AND frequency_quartile = 4 AND recency_quartile = 1 THEN 'Top Champions'
             WHEN monetary_quartile >= 3 AND frequency_quartile >= 3 AND recency_quartile <= 2 THEN 'Loyal High Value'
@@ -154,7 +157,7 @@ final_segments AS (
     FROM rfm_quartiles
 )
 
--- STEP 7: Final projection and formatting
+-- Final output & aggregation
 SELECT
     customer_unique_id,
     FORMAT(first_order_date, 'yyyy-MM') AS first_order,
@@ -163,8 +166,8 @@ SELECT
     total_orders,
     active_months,
     CASE
-        WHEN total_orders = 1 THEN '1 --> Unique Order'
-        WHEN DATEDIFF(DAY, first_order_date, last_order_date) / (total_orders - 1) = 0 THEN '>1 --> More Orders the same day'
+        WHEN total_orders = 1 THEN '1 --> Unique Order' -- CUstomers with an unique order
+        WHEN DATEDIFF(DAY, first_order_date, last_order_date) / (total_orders - 1) = 0 THEN '>1 --> More Orders the same day' -- More orders, but all the same day
         ELSE CAST(ROUND(DATEDIFF(DAY, first_order_date, last_order_date) / (total_orders - 1), 2) AS VARCHAR(20))
     END AS avg_days_between_orders,
     total_spent,
