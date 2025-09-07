@@ -1,23 +1,27 @@
-# Advanced Analytics: Country Market Summary (2016–2018)
+# 📊 Advanced Analytics: Country Market Summary (2016–2018)
 
-**Scopo**
+## 🎯 Purpose
 
-Questo documento contiene la query SQL (commentata riga-per-riga) che produce un riassunto di mercato per *country* a partire dal layer `gold` del data warehouse. L'obiettivo è fornire metriche chiave — clienti, seller, prodotti, ordini, revenue, profilo di mercato e indicatori di cross-border — utili per decisioni commerciali e operative.
+This document contains the SQL query that produces a **market summary by country** from the `gold` layer of the data warehouse.  
+The goal is to provide **key metrics** — customers, sellers, products, orders, revenue, market profile, and cross-border indicators — useful for **business and operational decision-making**.
 
-**Periodo di riferimento**: completo dal 2016 al 2018 (assunto nella query).\
-**Nota**: la query esclude gli ordini con `order_status` in (`'canceled','unavailable'`).
+**📅 Reference period**: full timeframe from 2016 to 2018 (assumed in the query).  
+**⚠️ Note**: the query excludes orders with `order_status` in (`'canceled','unavailable'`).
 
 ---
 
-## Mappatura tabelle (breve)
+## 🗂️ Table Mapping (short overview)
 
-- `gold.dim_geolocation` — informazioni geografico/postali (zip_code → country)
-- `gold.dim_customers` — anagrafica clienti (customer_id, customer_unique_id, customer_zip_code)
-- `gold.dim_sellers` — anagrafica venditori (seller_id, seller_zip_code)
-- `gold.fact_order_items` — righe di ordine (order_id, seller_id, product_id, quantity, price...)
-- `gold.dim_products` — anagrafica prodotti (product_id, category...)
-- `gold.fact_orders` — header ordine (order_id, customer_id, order_status, order_purchase_timestamp...)
-- `gold.fact_payments` — pagamenti per ordine (order_id, payment_type, total...)
+- `gold.dim_geolocation` — geographic/postal information (zip_code → country) 
+- `gold.dim_customers` — customer master data (customer_id, customer_unique_id, customer_zip_code)   
+- `gold.dim_sellers` — seller master data (seller_id, seller_zip_code)   
+- `gold.fact_order_items` — order line items (order_id, seller_id, product_id, quantity, price...)   
+- `gold.dim_products` — product master data (product_id, category...)   
+- `gold.fact_orders` — order header (order_id, customer_id, order_status, order_purchase_timestamp...)  
+- `gold.fact_payments` — order payments (order_id, payment_type, total...)   
+
+---
+
 
 ---
 
