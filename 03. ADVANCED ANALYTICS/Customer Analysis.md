@@ -196,8 +196,8 @@ ORDER BY total_orders DESC;
 | **Avg Order Value** | `AVG(order_total)` | Typical basket size
 | **Order Value StdDev** | `STDEV(order_total)` | Dispersion of order values
 | **Avg Monthly Value** | `total_spent / active_months` (proxy CLV) | Simple proxy for recurring monthly revenue from the customer
-| **Spending Quartile** | **High Value** spending_quartile = 4<br>**Upper Mid Value** spending_quartile = 3<br>**Lower Mid Value** spending_quartile = 2<br>**Low Value** spending_quartile = 1 | Quick stratification into 4 equal groups
-| **RFM quartiles** | `NTILE(4)` on recency, frequency, monetary | Classic segmentation building block
+| **Spending Quartile** | **High Value** 🠒 spending_quartile = 4<br>**Upper Mid Value** 🠒 spending_quartile = 3<br>**Lower Mid Value** 🠒 spending_quartile = 2<br>**Low Value** 🠒 spending_quartile = 1 | Quick stratification into 4 equal groups
+| **RFM quartiles** | monetary_quartile = `mq` <br> frequency_quartile = `fq` <br> recency_quartile= `rq` <br>**Top Champions** 🠒 `mq` = 4 & `fq` = 4 & `rq` = 1<br> **Loyal High Value** 🠒 `mq` ≥ 3 & `fq` ≥ 3 & `rq` ≤ 2<br> **Mid Value Regular** 🠒 `mq` ≥ 2 & `fq` ≥ 2 <br> **At Risk** 🠒 `rq` ≥ 3 <br>**Low Value** 🠒 all other cases (fallback category) | Classic segmentation building block
 | **Customer segments** | rules combining quartiles → human-readable labels | Actionable groups for marketing/retention
 
 ---
