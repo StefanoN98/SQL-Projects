@@ -18,8 +18,8 @@ The goal is to provide **key metrics** — customers, sellers, products, orders,
 5. [Main Key Metrics Explained](#-main-key-metrics-explained)  
 6. [Why This Query Is Useful for the Business](#-why-this-query-is-useful-for-the-business)  
 7. [How to Leverage This Output for Further Analysis](#-how-to-leverage-this-output-for-further-analysis)
-8. [Technical Details and Interesting SQL Techniques](#technical-details-and-interesting-sql-techniques) 
-9. [Technical Details and Interesting SQL Techniques](#-technical-details-and-interesting-sql-techniques)
+8. [Technical Details and SQL Techniques](#-technical-details-and-sql-techniques) 
+
 
 ---
 
@@ -311,7 +311,7 @@ The output of this query provides a **rich foundation of country-level metrics**
 
 ---
 
-## ⚙️ Technical Details and Interesting SQL Techniques
+## ⚙️ Technical Details and SQL Techniques
 
 - **CTEs (Common Table Expressions)**: the query is structured into logical, reusable blocks.  
   This makes the logic easier to read, debug, and test (each CTE can be run in isolation).
