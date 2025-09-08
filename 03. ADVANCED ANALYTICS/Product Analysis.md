@@ -109,7 +109,6 @@ product_rev_prc_pt1 AS (
     GROUP BY dp.product_id, dp.product_category_name
 ),
 
--- CTE with window functions to calculate category-level averages
 product_rev_prc_pt2 AS(
    -- Use the previous cte  to apply window functions and get average  price and revenue per product category level
     SELECT
