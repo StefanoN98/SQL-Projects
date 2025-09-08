@@ -69,3 +69,150 @@ The goal is to provide key metrics — revenue, orders, sellers, customers, revi
 | 002159fe700ed3521f46cfcf6e941c76 | ... | 231,33              | 1,143                  | 202,33          | 117,85               | Above Category Price | 7             | 3,43           | 28,57%        | 28,57%       | 2017-04-15      | 2018-08-07     | 479                  | 2018-08    |
 | 05fa3b5ecdf7f54e97fe25127db0ee7c | ... | 201,95              | 1,333                  | 181             | 46,2                 | Above Category Price | 4             | 3,75           | 50,00%        | 0,00%        | 2017-08-03      | 2018-02-23     | 204                  | 2018-02    |
 
+---
+
+## 💻 The Query
+
+```sql
+WITH product_orders AS (
+    -- Extract orders per product and seller, including unique customer ID and revenue
+    SELECT 
+        foi.product_id,
+        foi.seller_id,
+        fo.order_id,
+        fo.customer_id,
+        dc.customer_unique_id,               
+        fo.order_purchase_timestamp,
+        fo.order_status,
+        foi.item_price AS item_price,             
+        SUM(foi.total_order_payment) AS order_revenue  -- total revenue associated with the order
+    FROM gold.fact_order_items foi
+    JOIN gold.fact_orders fo ON foi.order_id = fo.order_id
+    JOIN gold.dim_customers dc ON fo.customer_id = dc.customer_id  
+    WHERE fo.order_status NOT IN ('canceled','unavailable') -- exclude canceled/unavailable orders
+    GROUP BY 
+        foi.product_id, foi.seller_id, fo.order_id, fo.customer_id, dc.customer_unique_id,
+        fo.order_purchase_timestamp, fo.order_status, foi.item_price
+),
+
+product_rev_prc_pt1 AS (
+   -- Calculate average price and revenue per product id
+    SELECT 
+        dp.product_id,
+        dp.product_category_name,
+        AVG(foi.item_price) AS avg_product_price,            -- average selling price of the product
+        AVG(foi.total_order_payment) AS avg_revenue_per_order -- average order revenue (including shipping, fees, etc.)
+    FROM gold.dim_products dp
+    JOIN gold.fact_order_items foi ON foi.product_id = dp.product_id
+    JOIN gold.fact_orders fo ON fo.order_id = foi.order_id
+    WHERE fo.order_status NOT IN ('canceled','unavailable')
+    GROUP BY dp.product_id, dp.product_category_name
+),
+
+-- CTE with window functions to calculate category-level averages
+product_rev_prc_pt2 AS(
+   -- Use the previous cte  to apply window functions and get average  price and revenue per product category level
+    SELECT
+        product_id,
+        product_category_name,
+        ROUND(avg_product_price,2) AS avg_product_price,          
+        ROUND(avg_revenue_per_order,2) AS avg_revenue_per_order,  
+        AVG(avg_product_price) OVER (PARTITION BY product_category_name) AS avg_category_price,    -- average price within the category
+        AVG(avg_revenue_per_order) OVER (PARTITION BY product_category_name) AS avg_category_revenue -- average revenue within the category
+    FROM product_rev_prc_pt1
+),
+
+product_reviews AS (
+   -- Aggregate reviews per product
+    SELECT 
+        dp.product_id,
+        AVG(CAST(fr.review_score AS FLOAT)) AS avg_review_score,      -- average review score per product
+        COUNT(fr.review_id) AS total_reviews,                         -- total number of reviews
+        SUM(CASE WHEN fr.review_score = 5 THEN 1 ELSE 0 END) AS five_star_reviews, -- number of 5-star reviews
+        SUM(CASE WHEN fr.review_score = 1 THEN 1 ELSE 0 END) AS one_star_reviews  -- number of 1-star reviews
+    FROM gold.fact_reviews fr
+    JOIN gold.fact_order_items foi ON foi.order_id=fr.order_id
+    JOIN gold.dim_products dp ON dp.product_id=foi.product_id
+    GROUP BY dp.product_id
+),
+
+product_stats AS (
+   -- Calculate product-level aggregations
+    SELECT 
+        dp.product_id,
+        dp.product_category_name,
+
+        -- Supply & demand
+        COUNT(DISTINCT po.seller_id) AS total_sellers,                -- number of unique sellers
+        COUNT(DISTINCT po.customer_unique_id) AS total_customers,    -- number of unique customers
+        COUNT(DISTINCT po.order_id) AS total_orders,                 -- unique orders containing the product
+        ROUND(SUM(po.order_revenue),0) AS total_revenue,            -- total revenue for the product
+       
+        -- Reviews
+        ROUND(AVG(pr.avg_review_score),2) AS avg_review_score,       -- average review score
+        MAX(pr.total_reviews) AS total_reviews,                      -- using MAX to preserve actual count from origin cte
+        MAX(pr.five_star_reviews) * 1.0 / NULLIF(MAX(pr.total_reviews),0) AS pct_five_star, -- percentage of 5-star reviews
+        MAX(pr.one_star_reviews) * 1.0 / NULLIF(MAX(pr.total_reviews),0) AS pct_one_star,   -- percentage of 1-star reviews
+
+        -- Temporal metrics
+        CAST(MIN(po.order_purchase_timestamp) AS DATE) AS first_order_date,  -- date of first order
+        CAST(MAX(po.order_purchase_timestamp) AS DATE) AS last_order_date,   -- date of last order
+        DATEDIFF(DAY, MIN(po.order_purchase_timestamp), MAX(po.order_purchase_timestamp)) AS product_lifetime_days, -- product lifetime in days
+        FORMAT(MAX(po.order_purchase_timestamp), 'yyyy-MM') AS peak_month,  -- peak month based on last order
+
+        -- Customer loyalty / repeat purchases
+        CASE 
+          WHEN COUNT(DISTINCT po.customer_unique_id) > 0 
+          THEN CAST(COUNT(DISTINCT po.order_id) AS FLOAT) / COUNT(DISTINCT po.customer_unique_id) -- average orders per customer
+          ELSE NULL
+        END AS avg_orders_per_customer
+
+    FROM gold.dim_products dp
+    JOIN product_orders po ON dp.product_id = po.product_id
+    LEFT JOIN product_reviews pr ON dp.product_id = pr.product_id
+    GROUP BY dp.product_id, dp.product_category_name
+)
+
+-- Final query joining product stats and price/revenue comparisons
+SELECT 
+    ps.product_id,
+    ps.product_category_name,
+    ps.total_sellers,
+    ps.total_customers,                
+    ps.total_orders,
+    ps.total_revenue,
+
+    -- Revenue segmentation based on percentiles
+    CASE 
+        WHEN ps.total_revenue > PERCENTILE_CONT(0.9) WITHIN GROUP (ORDER BY ps.total_revenue) OVER() THEN 'Top 10% Revenue'
+        WHEN ps.total_revenue > PERCENTILE_CONT(0.75) WITHIN GROUP (ORDER BY ps.total_revenue) OVER() THEN 'Top 25% Revenue'
+        ELSE 'Long Tail'
+    END AS revenue_segment,
+
+    prp.avg_revenue_per_order,                  -- average revenue per order
+    ROUND(avg_orders_per_customer,3) AS avg_orders_per_customer, -- average orders per customer
+    prp.avg_product_price,                      -- average product price
+
+    -- Price comparison with category
+    ROUND(prp.avg_product_price - prp.avg_category_price,2) AS price_diff_vs_category, 
+    CASE 
+        WHEN prp.avg_product_price > prp.avg_category_price THEN 'Above Category Price'
+        WHEN prp.avg_product_price < prp.avg_category_price THEN 'Below Category Price'
+        ELSE 'At Category Price'
+    END AS price_positioning,
+
+    ps.total_reviews,
+    ps.avg_review_score,
+    FORMAT(ps.pct_five_star *100,'N2') + '%' AS pct_five_star, -- percentage of 5-star reviews
+    FORMAT(ps.pct_one_star *100,'N2') + '%' AS pct_one_star,   -- percentage of 1-star reviews
+    ps.first_order_date,
+    ps.last_order_date,
+    ps.product_lifetime_days,
+    ps.peak_month
+
+FROM product_stats ps
+JOIN product_rev_prc_pt2 prp 
+     ON ps.product_id = prp.product_id
+ORDER BY product_id;
+
+```
