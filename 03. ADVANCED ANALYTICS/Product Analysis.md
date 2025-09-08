@@ -1,4 +1,4 @@
-# 📊 Advanced Analytics: Product Performance Summary
+# 📊 Product Performance Summary
 
 ## 🎯 Purpose
 
