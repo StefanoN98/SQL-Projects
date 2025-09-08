@@ -257,14 +257,6 @@ range of analytical extensions and business applications:
    -   Assess whether recent cohorts produce a higher share of "Top
     Champions" or stagnate in "Low Value" segments.
 
-### Forecasting and Strategic Planning
-
-   -   Use historical trajectories of `avg_monthly_value` and
-    `total_orders` to **simulate revenue impact** under different
-    retention or acquisition scenarios.
-   -   Link cohort progression with business cycles (seasonality, product
-    launches) to predict **future growth potential**.
-
 ---
 
 ## ⚙️ Technical Details & SQL Techniques
