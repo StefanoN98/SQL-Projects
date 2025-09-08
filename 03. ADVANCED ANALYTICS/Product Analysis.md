@@ -215,3 +215,16 @@ JOIN product_rev_prc_pt2 prp
 ORDER BY product_id;
 
 ```
+---
+
+## 🔑 Main Key Metrics Explained
+| Metric                      | Calculation / Threshold                                  | Description                                   |
+| --------------------------- | -------------------------------------------------------- | --------------------------------------------- |
+| **Revenue Segment**         | Percentiles: Top 10%, Top 25%, Long Tail                 | Classifies products by revenue performance.   |
+| **Avg Revenue per Order**   | Average revenue across all orders containing the product | Helps identify high-value products.           |
+| **Avg Orders per Customer** | `total_orders / total_customers`                         | Measures repeat purchase behavior.            |
+| **Avg Product Price**       | Average of `item_price` across all orders                | Indicates pricing level relative to category. |
+| **Price Positioning**       | Above / Below / At Category Price                        | Compares product price with category average. |
+| **Review Metrics**          | Avg score, % of 5-star and 1-star reviews                | Reflects customer satisfaction.               |
+| **Temporal Metrics**        | First/Last order dates, lifetime in days, peak month     | Tracks product lifecycle and peak demand.     |
+
