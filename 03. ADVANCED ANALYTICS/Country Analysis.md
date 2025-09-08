@@ -17,8 +17,9 @@ The goal is to provide **key metrics** — customers, sellers, products, orders,
 4. [The Query](#-the-query)  
 5. [Main Key Metrics Explained](#-main-key-metrics-explained)  
 6. [Why This Query Is Useful for the Business](#-why-this-query-is-useful-for-the-business)  
-7. [How to Leverage This Output for Further Analysis](#-how-to-leverage-this-output-for-further-analysis)  
-8. [Technical Details and Interesting SQL Techniques](#-technical-details-and-interesting-sql-techniques)
+7. [How to Leverage This Output for Further Analysis](#-how-to-leverage-this-output-for-further-analysis)
+8. [Technical Details and Interesting SQL Techniques](#technical-details-and-interesting-sql-techniques) 
+9. [Technical Details and Interesting SQL Techniques](#-technical-details-and-interesting-sql-techniques)
 
 ---
 
