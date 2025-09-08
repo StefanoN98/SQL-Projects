@@ -17,7 +17,7 @@
 6. [Key Metrics Explained](#-key-metrics-explained)
 7. [Why This Is Useful for the Business](#-why-this-is-useful-for-the-business)
 8. [How the End User Can Leverage The Output](#-how-the-end-user-can-leverage-the-output)
-9. [Technical Details & SQL Techniques](#-technical-details--sql-techniques)
+9. [Technical Details & SQL Techniques](#-technical-details-sql-techniques)
 
 ---
 
