@@ -1,4 +1,4 @@
-# 📊 Advanced Analytics: Country Market Summary (2016–2018)
+# 📊 Country Market Summary (2016–2018)
 
 ## 🎯 Purpose
 
