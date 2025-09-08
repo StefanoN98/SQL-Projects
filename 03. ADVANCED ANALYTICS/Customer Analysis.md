@@ -225,35 +225,35 @@ range of analytical extensions and business applications:
 
    -   Use `first_order` and `last_order` to reconstruct individual
     timelines and detect **time-to-second-purchase** or long inactive
-    periods.\
+    periods.
    -   `avg_days_between_orders` highlights buying rhythm, helping
     distinguish **habitual repeat buyers** from **sporadic purchasers**.
 
 2. **Loyalty and Churn Diagnostics**
 
    -   `recency_days` and `active_months` together provide a clear view of
-    customer engagement depth.\
+    customer engagement depth.
    -   Customers drifting into "At Risk" segments can be proactively
     flagged for intervention before churn becomes permanent.
 
 3. **Revenue Stability Analysis**
 
    -   Combine `avg_order_value` with `order_value_stddev` to identify
-    **predictable revenue contributors** vs. **volatile spenders**.\
+    **predictable revenue contributors** vs. **volatile spenders**.
    -   `avg_monthly_value` works as a simplified CLV proxy to monitor the
     **stability of recurring revenue streams**.
 
 4. **Segment Transition Monitoring**
 
    -   Compare `customer_segment_base` and `customer_segment_RFM` over time
-    to understand **upgrades, downgrades, and retention pathways**.\
+    to understand **upgrades, downgrades, and retention pathways**.
    -   Transitions (e.g., "Loyal High Value" → "At Risk") can be tracked as
     an **early-warning KPI** for account managers.
 
 5. **Portfolio and Cohort Evaluation**
 
    -   Aggregate by `first_order` cohorts to see how different acquisition
-    waves perform in terms of retention and revenue contribution.\
+    waves perform in terms of retention and revenue contribution.
    -   Assess whether recent cohorts produce a higher share of "Top
     Champions" or stagnate in "Low Value" segments.
 
@@ -261,7 +261,7 @@ range of analytical extensions and business applications:
 
    -   Use historical trajectories of `avg_monthly_value` and
     `total_orders` to **simulate revenue impact** under different
-    retention or acquisition scenarios.\
+    retention or acquisition scenarios.
    -   Link cohort progression with business cycles (seasonality, product
     launches) to predict **future growth potential**.
 
