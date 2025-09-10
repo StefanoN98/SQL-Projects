@@ -222,7 +222,6 @@ ORDER BY product_id;
 | **Revenue Segment**         | **Top 10%**: >90th percentile<br>**Top 25%**: 75th-90th percentile<br>**Long Tail**: <75th percentile             | Classifies products by revenue performance, Identifies star products vs. those needing attention  |
 | **Avg Revenue per Order**   | Average revenue across all orders containing the product | Helps identify high-value products.           |
 | **Avg Orders per Customer** | `total_orders / total_customers`                         | Measures repeat purchase behavior.            |
-| **Avg Product Price**       | Average of `item_price` across all orders                | Indicates pricing level relative to category. |
 | **Price Positioning**       | Compares product price vs. category average: Above/Below/At Category Price                       | Compares product price with category average. |
 | **Review Metrics**          | **5-star %**: `(five_star_reviews / total_reviews) * 100`<br>**1-star %**: `(one_star_reviews / total_reviews) * 100`                | Reflects customer satisfaction and product quality perception .               |
 | **Temporal Metrics**        | First/Last order dates, lifetime in days, peak month     | Tracks product lifecycle and peak demand.     |
