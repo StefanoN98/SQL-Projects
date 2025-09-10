@@ -213,7 +213,6 @@ FROM product_stats ps
 JOIN product_rev_prc_pt2 prp 
      ON ps.product_id = prp.product_id
 ORDER BY product_id;
-
 ```
 ---
 
