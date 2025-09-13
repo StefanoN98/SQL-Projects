@@ -57,7 +57,9 @@ This repository presents a complete **SQL-based Data Analytics Pipeline**, progr
 
 ### 3️⃣ **Advanced Analytics** 📈
 
-### 🔜 Next Step
+**🟢 Objective:** Perform complex analytical operations to extract deeper business insights.
+
+**🛠 Approach:** Uses advanced SQL techniques, including **trend analysis, cumulative metrics, segmentation, and performance evaluation**.
 
 ---
 
