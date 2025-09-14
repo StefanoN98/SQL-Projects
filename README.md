@@ -61,6 +61,25 @@ This repository presents a complete **SQL-based Data Analytics Pipeline**, progr
 
 **🛠 Approach:** Build queries using layered CTEs, window functions, and segmentation logic, carefully linking different levels of detail to avoid inconsistent or misleading outputs while maintaining scalability and analytical depth.  
 
+#### 📌 **Key Objects:**
+
+- 🌍 **Country Market Summary**: Provides **market-level indicators per country** (customers, sellers, products, orders, revenue, domestic vs. foreign share).  
+
+- 👥 **Customer Segmentation & RFM Analysis**: Builds **customer profiles** based on recency, frequency, and monetary metrics. 
+
+- 📦 **Product Performance Summary**: Delivers **product-level performance metrics** (revenue, orders, customers, price, positioning vs. category benchmarks, reviews).  
+
+
+#### **💼 Business Value**
+
+These queries act as **foundational analytical reports**:  
+
+- They **consolidate raw data** from the warehouse into **structured, business-ready datasets** (markets, customers, products).  
+- They enable **analysts and BI teams** to load clean outputs into visualization tools like Power BI, Tableau, or Looker, building **dashboards and interactive reports** without re-writing complex SQL.  
+- They provide **repeatable and standardized KPIs**, ensuring consistent metrics across teams (e.g., what defines a "Large Market" or "Top Champion Customer").  
+- They serve as a **launchpad for deeper analysis** — from marketing campaign targeting to revenue forecasting and product lifecycle management.  
+
+In short: these queries are not just one-off analyses, but **reusable building blocks** that bridge the gap between **data engineering** and **business intelligence**.  
 
 ---
 
