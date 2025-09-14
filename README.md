@@ -81,7 +81,7 @@ These queries act as **foundational analytical reports**:
 
 In short: these queries are not just one-off analyses, but **reusable building blocks** that bridge the gap between **data engineering** and **business intelligence**.  
 
-🔗 **Reference:** [Advanced Analytics](https://github.com/StefanoN98/SQL-Projects/tree/d5a828cd84053b76ca1f3d3414c6017ef3045988/03.%20ADVANCED%20ANALYTICS)
+🔗 **Reference:** [Advanced Analytics](https://github.com/StefanoN98/SQL-Projects/tree/7a3d0e489ab8a2d3731f4a53f1fe6227dd8008b2/03.%20ADVANCED%20ANALYTICS)
 
 ---
 
