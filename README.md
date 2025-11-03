@@ -72,12 +72,12 @@ This repository presents a complete **SQL-based Data Analytics Pipeline**, progr
 
 #### **💼 Business Value**
 
-These queries act as **foundational analytical reports**:  
+These queries act as **foundational analytical reports**:
 
-- They **consolidate raw data** from the warehouse into **structured, business-ready datasets** (markets, customers, products).  
-- They enable **analysts and BI teams** to load clean outputs into visualization tools like Power BI, Tableau, or Looker, building **dashboards and interactive reports** without re-writing complex SQL.  
-- They provide **repeatable and standardized KPIs**, ensuring consistent metrics across teams (e.g., what defines a "Large Market" or "Top Champion Customer").  
-- They serve as a **launchpad for deeper analysis** — from marketing campaign targeting to revenue forecasting and product lifecycle management.  
+- **Consolidates raw data** into structured, business-ready datasets (markets, customers, products).
+- Enables analysts and BI teams to build dashboards and reports without re-writing complex SQL.
+- Delivers **standardized and repeatable KPIs**, ensuring consistency across teams and departments.
+- Serves as a **foundation for deeper analysis** — from marketing segmentation to revenue forecasting and product lifecycle management.  
 
 In short: these queries are not just one-off analyses, but **reusable building blocks** that bridge the gap between **data engineering** and **business intelligence**.  
 
