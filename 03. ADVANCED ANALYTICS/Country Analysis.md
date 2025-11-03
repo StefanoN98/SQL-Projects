@@ -316,10 +316,8 @@ The output of this query provides a **rich foundation of country-level metrics**
 - **Aggregate → Derived → Window pattern**: when applying a window function (e.g., `AVG`, `MAX`) on top of already aggregated results (e.g., spending per customer), you need a two-step approach:  
   1. Aggregate at the customer level.  
   2. Apply the window function on the derived set.  
-
 - **`COUNT(DISTINCT ...)` usage**: applied frequently to reduce the risk of double-counting caused by joins with transactional tables (`order_items`, `payments`). 
-- **Divide-by-zero handling**: use `NULLIF(..., 0)` or `CASE WHEN ... > 0 THEN ... ELSE 0 END` to prevent runtime errors or `INF` values.
-- **`FORMAT(...)` for readability**: functions like `FORMAT(..., 'N2')` are handy for displaying results, but they can be slow in large-scale aggregations.  
+- **Divide-by-zero handling**: use `NULLIF(..., 0)` or `CASE WHEN ... > 0 THEN ... ELSE 0 END` to prevent runtime errors.
+- **`FORMAT(...)` for readability**: functions like `FORMAT(..., 'N2')` for displaying results in a clear way.  
 - **`LEFT JOIN` vs `INNER JOIN`**: in `customer_seller_product_stats`, `LEFT JOIN`s ensure countries with no customers or sellers are still included in the output. 
-
 - **Robustness**: the use of `ISNULL/NULLIF` and `LEFT JOIN`s in the final select makes the query more tolerant of missing data.
