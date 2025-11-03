@@ -75,7 +75,7 @@ This repository presents a complete **SQL-based Data Analytics Pipeline**, progr
 These queries act as **foundational analytical reports**:
 
 - **Consolidates raw data** into structured, business-ready datasets (markets, customers, products).
-- Enables analysts and BI teams to build dashboards and reports without re-writing complex SQL.
+- Enables analysts and BI teams to **build dashboards** and reports without re-writing complex SQL.
 - Delivers **standardized and repeatable KPIs**, ensuring consistency across teams and departments.
 - Serves as a **foundation for deeper analysis** — from marketing segmentation to revenue forecasting and product lifecycle management.  
 
