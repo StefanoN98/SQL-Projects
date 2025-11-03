@@ -313,13 +313,11 @@ The output of this query provides a **rich foundation of country-level metrics**
 
 ## ⚙️ Technical Details and SQL Techniques
 
-- **CTEs (Common Table Expressions)**: the query is structured into logical, reusable blocks.  
-  This makes the logic easier to read, debug, and test (each CTE can be run in isolation).
+- **CTEs (Common Table Expressions)**: the query is structured into logical, reusable blocks. This makes the logic easier to read, debug, and test (each CTE can be run in isolation).
 
 - **Aggregate → Derived → Window pattern**: when applying a window function (e.g., `AVG`, `MAX`) on top of already aggregated results (e.g., spending per customer), you need a two-step approach:  
   1. Aggregate at the customer level.  
   2. Apply the window function on the derived set.  
-  This avoids errors and database limitations.
 
 - **`COUNT(DISTINCT ...)` usage**: applied frequently to reduce the risk of double-counting caused by joins with transactional tables (`order_items`, `payments`). 
 
