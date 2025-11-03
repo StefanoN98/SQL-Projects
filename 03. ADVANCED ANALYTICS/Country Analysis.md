@@ -321,15 +321,12 @@ The output of this query provides a **rich foundation of country-level metrics**
   2. Apply the window function on the derived set.  
   This avoids errors and database limitations.
 
-- **`COUNT(DISTINCT ...)` usage**: applied frequently to reduce the risk of double-counting caused by joins with transactional tables (`order_items`, `payments`).  
-  ⚠️ Note: this operation is expensive on large datasets, so to consider alternative solutions on larger dataset.
+- **`COUNT(DISTINCT ...)` usage**: applied frequently to reduce the risk of double-counting caused by joins with transactional tables (`order_items`, `payments`). 
 
 - **Divide-by-zero handling**: use `NULLIF(..., 0)` or `CASE WHEN ... > 0 THEN ... ELSE 0 END` to prevent runtime errors or `INF` values.
 
 - **`FORMAT(...)` for readability**: functions like `FORMAT(..., 'N2')` are handy for displaying results, but they can be slow in large-scale aggregations.  
-  👉 Best practice: perform calculations numerically and handle formatting at the visualization layer (BI tool).
 
-- **`LEFT JOIN` vs `INNER JOIN`**: in `customer_seller_product_stats`, `LEFT JOIN`s ensure countries with no customers or sellers are still included in the output.  
-  👉 Use `INNER JOIN` to restrict the dataset to countries with complete information.
+- **`LEFT JOIN` vs `INNER JOIN`**: in `customer_seller_product_stats`, `LEFT JOIN`s ensure countries with no customers or sellers are still included in the output. 
 
 - **Robustness**: the use of `ISNULL/NULLIF` and `LEFT JOIN`s in the final select makes the query more tolerant of missing data.
